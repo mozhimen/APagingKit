@@ -30,3 +30,7 @@ include ':SwiftKit:uicorek'
 include ':ANetKit'
 project(':ANetKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ANetKit")
 include ':ANetKit:netk_retrofit'
+//AUICoreKit
+include ':AUICoreKit'
+project(':AUICoreKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AUICoreKit")
+include ':AUICoreKit:vhk'
