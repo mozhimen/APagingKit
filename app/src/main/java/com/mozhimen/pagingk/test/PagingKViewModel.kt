@@ -2,7 +2,11 @@ package com.mozhimen.pagingk.test
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.mozhimen.basick.elemk.androidx.lifecycle.bases.BaseViewModel
+import com.mozhimen.pagingk.test.paging.DataResPagingSource
+import com.mozhimen.pagingk.test.restful.mos.DataRes
+import kotlinx.coroutines.flow.Flow
 
 /**
  * @ClassName PagingKViewModel
@@ -12,7 +16,7 @@ import com.mozhimen.basick.elemk.androidx.lifecycle.bases.BaseViewModel
  * @Version 1.0
  */
 class PagingKViewModel : BaseViewModel() {
-    fun getData() = Pager(PagingConfig(pageSize = 1)) {
-        DataPagingSource()
-    }.flow
+
+    fun onInvalidate(): Flow<PagingData<DataRes>> =
+        Pager(PagingConfig(pageSize = 1)) { DataResPagingSource() }.flow
 }

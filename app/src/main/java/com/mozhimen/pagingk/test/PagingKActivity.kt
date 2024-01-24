@@ -8,6 +8,8 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVBVM
 import com.mozhimen.pagingk.test.databinding.ActivityPagingkBinding
+import com.mozhimen.pagingk.test.paging.DataResPagingDataAdapter
+import com.mozhimen.pagingk.test.paging.FooterLoadStateAdapter
 import com.mozhimen.pagingk.test.restful.mos.DataRes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,8 +23,8 @@ import java.io.IOException
  * @Version 1.0
  */
 class PagingKActivity : BaseActivityVBVM<ActivityPagingkBinding, PagingKViewModel>() {
-    private val dataRecycleViewAdapter: DataPagingDataAdapter by lazy {
-        DataPagingDataAdapter { position, it, adapter ->
+    private val dataRecycleViewAdapter: DataResPagingDataAdapter by lazy {
+        DataResPagingDataAdapter { position, it, adapter ->
             it?.author = "更改了${position}"
             adapter.notifyItemChanged(position)
         }.apply {
@@ -31,22 +33,22 @@ class PagingKActivity : BaseActivityVBVM<ActivityPagingkBinding, PagingKViewMode
                 when (it.refresh) {
 
                     is LoadState.NotLoading -> {
-                        Log.d(TAG, "is NotLoading")
+                        Log.d(TAG, "addLoadStateListener: is NotLoading")
                     }
 
                     is LoadState.Loading -> {
-                        Log.d(TAG, "is Loading")
+                        Log.d(TAG, "addLoadStateListener: is Loading")
                     }
 
                     is LoadState.Error -> {
-                        Log.d(TAG, "is Error:")
+                        Log.d(TAG, "addLoadStateListener: is Error:")
                         when ((it.refresh as LoadState.Error).error) {
                             is IOException -> {
-                                Log.d(TAG, "IOException")
+                                Log.d(TAG, "addLoadStateListener: IOException")
                             }
 
                             else -> {
-                                Log.d(TAG, "others exception")
+                                Log.d(TAG, "addLoadStateListener: others exception")
                             }
                         }
                     }
@@ -55,16 +57,16 @@ class PagingKActivity : BaseActivityVBVM<ActivityPagingkBinding, PagingKViewMode
         }
     }
 
-    lateinit var mPagingData: PagingData<DataRes.DataBean.DatasBean>
+    lateinit var mPagingData: PagingData<DataRes>
 
     override fun initView(savedInstanceState: Bundle?) {
         vb.rvData.layoutManager = LinearLayoutManager(this)
-        vb.rvData.adapter = dataRecycleViewAdapter.withLoadStateFooter(LoadStateFooterAdapter { dataRecycleViewAdapter.retry() })
+        vb.rvData.adapter = dataRecycleViewAdapter.withLoadStateFooter(FooterLoadStateAdapter { dataRecycleViewAdapter.retry() })
         vb.btnGet.setOnClickListener {
             Log.d(TAG, "点击了查询按钮")
             lifecycleScope.launch {
                 try {
-                    vm.getData().collectLatest {
+                    vm.onInvalidate().collectLatest {
                         mPagingData = it
                         dataRecycleViewAdapter.submitData(it)
                     }

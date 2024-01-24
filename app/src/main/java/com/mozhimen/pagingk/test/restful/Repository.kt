@@ -1,6 +1,8 @@
 package com.mozhimen.pagingk.test.restful
 
 import androidx.annotation.WorkerThread
+import com.mozhimen.pagingk.test.restful.mos.BasePageRes
+import com.mozhimen.pagingk.test.restful.mos.BaseRes
 import com.mozhimen.pagingk.test.restful.mos.DataRes
 
 /**
@@ -15,6 +17,6 @@ object Repository {
      * 查询护理数据
      */
     @WorkerThread
-    suspend fun getDataOnBack(pageId: Int): DataRes =
-        ApiFactory.apis.getData(pageId)
+    suspend fun getDatasOnBack(pageId: Int): BaseRes<BasePageRes<DataRes>?>? =
+        ApiFactory.apis.getDatas(pageId)
 }

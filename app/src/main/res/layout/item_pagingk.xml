@@ -6,7 +6,7 @@
 
         <variable
             name="item_data"
-            type="com.mozhimen.pagingk.test.restful.mos.DataRes.DataBean.DatasBean" />
+            type="com.mozhimen.pagingk.test.restful.mos.DataRes" />
     </data>
 
     <LinearLayout

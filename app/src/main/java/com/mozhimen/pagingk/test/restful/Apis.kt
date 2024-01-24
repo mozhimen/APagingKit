@@ -1,5 +1,7 @@
 package com.mozhimen.pagingk.test.restful
 
+import com.mozhimen.pagingk.test.restful.mos.BasePageRes
+import com.mozhimen.pagingk.test.restful.mos.BaseRes
 import com.mozhimen.pagingk.test.restful.mos.DataRes
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,5 +18,5 @@ interface Apis {
      * 获取数据
      */
     @GET("wenda/list/{pageId}/json")
-    suspend fun getData(@Path("pageId") pageId: Int): DataRes
+    suspend fun getDatas(@Path("pageId") pageId: Int): BaseRes<BasePageRes<DataRes>?>?
 }

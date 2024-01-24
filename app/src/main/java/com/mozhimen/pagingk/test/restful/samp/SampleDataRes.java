@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.test.restful.mos;
+package com.mozhimen.pagingk.test.restful.samp;
 
 import androidx.room.Entity;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @desc
  */
 
-public class DataRes {
+public class SampleDataRes {
 
 
     /**
