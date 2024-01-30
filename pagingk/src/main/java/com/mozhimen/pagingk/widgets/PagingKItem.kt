@@ -10,7 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import com.mozhimen.basick.utilk.android.view.findViewByInflate
+import com.mozhimen.basick.utilk.android.view.findViewOfInflate
 import com.mozhimen.basick.utilk.bases.IUtilK
 import com.mozhimen.uicorek.vhk.VHKRecycler
 import java.lang.ref.WeakReference
@@ -84,7 +84,7 @@ abstract class PagingKItem<DATA : Any> : LifecycleOwner, IUtilK {
      * 默认实现返回[BaseViewHolder]，可重写返回自定义 ViewHolder
      */
     open fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler =
-        VHKRecycler(parent.findViewByInflate(layoutId))
+        VHKRecycler(parent.findViewOfInflate(layoutId))
 
     open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
     }
