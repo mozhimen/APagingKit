@@ -1,11 +1,13 @@
 package com.mozhimen.pagingk.bases
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mozhimen.basick.elemk.androidx.lifecycle.bases.BaseViewModel
+import com.mozhimen.basick.utilk.java.util.UtilKDate
 import com.mozhimen.pagingk.commons.IPagingKDataSource
 import com.mozhimen.pagingk.commons.IPagingKDataSourceLoadListener
 import com.mozhimen.pagingk.cons.CPagingKLoadingState
@@ -24,10 +26,12 @@ import kotlinx.coroutines.CoroutineScope
 abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKDataSource<RES, DES> {
     private val _pagingKDataSourceLoadingListener: IPagingKDataSourceLoadListener = object : IPagingKDataSourceLoadListener {
         override fun onFirstLoadStart() {
+            Log.d(TAG, "onFirstLoadStart: ${UtilKDate.getNowStr()}")
             liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_START)
         }
 
         override fun onFirstLoadCompleted(isEmpty: Boolean) {
+            Log.d(TAG, "onFirstLoadCompleted: ${UtilKDate.getNowStr()} isEmpty $isEmpty")
             if (isEmpty)
                 liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_EMPTY)
             else

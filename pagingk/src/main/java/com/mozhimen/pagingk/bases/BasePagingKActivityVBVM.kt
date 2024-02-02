@@ -46,15 +46,10 @@ abstract class BasePagingKActivityVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
                 getPagedListAdapter()
         }
         getViewModel().liveLoadState.observe(this) {
-            if (it == CPagingKLoadingState.STATE_FIRST_LOAD_START) {
-                getSwipeRefreshLayout()?.isRefreshing = true
-                onLoadStart()
-            } else
-                getSwipeRefreshLayout()?.isRefreshing = false
-            if (it == CPagingKLoadingState.STATE_FIRST_LOAD_EMPTY) {
-                onLoadEmpty()
-            } else {
-                onLoadComplete()
+            when (it) {
+                CPagingKLoadingState.STATE_FIRST_LOAD_START -> onLoadStart()
+                CPagingKLoadingState.STATE_FIRST_LOAD_EMPTY -> onLoadEmpty()
+                CPagingKLoadingState.STATE_FIRST_LOAD_COMPLETED -> onLoadComplete()
             }
         }
     }
