@@ -47,9 +47,18 @@ abstract class BasePagingKFragmentVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
         }
         getViewModel().liveLoadState.observe(this) {
             when (it) {
-                CPagingKLoadingState.STATE_FIRST_LOAD_START -> onLoadStart()
-                CPagingKLoadingState.STATE_FIRST_LOAD_EMPTY -> onLoadEmpty()
-                CPagingKLoadingState.STATE_FIRST_LOAD_COMPLETED -> onLoadComplete()
+                CPagingKLoadingState.STATE_FIRST_LOAD_START -> {
+                    getSwipeRefreshLayout()?.isRefreshing = true
+                    onLoadStart()
+                }
+                CPagingKLoadingState.STATE_FIRST_LOAD_COMPLETED -> {
+                    getSwipeRefreshLayout()?.isRefreshing = false
+                    onLoadComplete()
+                }
+                else -> {
+                    getSwipeRefreshLayout()?.isRefreshing = false
+                    onLoadEmpty()
+                }
             }
         }
     }
