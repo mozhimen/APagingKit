@@ -24,6 +24,7 @@ interface IPagingKActivity<DES : Any, VM : BasePagingKViewModel<*, DES>> {
     fun getRecyclerView(): RecyclerView
     fun getRecyclerViewLayoutManager(): LayoutManager
     fun getRecyclerViewItemDecoration(): ItemDecoration? = null
+    fun onRefresh()
     fun onLoadStart()
     fun onLoadEmpty()
     fun onLoadComplete()

@@ -35,7 +35,9 @@ abstract class BasePagingKFragmentVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
         getSwipeRefreshLayout()?.apply {
             if (getSwipeRefreshLayoutColorScheme() != 0)
                 setColorSchemeResources(getSwipeRefreshLayoutColorScheme())
-            setOnRefreshListener { getViewModel().onInvalidate() }
+            setOnRefreshListener {
+                onRefresh()
+            }
         }
         getRecyclerView().apply {
             layoutManager = getRecyclerViewLayoutManager()
@@ -51,16 +53,23 @@ abstract class BasePagingKFragmentVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
                     getSwipeRefreshLayout()?.isRefreshing = true
                     onLoadStart()
                 }
+
                 CPagingKLoadingState.STATE_FIRST_LOAD_COMPLETED -> {
                     getSwipeRefreshLayout()?.isRefreshing = false
                     onLoadComplete()
                 }
+
                 else -> {
                     getSwipeRefreshLayout()?.isRefreshing = false
                     onLoadEmpty()
                 }
             }
         }
+    }
+
+    @CallSuper
+    override fun onRefresh() {
+        getViewModel().onInvalidate()
     }
 
     @CallSuper

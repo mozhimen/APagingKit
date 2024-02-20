@@ -35,7 +35,7 @@ abstract class BasePagingKActivityVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
         getSwipeRefreshLayout()?.apply {
             if (getSwipeRefreshLayoutColorScheme() != 0)
                 setColorSchemeResources(getSwipeRefreshLayoutColorScheme())
-            setOnRefreshListener { getViewModel().onInvalidate() }
+            setOnRefreshListener { onRefresh() }
         }
         getRecyclerView().apply {
             layoutManager = getRecyclerViewLayoutManager()
@@ -61,6 +61,11 @@ abstract class BasePagingKActivityVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
                 }
             }
         }
+    }
+
+    @CallSuper
+    override fun onRefresh() {
+        getViewModel().onInvalidate()
     }
 
     @CallSuper
