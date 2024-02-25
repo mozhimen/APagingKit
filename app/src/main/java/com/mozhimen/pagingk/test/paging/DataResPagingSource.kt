@@ -2,6 +2,7 @@ package com.mozhimen.pagingk.test.paging
 
 import android.util.Log
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.mozhimen.basick.utilk.bases.IUtilK
 import com.mozhimen.pagingk.test.restful.Repository
 import com.mozhimen.pagingk.test.restful.mos.DataRes
@@ -14,28 +15,31 @@ import java.lang.Exception
  * @date 2020/11/7
  * @desc 数据源
  */
-class DataResPagingSource : PagingSource<Int, DataRes>(), IUtilK {
+class DataResPagingSource(private val _repository: Repository) : PagingSource<Int, DataRes>(), IUtilK {
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataRes> {
         return try {
             val currentPage = params.key ?: 1//页码未定义置为1
             Log.d(TAG, "load: 请求第${currentPage}页")//仓库层请求数据
 
-            val res = Repository.getDatasOnBack(currentPage)
-            //当前页码 小于 总页码 页面加1
+            val res = _repository.getDatasOnBack(currentPage)
+
+            // 设置前一页和下一页的信息
+            val prevKey = if (currentPage > 1) currentPage - 1 else null
             val nextPage = if (currentPage < (res?.data?.pageCount ?: 0))
                 currentPage + 1
-            else null//没有更多数据
+            else null//没有更多数据//当前页码 小于 总页码 页面加1
 
             LoadResult.Page(
                 data = res?.data?.datas ?: emptyList(),
-                prevKey = null,
+                prevKey = prevKey,
                 nextKey = nextPage
             )
         } catch (e: Exception) {
             if (e is IOException) {
-                Log.d(TAG, "load: -------连接失败")
+                Log.d(TAG, "load: 连接失败")
             }
-            Log.d(TAG, "load: -------${e.message}")
+            Log.d(TAG, "load: ${e.message}")
 
             LoadResult.Error(throwable = e)
         }

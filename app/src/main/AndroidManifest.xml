@@ -10,10 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.APagingKit">
 
-        <!--///////////////////////////////////////////////////////////////////////////-->
-        <!--pagingk-->
         <activity
-            android:name=".PagingKActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".countdown.CountDownActivity"
+            android:exported="false" />
+        <activity
+            android:name=".crud.CrudActivity"
+            android:exported="false" />
+        <activity
+            android:name=".paging.PagingActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

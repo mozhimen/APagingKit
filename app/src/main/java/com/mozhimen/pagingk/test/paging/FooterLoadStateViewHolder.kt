@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.elemk.commons.I_Listener
 import com.mozhimen.basick.utilk.bases.IUtilK
 import com.mozhimen.pagingk.test.R
-import com.mozhimen.pagingk.test.databinding.ItemPagingkLoadstateBinding
+import com.mozhimen.pagingk.test.databinding.ItemPagingLoadStateBinding
+import com.mozhimen.uicorek.vhk.VHKRecyclerVB
 
 /**
  * @author huanglinqing
@@ -18,9 +18,7 @@ import com.mozhimen.pagingk.test.databinding.ItemPagingkLoadstateBinding
  * @desc 尾部adapter
  */
 class FooterLoadStateViewHolder(parent: ViewGroup, var onRetry: I_Listener) :
-    RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pagingk_loadstate, parent, false)), IUtilK {
-
-    var vb: ItemPagingkLoadstateBinding = ItemPagingkLoadstateBinding.bind(itemView)
+    VHKRecyclerVB<ItemPagingLoadStateBinding>(LayoutInflater.from(parent.context).inflate(R.layout.item_paging_load_state, parent, false)), IUtilK {
 
     fun loadState(loadState: LoadState) {
         when (loadState) {
@@ -31,15 +29,8 @@ class FooterLoadStateViewHolder(parent: ViewGroup, var onRetry: I_Listener) :
                 }
                 Log.d(TAG, "loadState: error了吧")
             }
-
-            is LoadState.Loading -> {
-                vb.llLoading.visibility = View.VISIBLE
-            }
-
-            else -> {
-                Log.d(TAG, "loadState: --其他的错误")
-            }
+            is LoadState.Loading -> vb.llLoading.visibility = View.VISIBLE
+            else -> Log.d(TAG, "loadState: --其他的错误")
         }
-
     }
 }

@@ -1,8 +1,6 @@
 package com.mozhimen.pagingk.test.paging
 
-import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.RecyclerView
-import com.mozhimen.pagingk.test.databinding.ItemPagingkBinding
+import com.mozhimen.pagingk.test.databinding.ItemPagingBinding
 import com.mozhimen.uicorek.vhk.VHKRecyclerVB
 
 /**
@@ -15,4 +13,4 @@ import com.mozhimen.uicorek.vhk.VHKRecyclerVB
 //class DataResViewHolder(private val _vb: ItemPagingkBinding) : VHKRecyclerVB(_vb.root) {
 //    var vb = _vb
 //}
-class DataResViewHolder(viewDataBinding: ItemPagingkBinding) : VHKRecyclerVB<ItemPagingkBinding>(viewDataBinding)
+class DataResViewHolder(viewDataBinding: ItemPagingBinding) : VHKRecyclerVB<ItemPagingBinding>(viewDataBinding)

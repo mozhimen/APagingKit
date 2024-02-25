@@ -17,7 +17,7 @@ import com.mozhimen.basick.utilk.bases.IUtilK
 class FooterLoadStateAdapter(private val _onRetry: I_Listener) : LoadStateAdapter<FooterLoadStateViewHolder>(), IUtilK {
 
     override fun onBindViewHolder(holder: FooterLoadStateViewHolder, loadState: LoadState) {
-        Log.d(TAG, "onBindViewHolder: ---去绑定 onBindViewHolder")
+        Log.d(TAG, "onBindViewHolder:")
         holder.loadState(loadState)
     }
 

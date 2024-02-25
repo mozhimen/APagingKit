@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data />
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/StyleK_Btn"
+            android:text="goCountDown"
+            android:onClick="goCountDown"
+            tools:ignore="HardcodedText,UsingOnClickInXml" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/StyleK_Btn"
+            android:text="goCrud"
+            android:onClick="goCrud"
+            tools:ignore="HardcodedText,UsingOnClickInXml" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/StyleK_Btn"
+            android:text="goPaging"
+            android:onClick="goPaging"
+            tools:ignore="HardcodedText,UsingOnClickInXml" />
+    </LinearLayout>
+</layout>
