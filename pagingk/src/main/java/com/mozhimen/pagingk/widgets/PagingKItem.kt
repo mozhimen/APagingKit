@@ -103,7 +103,7 @@ abstract class PagingKItem<DATA : Any> : LifecycleOwner, IUtilK {
 
     @CallSuper
     open fun onDetachedFromRecyclerView() {
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         Log.d(TAG, "onDetachedFromRecyclerView: ")
     }
 
