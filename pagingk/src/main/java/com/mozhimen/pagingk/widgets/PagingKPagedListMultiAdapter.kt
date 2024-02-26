@@ -54,6 +54,14 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
         }
     }
 
+    override fun onViewAttachedToWindow(holder: VHKRecycler) {
+        super.onViewAttachedToWindow(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: VHKRecycler) {
+        super.onViewDetachedFromWindow(holder)
+    }
+
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         _pagingKItems.forEach { _, value ->
             value.onDetachedFromRecyclerView()

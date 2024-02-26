@@ -31,7 +31,9 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
     private var _onPageItemClickListener: IOnPageItemClickListener<DATA>? = null
     private var _onPageItemLongClickListener: IOnPageItemLongClickListener<DATA>? = null
     private var _onPageItemChildClickListener: IOnPageItemChildClickListener<DATA>? = null
+
     private val _childClickViewIds = LinkedHashSet<Int>()//用于保存需要设置点击事件的 item
+
     private var _lifecycleRegistry: LifecycleRegistry? = null
     protected val lifecycleRegistry: LifecycleRegistry
         get() = _lifecycleRegistry ?: LifecycleRegistry(this).also {
@@ -139,8 +141,10 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
      * 设置需要点击事件的子view
      */
     fun addChildClickViewIds(@IdRes vararg viewIds: Int) {
-        for (viewId in viewIds)
-            _childClickViewIds.add(viewId)
+        for (viewId in viewIds) {
+            if (!viewIds.contains(viewId))
+                _childClickViewIds.add(viewId)
+        }
     }
 
     fun setOnItemClickListener(listener: IOnPageItemClickListener<DATA>) {
