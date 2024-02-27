@@ -1,7 +1,6 @@
 package com.mozhimen.pagingk.widgets
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
@@ -11,6 +10,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import com.mozhimen.basick.utilk.android.view.findViewOfInflate
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnCreate
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnPause
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnResume
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStop
 import com.mozhimen.basick.utilk.bases.IUtilK
 import com.mozhimen.uicorek.vhk.VHKRecycler
 import java.lang.ref.WeakReference
@@ -28,6 +32,9 @@ abstract class PagingKItem<DATA : Any> : LifecycleOwner, IUtilK {
     private var _adapterKPageRecyclerMultiRef: WeakReference<PagingKPagedListMultiAdapter<DATA>>? = null
     private val _childClickViewIds by lazy(LazyThreadSafetyMode.NONE) { ArrayList<Int>() }
     private val _childLongClickViewIds by lazy(LazyThreadSafetyMode.NONE) { ArrayList<Int>() }
+
+    ///////////////////////////////////////////////////////////////////////
+
     private var _lifecycleRegistry: LifecycleRegistry? = null
     private val lifecycleRegistry: LifecycleRegistry
         get() = _lifecycleRegistry ?: LifecycleRegistry(this).also {
@@ -96,16 +103,34 @@ abstract class PagingKItem<DATA : Any> : LifecycleOwner, IUtilK {
      */
     open fun onViewHolderCreated(holder: VHKRecycler, viewType: Int) {}
 
+    ///////////////////////////////////////////////////////////////////////
+
     @CallSuper
     open fun onAttachedToRecyclerView() {
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
+        lifecycleRegistry.handleLifecycleEventOnCreate()
+    }
+
+    @CallSuper
+    open fun onViewAttachedToWindow(holder: VHKRecycler) {
+        lifecycleRegistry.handleLifecycleEventOnResume()
+    }
+
+    @CallSuper
+    open fun onViewDetachedFromWindow(holder: VHKRecycler) {
+        lifecycleRegistry.handleLifecycleEventOnPause()
+    }
+
+    @CallSuper
+    open fun onViewRecycled(holder: VHKRecycler) {
+        lifecycleRegistry.handleLifecycleEventOnStop()
     }
 
     @CallSuper
     open fun onDetachedFromRecyclerView() {
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
-        Log.d(TAG, "onDetachedFromRecyclerView: ")
+        lifecycleRegistry.handleLifecycleEventOnDestroy()
     }
+
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * item 若想实现条目点击事件则重写该方法

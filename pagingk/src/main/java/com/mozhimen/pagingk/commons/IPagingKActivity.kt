@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.mozhimen.pagingk.bases.BasePagedListAdapter
 import com.mozhimen.pagingk.bases.BasePagingKViewModel
 
 /**
@@ -17,7 +18,7 @@ import com.mozhimen.pagingk.bases.BasePagingKViewModel
  */
 interface IPagingKActivity<DES : Any, VM : BasePagingKViewModel<*, DES>> {
     fun getViewModel(): VM
-    fun getPagedListAdapter(): PagedListAdapter<DES, *>
+    fun getPagedListAdapter(): BasePagedListAdapter<DES, *>
     fun getLoadStateAdapter(): LoadStateAdapter<*>? = null
     fun getSwipeRefreshLayout(): SwipeRefreshLayout?
     fun getSwipeRefreshLayoutColorScheme(): Int = 0

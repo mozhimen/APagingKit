@@ -1,5 +1,6 @@
 package com.mozhimen.pagingk.widgets
 
+import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
+import com.mozhimen.basick.utilk.bases.IUtilK
 import com.mozhimen.uicorek.vhk.VHKRecycler
 
 /**
@@ -17,7 +19,7 @@ import com.mozhimen.uicorek.vhk.VHKRecycler
  * @Date 2023/10/11 11:44
  * @Version 1.0
  */
-open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<DATA>) : PagingKPagedListAdapter<DATA>(0, itemCallback) {
+open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<DATA>) : PagingKPagedListAdapter<DATA>(0, itemCallback), IUtilK {
     private val _pagingKItems by lazy(LazyThreadSafetyMode.NONE) { SparseArray<PagingKItem<DATA>>() }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler {
@@ -36,7 +38,9 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
 
     override fun onBindViewHolder(holder: VHKRecycler, position: Int, payloads: MutableList<Any>) {
         super.onBindViewHolder(holder, position, payloads)
-        bindPagingKItem(holder, getItem(position), position, payloads)
+        if (payloads.isNotEmpty()) {
+            bindPagingKItem(holder, getItem(position), position, payloads)
+        }
     }
 
 //    override fun bindViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
@@ -56,17 +60,25 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
 
     override fun onViewAttachedToWindow(holder: VHKRecycler) {
         super.onViewAttachedToWindow(holder)
+        getPagingKItem(holder.itemViewType)?.onViewAttachedToWindow(holder)
     }
 
     override fun onViewDetachedFromWindow(holder: VHKRecycler) {
         super.onViewDetachedFromWindow(holder)
+        getPagingKItem(holder.itemViewType)?.onViewDetachedFromWindow(holder)
+    }
+
+    override fun onViewRecycled(holder: VHKRecycler) {
+        super.onViewRecycled(holder)
+        Log.d(TAG, "onViewRecycled: ")
+        getPagingKItem(holder.itemViewType)?.onViewRecycled(holder)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
         _pagingKItems.forEach { _, value ->
             value.onDetachedFromRecyclerView()
         }
-        super.onDetachedFromRecyclerView(recyclerView)
     }
 
     /////////////////////////////////////////////////////////////////////////////////

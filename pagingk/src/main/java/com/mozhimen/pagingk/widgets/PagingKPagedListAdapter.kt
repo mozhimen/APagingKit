@@ -10,11 +10,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventDestroyed
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnCreate
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnPause
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnResume
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStop
+import com.mozhimen.pagingk.bases.BasePagedListAdapter
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemChildClickListener
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemClickListener
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemLongClickListener
@@ -28,7 +32,7 @@ import java.util.LinkedHashSet
  * @Date 2023/10/11 10:28
  * @Version 1.0
  */
-open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : PagedListAdapter<DATA, VHKRecycler>(itemCallback), LifecycleOwner {
+open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : BasePagedListAdapter<DATA, VHKRecycler>(itemCallback), LifecycleOwner {
     private var _onPageItemClickListener: IOnPageItemClickListener<DATA>? = null
     private var _onPageItemLongClickListener: IOnPageItemLongClickListener<DATA>? = null
     private var _onPageItemChildClickListener: IOnPageItemChildClickListener<DATA>? = null
@@ -55,28 +59,30 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
 
     //    @CallSuper
     override fun onBindViewHolder(holder: VHKRecycler, position: Int, payloads: MutableList<Any>) {
-        onBindViewHolder(holder, position)
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+        }
 //        bindViewClickListener(holder, holder.itemViewType, position)
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        lifecycleRegistry.handleLifecycleEventOnCreate()
     }
 
     override fun onViewAttachedToWindow(holder: VHKRecycler) {
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
+        lifecycleRegistry.handleLifecycleEventOnResume()
     }
 
     override fun onViewDetachedFromWindow(holder: VHKRecycler) {
-//        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+        lifecycleRegistry.handleLifecycleEventOnPause()
+    }
+
+    override fun onViewRecycled(holder: VHKRecycler) {
+        lifecycleRegistry.handleLifecycleEventOnStop()
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        lifecycleRegistry.handleLifecycleEventDestroyed()
-    }
-
-    public override fun getItem(position: Int): DATA? {
-        return super.getItem(position)
+        lifecycleRegistry.handleLifecycleEventOnDestroy()
     }
 
     override val lifecycle: Lifecycle
