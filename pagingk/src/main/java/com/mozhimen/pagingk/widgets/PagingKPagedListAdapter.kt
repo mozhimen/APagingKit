@@ -14,6 +14,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventDestroyed
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemChildClickListener
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemClickListener
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemLongClickListener
@@ -71,7 +72,7 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        lifecycleRegistry.handleLifecycleEventDestroyed()
     }
 
     public override fun getItem(position: Int): DATA? {
