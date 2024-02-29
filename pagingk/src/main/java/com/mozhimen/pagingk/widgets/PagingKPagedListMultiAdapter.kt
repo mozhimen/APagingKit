@@ -1,5 +1,7 @@
 package com.mozhimen.pagingk.widgets
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
@@ -50,16 +52,15 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
         }
     }
 
-    override fun onBindViewHolder(holder: VHKRecycler, position: Int) {
-        super.onBindViewHolder(holder, position)
-        onProviderBindViewHolder(holder, getItem(position), position)
+    @SuppressLint("MissingSuperCall")
+    override fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int) {
+        Log.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder")
+        getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position)
     }
 
-    override fun onBindViewHolder(holder: VHKRecycler, position: Int, payloads: MutableList<Any>) {
-        super.onBindViewHolder(holder, position, payloads)
-        if (payloads.isNotEmpty()) {
-            onProviderBindViewHolder(holder, getItem(position), position, payloads)
-        }
+    override fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
+        Log.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder payloads $payloads")
+        getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position, payloads)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -74,16 +75,6 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
 
     override fun onViewRecycled(holder: VHKRecycler) {
         getPagingKVHKProvider(holder.itemViewType)?.onViewRecycled(holder)
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////
-
-    fun onProviderBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int) {
-        getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position)
-    }
-
-    fun onProviderBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
-        getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position, payloads)
     }
 
     /////////////////////////////////////////////////////////////////////////////////

@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference
  * @Date 2023/10/11 11:52
  * @Version 1.0
  */
-abstract class BasePagingKVHKProvider<DATA : Any> : LifecycleOwner, IUtilK {
+abstract class BasePagingKVHKProvider<DATA : Any> : IUtilK {
 
     lateinit var context: Context
     private var _adapterKPageRecyclerMultiRef: WeakReference<PagingKPagedListMultiAdapter<DATA>>? = null
@@ -75,7 +75,7 @@ abstract class BasePagingKVHKProvider<DATA : Any> : LifecycleOwner, IUtilK {
         VHKRecycler(parent.getViewOfInflate(layoutId))
 
     @CallSuper
-    open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int){
+    open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int) {
         holder.onBind()
     }
 
