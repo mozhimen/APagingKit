@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.widgets
+package com.mozhimen.pagingk.bases
 
 import android.content.Context
 import android.view.View
@@ -6,16 +6,10 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
-import com.mozhimen.basick.utilk.android.view.findViewOfInflate
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnCreate
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnPause
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnResume
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStop
+import com.mozhimen.basick.utilk.android.view.getViewOfInflate
 import com.mozhimen.basick.utilk.bases.IUtilK
+import com.mozhimen.pagingk.widgets.PagingKPagedListMultiAdapter
 import com.mozhimen.uicorek.vhk.VHKRecycler
 import java.lang.ref.WeakReference
 
@@ -26,25 +20,12 @@ import java.lang.ref.WeakReference
  * @Date 2023/10/11 11:52
  * @Version 1.0
  */
-abstract class PagingKItem<DATA : Any> : LifecycleOwner, IUtilK {
+abstract class BasePagingKVHKProvider<DATA : Any> : LifecycleOwner, IUtilK {
 
     lateinit var context: Context
     private var _adapterKPageRecyclerMultiRef: WeakReference<PagingKPagedListMultiAdapter<DATA>>? = null
     private val _childClickViewIds by lazy(LazyThreadSafetyMode.NONE) { ArrayList<Int>() }
     private val _childLongClickViewIds by lazy(LazyThreadSafetyMode.NONE) { ArrayList<Int>() }
-
-    ///////////////////////////////////////////////////////////////////////
-
-    private var _lifecycleRegistry: LifecycleRegistry? = null
-    private val lifecycleRegistry: LifecycleRegistry
-        get() = _lifecycleRegistry ?: LifecycleRegistry(this).also {
-            _lifecycleRegistry = it
-        }
-
-    ///////////////////////////////////////////////////////////////////////
-
-    override val lifecycle: Lifecycle
-        get() = lifecycleRegistry
 
     ///////////////////////////////////////////////////////////////////////
 
@@ -91,12 +72,14 @@ abstract class PagingKItem<DATA : Any> : LifecycleOwner, IUtilK {
      * 默认实现返回[BaseViewHolder]，可重写返回自定义 ViewHolder
      */
     open fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler =
-        VHKRecycler(parent.findViewOfInflate(layoutId))
+        VHKRecycler(parent.getViewOfInflate(layoutId))
 
-    open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
+    @CallSuper
+    open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int){
+        holder.onBind()
     }
 
-    abstract fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int)
+    open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {}
 
     /**
      * （可选重写）ViewHolder创建完毕以后的回掉方法。
@@ -106,28 +89,18 @@ abstract class PagingKItem<DATA : Any> : LifecycleOwner, IUtilK {
     ///////////////////////////////////////////////////////////////////////
 
     @CallSuper
-    open fun onAttachedToRecyclerView() {
-        lifecycleRegistry.handleLifecycleEventOnCreate()
-    }
-
-    @CallSuper
     open fun onViewAttachedToWindow(holder: VHKRecycler) {
-        lifecycleRegistry.handleLifecycleEventOnResume()
+        holder.onViewAttachedToWindow()
     }
 
     @CallSuper
     open fun onViewDetachedFromWindow(holder: VHKRecycler) {
-        lifecycleRegistry.handleLifecycleEventOnPause()
+        holder.onViewDetachedFromWindow()
     }
 
     @CallSuper
     open fun onViewRecycled(holder: VHKRecycler) {
-        lifecycleRegistry.handleLifecycleEventOnStop()
-    }
-
-    @CallSuper
-    open fun onDetachedFromRecyclerView() {
-        lifecycleRegistry.handleLifecycleEventOnDestroy()
+        holder.onViewRecycled()
     }
 
     ///////////////////////////////////////////////////////////////////////

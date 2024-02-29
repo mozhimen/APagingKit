@@ -1,15 +1,14 @@
 package com.mozhimen.pagingk.widgets
 
-import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.util.forEach
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
 import com.mozhimen.basick.utilk.bases.IUtilK
+import com.mozhimen.pagingk.bases.BasePagingKVHKProvider
 import com.mozhimen.uicorek.vhk.VHKRecycler
 
 /**
@@ -20,10 +19,30 @@ import com.mozhimen.uicorek.vhk.VHKRecycler
  * @Version 1.0
  */
 open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<DATA>) : PagingKPagedListAdapter<DATA>(0, itemCallback), IUtilK {
-    private val _pagingKItems by lazy(LazyThreadSafetyMode.NONE) { SparseArray<PagingKItem<DATA>>() }
+    private val _pagingKItems by lazy(LazyThreadSafetyMode.NONE) { SparseArray<BasePagingKVHKProvider<DATA>>() }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    /**Fe
+     * 通过 ViewType 获取 BaseItemProvider
+     * 例如：如果ViewType经过特殊处理，可以重写此方法，获取正确的Provider
+     * （比如 ViewType 通过位运算进行的组合的）
+     */
+    fun getPagingKVHKProvider(viewType: Int): BasePagingKVHKProvider<DATA>? =
+        _pagingKItems.get(viewType)
+
+    /**
+     * 必须通过此方法，添加 provider
+     */
+    fun addPagingKVHKProvider(item: BasePagingKVHKProvider<DATA>) {
+        item.setAdapter(this)
+        _pagingKItems.put(item.itemViewType, item)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler {
-        val recyclerKPageItem = getPagingKItem(viewType)
+        val recyclerKPageItem = getPagingKVHKProvider(viewType)
         checkNotNull(recyclerKPageItem) { "ViewType: $viewType no such provider found，please use addItemProvider() first!" }
         recyclerKPageItem.context = parent.context
         return recyclerKPageItem.onCreateViewHolder(parent, viewType).apply {
@@ -33,81 +52,47 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
 
     override fun onBindViewHolder(holder: VHKRecycler, position: Int) {
         super.onBindViewHolder(holder, position)
-        bindPagingKItem(holder, getItem(position), position)
+        onProviderBindViewHolder(holder, getItem(position), position)
     }
 
     override fun onBindViewHolder(holder: VHKRecycler, position: Int, payloads: MutableList<Any>) {
         super.onBindViewHolder(holder, position, payloads)
         if (payloads.isNotEmpty()) {
-            bindPagingKItem(holder, getItem(position), position, payloads)
+            onProviderBindViewHolder(holder, getItem(position), position, payloads)
         }
     }
 
-//    override fun bindViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
+    /////////////////////////////////////////////////////////////////////////////////
+
+    override fun onViewAttachedToWindow(holder: VHKRecycler) {
+        getPagingKVHKProvider(holder.itemViewType)?.onViewAttachedToWindow(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: VHKRecycler) {
+        getPagingKVHKProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder)
+    }
+
+    override fun onViewRecycled(holder: VHKRecycler) {
+        getPagingKVHKProvider(holder.itemViewType)?.onViewRecycled(holder)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    fun onProviderBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int) {
+        getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position)
+    }
+
+    fun onProviderBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
+        getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position, payloads)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    //    override fun bindViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
 //        super.bindViewClickListener(holder, viewType, position)
 //        bindItemViewClickListener(holder, viewType, position)
 //        bindItemChildViewClickListener(holder, viewType, position)
 //    }
-
-    /////////////////////////////////////////////////////////////////////////////////
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        _pagingKItems.forEach { _, value ->
-            value.onAttachedToRecyclerView()
-        }
-    }
-
-    override fun onViewAttachedToWindow(holder: VHKRecycler) {
-        super.onViewAttachedToWindow(holder)
-        getPagingKItem(holder.itemViewType)?.onViewAttachedToWindow(holder)
-    }
-
-    override fun onViewDetachedFromWindow(holder: VHKRecycler) {
-        super.onViewDetachedFromWindow(holder)
-        getPagingKItem(holder.itemViewType)?.onViewDetachedFromWindow(holder)
-    }
-
-    override fun onViewRecycled(holder: VHKRecycler) {
-        super.onViewRecycled(holder)
-        Log.d(TAG, "onViewRecycled: ")
-        getPagingKItem(holder.itemViewType)?.onViewRecycled(holder)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        _pagingKItems.forEach { _, value ->
-            value.onDetachedFromRecyclerView()
-        }
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////
-
-    /**Fe
-     * 通过 ViewType 获取 BaseItemProvider
-     * 例如：如果ViewType经过特殊处理，可以重写此方法，获取正确的Provider
-     * （比如 ViewType 通过位运算进行的组合的）
-     */
-    fun getPagingKItem(viewType: Int): PagingKItem<DATA>? =
-        _pagingKItems.get(viewType)
-
-    /**
-     * 必须通过此方法，添加 provider
-     */
-    fun addPagingKItem(item: PagingKItem<DATA>) {
-        item.setAdapter(this)
-        _pagingKItems.put(item.itemViewType, item)
-    }
-
-    fun bindPagingKItem(holder: VHKRecycler, item: DATA?, position: Int) {
-        getPagingKItem(holder.itemViewType)?.onBindViewHolder(holder, item, position)
-    }
-
-    fun bindPagingKItem(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
-        getPagingKItem(holder.itemViewType)?.onBindViewHolder(holder, item, position, payloads)
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////
 
     protected open fun bindItemViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
         if (getOnItemClickListener() == null) {
@@ -128,7 +113,7 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
 
     protected open fun bindItemChildViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
         if (getOnItemChildClickListener() == null) {
-            val recyclerKPageItem = getPagingKItem(viewType) ?: return
+            val recyclerKPageItem = getPagingKVHKProvider(viewType) ?: return
             val childClickViewIds = recyclerKPageItem.getChildClickViewIds()
             childClickViewIds.forEach { id ->
                 holder.itemView.findViewById<View>(id)?.let { childView ->

@@ -13,11 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnCreate
 import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnPause
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnResume
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStop
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStart
 import com.mozhimen.pagingk.bases.BasePagedListAdapter
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemChildClickListener
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemClickListener
@@ -32,7 +29,8 @@ import java.util.LinkedHashSet
  * @Date 2023/10/11 10:28
  * @Version 1.0
  */
-open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : BasePagedListAdapter<DATA, VHKRecycler>(itemCallback), LifecycleOwner {
+open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : BasePagedListAdapter<DATA, VHKRecycler>(itemCallback),
+    LifecycleOwner {
     private var _onPageItemClickListener: IOnPageItemClickListener<DATA>? = null
     private var _onPageItemLongClickListener: IOnPageItemLongClickListener<DATA>? = null
     private var _onPageItemChildClickListener: IOnPageItemChildClickListener<DATA>? = null
@@ -40,20 +38,23 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
     private val _childClickViewIds = LinkedHashSet<Int>()//用于保存需要设置点击事件的 item
 
     private var _lifecycleRegistry: LifecycleRegistry? = null
-    protected val lifecycleRegistry: LifecycleRegistry
+    val lifecycleRegistry: LifecycleRegistry
         get() = _lifecycleRegistry ?: LifecycleRegistry(this).also {
             _lifecycleRegistry = it
         }
 
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
+
     //////////////////////////////////////////////////////////////////////////////
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler {
-        val inflate = LayoutInflater.from(parent.context).inflate(_layoutId, parent, false)
-        return VHKRecycler(inflate)
+        return VHKRecycler(LayoutInflater.from(parent.context).inflate(_layoutId, parent, false))
     }
 
-    //    @CallSuper
+    @CallSuper
     override fun onBindViewHolder(holder: VHKRecycler, position: Int) {
+        holder.onBind()
 //        bindViewClickListener(holder, holder.itemViewType, position)
     }
 
@@ -66,27 +67,24 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        lifecycleRegistry.handleLifecycleEventOnCreate()
+        lifecycleRegistry.handleLifecycleEventOnStart()
     }
 
     override fun onViewAttachedToWindow(holder: VHKRecycler) {
-        lifecycleRegistry.handleLifecycleEventOnResume()
+        holder.onViewAttachedToWindow()
     }
 
     override fun onViewDetachedFromWindow(holder: VHKRecycler) {
-        lifecycleRegistry.handleLifecycleEventOnPause()
+        holder.onViewDetachedFromWindow()
     }
 
     override fun onViewRecycled(holder: VHKRecycler) {
-        lifecycleRegistry.handleLifecycleEventOnStop()
+        holder.onViewRecycled()
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         lifecycleRegistry.handleLifecycleEventOnDestroy()
     }
-
-    override val lifecycle: Lifecycle
-        get() = lifecycleRegistry
 
     //////////////////////////////////////////////////////////////////////////////
 
