@@ -21,8 +21,8 @@ class DataResPagingDataAdapter(private val _onItemUpdate: IOnItemUpdateListener)
     override fun onBindViewHolder(holder: DataResViewHolder, position: Int) {
         val dataRes = getItem(position)
 
-        holder.vb.itemData = dataRes
-        holder.vb.btnUpdate.setOnClickListener {
+        holder.vdb.itemData = dataRes
+        holder.vdb.btnUpdate.setOnClickListener {
             _onItemUpdate(position, dataRes, this)
         }
     }

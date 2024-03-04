@@ -5,7 +5,7 @@ import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.mozhimen.basick.elemk.androidx.fragment.bases.BaseFragmentVB
+import com.mozhimen.basick.elemk.androidx.fragment.bases.databinding.BaseFragmentVDB
 import com.mozhimen.basick.utilk.android.view.applyGone
 import com.mozhimen.basick.utilk.android.view.applyVisible
 import com.mozhimen.pagingk.commons.IPagingKActivity
@@ -18,7 +18,7 @@ import com.mozhimen.pagingk.cons.CPagingKLoadingState
  * @Date 2023/10/16 15:05
  * @Version 1.0
  */
-abstract class BasePagingKFragmentVBVM<DES : Any, VB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BaseFragmentVB<VB>(), IPagingKActivity<DES, VM> {
+abstract class BasePagingKFragmentVBVM<DES : Any, VB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BaseFragmentVDB<VB>(), IPagingKActivity<DES, VM> {
 
     private val _pagedListObserver: Observer<PagedList<DES>> by lazy {
         Observer<PagedList<DES>> { pagedList ->

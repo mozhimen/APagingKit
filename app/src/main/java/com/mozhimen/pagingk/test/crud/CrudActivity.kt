@@ -10,22 +10,22 @@ class CrudActivity : BaseActivityVBVM<ActivityCrudBinding, SampleViewModel>() {
     private val sampleAdapter by lazy { SampleAdapter(vm) }
 
     override fun initView(savedInstanceState: Bundle?) {
-        vb.rvItems.apply {
+        vdb.rvItems.apply {
             layoutManager = LinearLayoutManager(this@CrudActivity)
             adapter = sampleAdapter.withLoadStateFooter(DefaultLoadStateAdapter())
         }
 
-        vb.swipeRefreshLayout.apply {
+        vdb.swipeRefreshLayout.apply {
             setOnRefreshListener {
                 sampleAdapter.refresh()
                 isRefreshing = false
             }
         }
-        vb.btInsertHeaderItem.setOnClickListener {
+        vdb.btInsertHeaderItem.setOnClickListener {
             vm.onViewEvent(SampleViewEvents.InsertItemHeader)
         }
 
-        vb.btInsertFooterItem.setOnClickListener {
+        vdb.btInsertFooterItem.setOnClickListener {
             vm.onViewEvent(SampleViewEvents.InsertItemFooter)
         }
     }

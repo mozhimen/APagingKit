@@ -40,8 +40,8 @@ class PagingActivity : BaseActivityVBVM<ActivityPagingBinding, PagingViewModel>(
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        vb.rvData.layoutManager = LinearLayoutManager(this)
-        vb.rvData.adapter = _dataResPagingDataAdapter.withLoadStateFooter(FooterLoadStateAdapter {
+        vdb.rvData.layoutManager = LinearLayoutManager(this)
+        vdb.rvData.adapter = _dataResPagingDataAdapter.withLoadStateFooter(FooterLoadStateAdapter {
             _dataResPagingDataAdapter.retry()
         })
         loadDataRes()

@@ -23,13 +23,13 @@ class FooterLoadStateViewHolder(parent: ViewGroup, var onRetry: I_Listener) :
     fun loadState(loadState: LoadState) {
         when (loadState) {
             is LoadState.Error -> {
-                vb.btnRetry.visibility = View.VISIBLE
-                vb.btnRetry.setOnClickListener {
+                vdb.btnRetry.visibility = View.VISIBLE
+                vdb.btnRetry.setOnClickListener {
                     onRetry()
                 }
                 Log.d(TAG, "loadState: error了吧")
             }
-            is LoadState.Loading -> vb.llLoading.visibility = View.VISIBLE
+            is LoadState.Loading -> vdb.llLoading.visibility = View.VISIBLE
             else -> Log.d(TAG, "loadState: --其他的错误")
         }
     }

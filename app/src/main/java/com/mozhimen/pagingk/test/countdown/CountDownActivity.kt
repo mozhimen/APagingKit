@@ -2,10 +2,10 @@ package com.mozhimen.pagingk.test.countdown
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVB
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
 import com.mozhimen.pagingk.test.databinding.ActivityCountDownBinding
 
-class CountDownActivity : BaseActivityVB<ActivityCountDownBinding>() {
+class CountDownActivity : BaseActivityVDB<ActivityCountDownBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         // 添加测试数据
         val beans = ArrayList<CountDownBean>()
@@ -23,7 +23,7 @@ class CountDownActivity : BaseActivityVB<ActivityCountDownBinding>() {
             countDownAdapter.notifyItemRemoved(position)
         }
 
-        vb.countRecycler.layoutManager = LinearLayoutManager(this)
-        vb.countRecycler.adapter = countDownAdapter
+        vdb.countRecycler.layoutManager = LinearLayoutManager(this)
+        vdb.countRecycler.adapter = countDownAdapter
     }
 }
