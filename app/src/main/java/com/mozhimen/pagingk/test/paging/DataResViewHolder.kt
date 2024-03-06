@@ -1,7 +1,7 @@
 package com.mozhimen.pagingk.test.paging
 
 import com.mozhimen.pagingk.test.databinding.ItemPagingBinding
-import com.mozhimen.uicorek.vhk.VHKRecyclerVB
+import com.mozhimen.xmlk.vhk.VHKRecyclerVB
 
 /**
  * @ClassName DataViewHolder

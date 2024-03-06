@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.mozhimen.pagingk'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 19
@@ -38,8 +38,8 @@ dependencies {
     api "androidx.paging:paging-common:3.0.0-alpha03"
 
     implementation project(':SwiftKit:basick')
-    implementation project(':SwiftKit:uicorek')
-    implementation project(':AUICoreKit:vhk')
+    implementation project(':SwiftKit:xmlk')
+    implementation project(':AXmlKit:vhk')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -9,7 +9,7 @@ import com.mozhimen.basick.elemk.commons.I_Listener
 import com.mozhimen.basick.utilk.bases.IUtilK
 import com.mozhimen.pagingk.test.R
 import com.mozhimen.pagingk.test.databinding.ItemPagingLoadStateBinding
-import com.mozhimen.uicorek.vhk.VHKRecyclerVB
+import com.mozhimen.xmlk.vhk.VHKRecyclerVB
 
 /**
  * @author huanglinqing

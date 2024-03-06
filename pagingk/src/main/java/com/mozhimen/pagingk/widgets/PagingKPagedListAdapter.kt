@@ -21,7 +21,7 @@ import com.mozhimen.pagingk.bases.BasePagedListAdapter
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemChildClickListener
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemClickListener
 import com.mozhimen.pagingk.widgets.commons.IOnPageItemLongClickListener
-import com.mozhimen.uicorek.vhk.VHKRecycler
+import com.mozhimen.xmlk.vhk.VHKRecycler
 import java.util.LinkedHashSet
 
 /**

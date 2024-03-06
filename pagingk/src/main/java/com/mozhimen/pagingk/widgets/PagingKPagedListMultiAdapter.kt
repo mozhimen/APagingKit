@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
 import com.mozhimen.basick.utilk.bases.IUtilK
 import com.mozhimen.pagingk.bases.BasePagingKVHKProvider
-import com.mozhimen.uicorek.vhk.VHKRecycler
+import com.mozhimen.xmlk.vhk.VHKRecycler
 
 /**
  * @ClassName PagingKPagedListMultiAdapter

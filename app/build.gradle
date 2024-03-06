@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.mozhimen.pagingk.test'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.mozhimen.pagingk.test"
@@ -39,10 +39,10 @@ android {
 dependencies {
 
     implementation project(':SwiftKit:basick')
-    implementation project(':SwiftKit:uicorek')
+    implementation project(':SwiftKit:xmlk')
     implementation project(':ANetKit:netk_retrofit')
     implementation project(':pagingk')
-    implementation project(':AUICoreKit:vhk')
+    implementation project(':AXmlKit:vhk')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
