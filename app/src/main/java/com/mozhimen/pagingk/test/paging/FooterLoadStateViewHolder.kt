@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import com.mozhimen.basick.elemk.commons.I_Listener
-import com.mozhimen.basick.utilk.bases.IUtilK
+import com.mozhimen.basick.utilk.commons.IUtilK
 import com.mozhimen.pagingk.test.R
 import com.mozhimen.pagingk.test.databinding.ItemPagingLoadStateBinding
 import com.mozhimen.xmlk.vhk.VHKRecyclerVB

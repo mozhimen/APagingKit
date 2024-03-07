@@ -3,7 +3,7 @@ package com.mozhimen.pagingk.test.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.mozhimen.basick.utilk.bases.IUtilK
+import com.mozhimen.basick.utilk.commons.IUtilK
 import com.mozhimen.pagingk.test.restful.Repository
 import com.mozhimen.pagingk.test.restful.mos.DataRes
 import java.io.IOException

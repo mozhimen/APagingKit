@@ -8,7 +8,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.LifecycleOwner
 import com.mozhimen.basick.utilk.android.view.getViewOfInflate
-import com.mozhimen.basick.utilk.bases.IUtilK
+import com.mozhimen.basick.utilk.commons.IUtilK
 import com.mozhimen.pagingk.widgets.PagingKPagedListMultiAdapter
 import com.mozhimen.xmlk.vhk.VHKRecycler
 import java.lang.ref.WeakReference
