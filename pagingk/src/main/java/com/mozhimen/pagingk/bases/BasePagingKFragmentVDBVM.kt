@@ -5,24 +5,24 @@ import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
+import com.mozhimen.basick.elemk.androidx.fragment.bases.databinding.BaseFragmentVDB
 import com.mozhimen.basick.utilk.android.view.applyGone
 import com.mozhimen.basick.utilk.android.view.applyVisible
 import com.mozhimen.pagingk.commons.IPagingKActivity
 import com.mozhimen.pagingk.cons.CPagingKLoadingState
 
 /**
- * @ClassName BasePagingKActivityVBVM
+ * @ClassName BasePagingKFragmentVBVM
  * @Description TODO
- * @Author Mozhimen / Kolin Zhao
- * @Date 2023/10/26 22:51
+ * @Author Mozhimen & Kolin Zhao
+ * @Date 2023/10/16 15:05
  * @Version 1.0
  */
-abstract class BasePagingKActivityVBVM<DES : Any, VB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BaseActivityVDB<VB>(), IPagingKActivity<DES, VM> {
+abstract class BasePagingKFragmentVDBVM<DES : Any, VB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BaseFragmentVDB<VB>(), IPagingKActivity<DES, VM> {
 
     private val _pagedListObserver: Observer<PagedList<DES>> by lazy {
         Observer<PagedList<DES>> { pagedList ->
-            Log.d(TAG, "_pagedListObserver_: pagedList $pagedList")
+            Log.d(TAG, "_pagedListObserver: $pagedList")
             getPagedListAdapter().submitList(pagedList)
         }
     }
@@ -35,7 +35,9 @@ abstract class BasePagingKActivityVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
         getSwipeRefreshLayout()?.apply {
             if (getSwipeRefreshLayoutColorScheme() != 0)
                 setColorSchemeResources(getSwipeRefreshLayoutColorScheme())
-            setOnRefreshListener { onRefresh() }
+            setOnRefreshListener {
+                onRefresh()
+            }
         }
         getRecyclerView().apply {
             layoutManager = getRecyclerViewLayoutManager()
@@ -51,10 +53,12 @@ abstract class BasePagingKActivityVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
                     getSwipeRefreshLayout()?.isRefreshing = true
                     onLoadStart()
                 }
+
                 CPagingKLoadingState.STATE_FIRST_LOAD_COMPLETED -> {
                     getSwipeRefreshLayout()?.isRefreshing = false
                     onLoadComplete()
                 }
+
                 else -> {
                     getSwipeRefreshLayout()?.isRefreshing = false
                     onLoadEmpty()
@@ -80,6 +84,7 @@ abstract class BasePagingKActivityVBVM<DES : Any, VB : ViewDataBinding, VM : Bas
 
     override fun onResume() {
         super.onResume()
-        getViewModel().livePagedList.observe(this, _pagedListObserver)
+        //由于注册观察者时会立即触发，所以在onResume中,防止在ViewPager2中切换时立刻触发
+        getViewModel().livePagedList.observe(this, _pagedListObserver) /*{ pagedList -> getPagedListAdapter().submitList(pagedList) }*/
     }
 }
