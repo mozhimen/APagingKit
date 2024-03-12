@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.LifecycleOwner
 import com.mozhimen.basick.utilk.android.view.getViewOfInflate
 import com.mozhimen.basick.utilk.commons.IUtilK
 import com.mozhimen.pagingk.widgets.PagingKPagedListMultiAdapter
@@ -29,7 +28,7 @@ abstract class BasePagingKVHKProvider<DATA : Any> : IUtilK {
 
     ///////////////////////////////////////////////////////////////////////
 
-    fun getAdapter(): PagingKPagedListMultiAdapter<DATA>? {
+    fun getPagingKPagedListMultiAdapter(): PagingKPagedListMultiAdapter<DATA>? {
         return _adapterKPageRecyclerMultiRef?.get()
     }
 
