@@ -88,17 +88,17 @@ abstract class BasePagingKVHKProvider<DATA : Any> : IUtilK {
     ///////////////////////////////////////////////////////////////////////
 
     @CallSuper
-    open fun onViewAttachedToWindow(holder: VHKRecycler) {
+    open fun onViewAttachedToWindow(holder: VHKRecycler, item: DATA?, position: Int?) {
         holder.onViewAttachedToWindow()
     }
 
     @CallSuper
-    open fun onViewDetachedFromWindow(holder: VHKRecycler) {
+    open fun onViewDetachedFromWindow(holder: VHKRecycler, item: DATA?, position: Int?) {
         holder.onViewDetachedFromWindow()
     }
 
     @CallSuper
-    open fun onViewRecycled(holder: VHKRecycler) {
+    open fun onViewRecycled(holder: VHKRecycler, item: DATA?, position: Int?) {
         holder.onViewRecycled()
     }
 

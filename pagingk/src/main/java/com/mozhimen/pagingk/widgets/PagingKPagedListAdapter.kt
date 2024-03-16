@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
+import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -97,6 +98,16 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
 
     override fun onViewRecycled(holder: VHKRecycler) {
         holder.onViewRecycled()
+    }
+
+    //////////////////////////////////////////////////////////////////////////////
+
+    fun getPosition(viewHolder: VHKRecycler): Int? {
+        val position = viewHolder.bindingAdapterPosition
+        if (position == RecyclerView.NO_POSITION) {
+            return null
+        }
+        return position
     }
 
     //////////////////////////////////////////////////////////////////////////////

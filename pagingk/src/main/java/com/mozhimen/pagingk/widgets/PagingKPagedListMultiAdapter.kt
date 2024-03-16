@@ -66,15 +66,18 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
     /////////////////////////////////////////////////////////////////////////////////
 
     override fun onViewAttachedToWindow(holder: VHKRecycler) {
-        getPagingKVHKProvider(holder.itemViewType)?.onViewAttachedToWindow(holder)
+        val position = getPosition(holder)
+        getPagingKVHKProvider(holder.itemViewType)?.onViewAttachedToWindow(holder, position?.let { getItem(it) }, position)
     }
 
     override fun onViewDetachedFromWindow(holder: VHKRecycler) {
-        getPagingKVHKProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder)
+        val position = getPosition(holder)
+        getPagingKVHKProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder, position?.let { getItem(it) }, position)
     }
 
     override fun onViewRecycled(holder: VHKRecycler) {
-        getPagingKVHKProvider(holder.itemViewType)?.onViewRecycled(holder)
+        val position = getPosition(holder)
+        getPagingKVHKProvider(holder.itemViewType)?.onViewRecycled(holder, position?.let { getItem(it) }, position)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
