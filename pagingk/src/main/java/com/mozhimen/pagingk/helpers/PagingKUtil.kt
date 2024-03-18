@@ -15,7 +15,7 @@ object PagingKUtil {
     fun <T> createErrorPagingKRep(exception: Exception): BasePagingKRep<T> {
         val basePagingKRep = BasePagingKRep<T>()
         basePagingKRep.code = 10010
-        basePagingKRep.msg = UtilKException.getStrMessageForException(exception)
+        basePagingKRep.msg = UtilKException.getStrMessage(exception)
         return basePagingKRep
     }
 }
