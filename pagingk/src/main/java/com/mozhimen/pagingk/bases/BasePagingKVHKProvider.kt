@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import com.mozhimen.basick.utilk.android.view.getView_ofInflate
+import com.mozhimen.basick.utilk.android.view.UtilKView
+import com.mozhimen.basick.utilk.android.view.UtilKViewWrapper
 import com.mozhimen.basick.utilk.commons.IUtilK
 import com.mozhimen.pagingk.widgets.PagingKPagedListMultiAdapter
 import com.mozhimen.xmlk.vhk.VHKRecycler
@@ -71,7 +72,7 @@ abstract class BasePagingKVHKProvider<DATA : Any> : IUtilK {
      * 默认实现返回[BaseViewHolder]，可重写返回自定义 ViewHolder
      */
     open fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler =
-        VHKRecycler(parent.getView_ofInflate(layoutId))
+        VHKRecycler(UtilKView.get_ofInflate(parent, layoutId))
 
     @CallSuper
     open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int) {
