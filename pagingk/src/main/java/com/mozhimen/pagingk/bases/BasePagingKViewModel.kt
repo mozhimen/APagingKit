@@ -58,8 +58,8 @@ abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig:
                     override suspend fun onLoadAfter(adjacentPageKey: Int): BasePagingKRep<RES> =
                         this@BasePagingKViewModel.onLoadAfter(adjacentPageKey, pagingKConfig.loadPageSize)
 
-                    override suspend fun onDataAggregation(dataList: List<RES>): MutableList<DES> =
-                        this@BasePagingKViewModel.onDataAggregation(dataList)
+                    override suspend fun onDataAggregation(current: Int?, dataList: List<RES>): MutableList<DES> =
+                        this@BasePagingKViewModel.onDataAggregation(current, dataList)
 
                     override suspend fun onAddOtherData(isLoadInitial: Boolean, hasMore: Boolean, dataList: MutableList<DES>) {
                         this@BasePagingKViewModel.onAddOtherData(isLoadInitial, hasMore, dataList)

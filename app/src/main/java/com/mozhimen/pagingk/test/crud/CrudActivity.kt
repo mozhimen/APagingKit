@@ -3,10 +3,10 @@ package com.mozhimen.pagingk.test.crud
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVBVM
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDBVM
 import com.mozhimen.pagingk.test.databinding.ActivityCrudBinding
 
-class CrudActivity : BaseActivityVBVM<ActivityCrudBinding, SampleViewModel>() {
+class CrudActivity : BaseActivityVDBVM<ActivityCrudBinding, SampleViewModel>() {
     private val sampleAdapter by lazy { SampleAdapter(vm) }
 
     override fun initView(savedInstanceState: Bundle?) {

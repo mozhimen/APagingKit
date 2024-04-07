@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVBVM
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDBVM
 import com.mozhimen.pagingk.test.databinding.ActivityPagingBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ import java.io.IOException
  * @Date 2024/1/21 16:34
  * @Version 1.0
  */
-class PagingActivity : BaseActivityVBVM<ActivityPagingBinding, PagingViewModel>() {
+class PagingActivity : BaseActivityVDBVM<ActivityPagingBinding, PagingViewModel>() {
     private val _dataResPagingDataAdapter: DataResPagingDataAdapter by lazy {
         DataResPagingDataAdapter(
             _onItemUpdate = { position, dataRes, adapter ->

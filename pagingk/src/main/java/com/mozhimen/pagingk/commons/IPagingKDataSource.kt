@@ -20,7 +20,7 @@ interface IPagingKDataSource<RES, DES> {
      * 数据聚合 将请求回来的原始数据，组装成目标数据
      * @param dataList 请求回来的数据
      */
-    suspend fun onDataAggregation(dataList: List<RES>): MutableList<DES>
+    suspend fun onDataAggregation(current: Int?, dataList: List<RES>): MutableList<DES>
 
     /**
      * 获取头部数据

@@ -43,7 +43,7 @@ abstract class BasePagingKKeyedDataSource<RES, DES : Any>(
                             }
                         }
                         val adjacentPageKey = if (pagingKData.current >= pages) null else pagingKData.current + 1
-                        val dataAggregation = onDataAggregation(records)
+                        val dataAggregation = onDataAggregation(pagingKData.current, records)
                         val haveMore = null != adjacentPageKey
                         onAddOtherData(true, haveMore, dataAggregation)
                         //添加头部
@@ -97,7 +97,7 @@ abstract class BasePagingKKeyedDataSource<RES, DES : Any>(
                             }
                         }
                         val adjacentPageKey = if (pagingKData.current >= pages) null else pagingKData.current + 1
-                        val dataAggregation = onDataAggregation(records)
+                        val dataAggregation = onDataAggregation(pagingKData.current, records)
                         val haveMore = null != adjacentPageKey
                         onAddOtherData(false, haveMore, dataAggregation)
                         //添加底部

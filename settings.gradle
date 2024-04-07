@@ -30,6 +30,7 @@ include ':SwiftKit:xmlk'
 include ':ANetKit'
 project(':ANetKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ANetKit")
 include ':ANetKit:netk_retrofit'
+include ':ANetKit:netk_okhttp'
 //AXmlKit
 include ':AXmlKit'
 project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
