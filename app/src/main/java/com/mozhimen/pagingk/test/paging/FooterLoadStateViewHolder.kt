@@ -1,6 +1,7 @@
 package com.mozhimen.pagingk.test.paging
 
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,10 +28,10 @@ class FooterLoadStateViewHolder(parent: ViewGroup, var onRetry: I_Listener) :
                 vdb.btnRetry.setOnClickListener {
                     onRetry()
                 }
-                Log.d(TAG, "loadState: error了吧")
+                UtilKLogWrapper.d(TAG, "loadState: error了吧")
             }
             is LoadState.Loading -> vdb.llLoading.visibility = View.VISIBLE
-            else -> Log.d(TAG, "loadState: --其他的错误")
+            else -> UtilKLogWrapper.d(TAG, "loadState: --其他的错误")
         }
     }
 }

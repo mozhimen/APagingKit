@@ -1,6 +1,7 @@
 package com.mozhimen.pagingk.test.paging
 
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.mozhimen.basick.utilk.commons.IUtilK
@@ -20,7 +21,7 @@ class DataResPagingSource(private val _repository: Repository) : PagingSource<In
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataRes> {
         return try {
             val currentPage = params.key ?: 1//页码未定义置为1
-            Log.d(TAG, "load: 请求第${currentPage}页")//仓库层请求数据
+            UtilKLogWrapper.d(TAG, "load: 请求第${currentPage}页")//仓库层请求数据
 
             val res = _repository.getDatasOnBack(currentPage)
 
@@ -37,9 +38,9 @@ class DataResPagingSource(private val _repository: Repository) : PagingSource<In
             )
         } catch (e: Exception) {
             if (e is IOException) {
-                Log.d(TAG, "load: 连接失败")
+                UtilKLogWrapper.d(TAG, "load: 连接失败")
             }
-            Log.d(TAG, "load: ${e.message}")
+            UtilKLogWrapper.d(TAG, "load: ${e.message}")
 
             LoadResult.Error(throwable = e)
         }

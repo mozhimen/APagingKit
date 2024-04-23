@@ -2,6 +2,7 @@ package com.mozhimen.pagingk.test.paging
 
 import android.os.Bundle
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,11 +29,11 @@ class PagingActivity : BaseActivityVDBVM<ActivityPagingBinding, PagingViewModel>
         ).apply {
             addLoadStateListener {//初始状态添加监听
                 when (it.refresh) {
-                    is LoadState.NotLoading -> Log.d(TAG, "addLoadStateListener: is NotLoading")
-                    is LoadState.Loading -> Log.d(TAG, "addLoadStateListener: is Loading")
+                    is LoadState.NotLoading -> UtilKLogWrapper.d(TAG, "addLoadStateListener: is NotLoading")
+                    is LoadState.Loading -> UtilKLogWrapper.d(TAG, "addLoadStateListener: is Loading")
                     is LoadState.Error -> when ((it.refresh as LoadState.Error).error) {
-                        is IOException -> Log.d(TAG, "addLoadStateListener: IOException")
-                        else -> Log.d(TAG, "addLoadStateListener: others exception")
+                        is IOException -> UtilKLogWrapper.d(TAG, "addLoadStateListener: IOException")
+                        else -> UtilKLogWrapper.d(TAG, "addLoadStateListener: others exception")
                     }
                 }
             }

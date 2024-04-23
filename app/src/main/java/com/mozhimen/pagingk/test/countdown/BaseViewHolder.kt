@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Handler
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,7 @@ open class BaseViewHolder(itemView: View, onItemDeleteClick: IA_Listener<Int>?, 
 
     private val timerRunnable = Runnable {
         // 这里打印日志，来印证我们只跑了 "屏幕内可展示item数量的 倒计时"
-//        Log.d(TAG, "run: ${hashCode()}")
+//        UtilKLogWrapper.d(TAG, "run: ${hashCode()}")
         delay -= 1000
         updateTimerState()
     }
@@ -75,7 +76,7 @@ open class BaseViewHolder(itemView: View, onItemDeleteClick: IA_Listener<Int>?, 
      * 进入屏幕时: 填充数据，这里声明为open，让子类重写
      */
     open fun onBindViewHolder(bean: CountDownBean) {
-        Log.d(TAG, "onBindViewHolder: $adapterPosition")
+        UtilKLogWrapper.d(TAG, "onBindViewHolder: $adapterPosition")
 
         // 使用 终止时间 - 当前时间，计算倒计时还有多少秒
         delay = bean.terminalTime - System.currentTimeMillis()
@@ -88,7 +89,7 @@ open class BaseViewHolder(itemView: View, onItemDeleteClick: IA_Listener<Int>?, 
      * 滑出屏幕时: 移除倒计时
      */
     fun onViewRecycled() {
-        Log.d(TAG, "onViewRecycled: $adapterPosition")
+        UtilKLogWrapper.d(TAG, "onViewRecycled: $adapterPosition")
 
         // 终止计时
         endTimer()

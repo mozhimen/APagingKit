@@ -1,6 +1,7 @@
 package com.mozhimen.pagingk.widgets
 
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,12 +73,12 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
 
     @CallSuper
     protected open fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder")
+        UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder")
         holder.onBind()
     }
 
     protected open fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder payloads $payloads")
+        UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder payloads $payloads")
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

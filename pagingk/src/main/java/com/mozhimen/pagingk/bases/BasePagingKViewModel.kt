@@ -1,6 +1,7 @@
 package com.mozhimen.pagingk.bases
 
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -26,12 +27,12 @@ import kotlinx.coroutines.CoroutineScope
 abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKDataSource<RES, DES> {
     private val _pagingKDataSourceLoadingListener: IPagingKDataSourceLoadListener = object : IPagingKDataSourceLoadListener {
         override fun onFirstLoadStart() {
-            Log.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
+            UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
             liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_START)
         }
 
         override fun onFirstLoadCompleted(isEmpty: Boolean) {
-            Log.d(TAG, "onFirstLoadCompleted: ${UtilKDateWrapper.getNowStr()} isEmpty $isEmpty")
+            UtilKLogWrapper.d(TAG, "onFirstLoadCompleted: ${UtilKDateWrapper.getNowStr()} isEmpty $isEmpty")
             if (isEmpty)
                 liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_EMPTY)
             else

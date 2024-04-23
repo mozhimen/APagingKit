@@ -2,6 +2,7 @@ package com.mozhimen.pagingk.widgets
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
@@ -54,12 +55,12 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
 
     @SuppressLint("MissingSuperCall")
     override fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder")
+        UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder")
         getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position)
     }
 
     override fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder payloads $payloads")
+        UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder payloads $payloads")
         getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position, payloads)
     }
 

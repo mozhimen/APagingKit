@@ -1,6 +1,6 @@
 package com.mozhimen.pagingk.helpers
 
-import com.mozhimen.basick.utilk.kotlin.UtilKException
+import com.mozhimen.basick.utilk.kotlin.UtilKThrowable
 import com.mozhimen.pagingk.bases.BasePagingKRep
 
 /**
@@ -15,7 +15,7 @@ object PagingKUtil {
     fun <T> createErrorPagingKRep(exception: Exception): BasePagingKRep<T> {
         val basePagingKRep = BasePagingKRep<T>()
         basePagingKRep.code = 10010
-        basePagingKRep.msg = UtilKException.getStrMessage(exception)
+        basePagingKRep.msg = UtilKThrowable.getStrMessage(exception)
         return basePagingKRep
     }
 }

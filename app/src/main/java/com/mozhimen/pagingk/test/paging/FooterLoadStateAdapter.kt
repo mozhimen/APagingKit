@@ -1,6 +1,7 @@
 package com.mozhimen.pagingk.test.paging
 
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
@@ -17,7 +18,7 @@ import com.mozhimen.basick.utilk.commons.IUtilK
 class FooterLoadStateAdapter(private val _onRetry: I_Listener) : LoadStateAdapter<FooterLoadStateViewHolder>(), IUtilK {
 
     override fun onBindViewHolder(holder: FooterLoadStateViewHolder, loadState: LoadState) {
-        Log.d(TAG, "onBindViewHolder:")
+        UtilKLogWrapper.d(TAG, "onBindViewHolder:")
         holder.loadState(loadState)
     }
 

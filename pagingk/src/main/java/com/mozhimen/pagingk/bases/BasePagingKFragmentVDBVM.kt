@@ -1,6 +1,7 @@
 package com.mozhimen.pagingk.bases
 
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -22,7 +23,7 @@ abstract class BasePagingKFragmentVDBVM<DES : Any, VB : ViewDataBinding, VM : Ba
 
     private val _pagedListObserver: Observer<PagedList<DES>> by lazy {
         Observer<PagedList<DES>> { pagedList ->
-            Log.d(TAG, "_pagedListObserver: $pagedList")
+            UtilKLogWrapper.d(TAG, "_pagedListObserver: $pagedList")
             getPagedListAdapter().submitList(pagedList)
         }
     }
