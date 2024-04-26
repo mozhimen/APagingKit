@@ -33,7 +33,7 @@ import java.util.LinkedHashSet
  * @Date 2023/10/11 10:28
  * @Version 1.0
  */
-open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : BasePagedListAdapter<DATA, VHKRecycler>(itemCallback),IUtilK,
+open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : BasePagedListAdapter<DATA, VHKRecycler>(itemCallback), IUtilK,
     LifecycleOwner {
     private var _onPageItemClickListener: IOnPageItemClickListener<DATA>? = null
     private var _onPageItemLongClickListener: IOnPageItemLongClickListener<DATA>? = null
@@ -54,7 +54,6 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler {
         val viewHolder = VHKRecycler(LayoutInflater.from(parent.context).inflate(_layoutId, parent, false))
-//        bindViewClickListener(holder, holder.itemViewType, position)
         return viewHolder
     }
 
@@ -62,7 +61,7 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
         onBindViewHolderInner(holder, getItem(position), position)
     }
 
-    //    @CallSuper
+    @CallSuper
     override fun onBindViewHolder(holder: VHKRecycler, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
