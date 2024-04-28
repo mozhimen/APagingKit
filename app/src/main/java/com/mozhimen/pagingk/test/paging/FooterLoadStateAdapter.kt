@@ -1,6 +1,5 @@
 package com.mozhimen.pagingk.test.paging
 
-import android.util.Log
 import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.ViewGroup
 import androidx.paging.LoadState

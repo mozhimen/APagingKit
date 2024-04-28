@@ -41,9 +41,9 @@ abstract class BasePagingKActivityVDBVM<DES : Any, VB : ViewDataBinding, VM : Ba
         getRecyclerView().apply {
             layoutManager = getRecyclerViewLayoutManager()
             getRecyclerViewItemDecoration()?.let { addItemDecoration(it) }
-            adapter = if (getLoadStateAdapter() != null)
-                getPagedListAdapter()/*.withLoadStateFooter(getLoadStateAdapter()!!)*/
-            else
+            adapter = if (getLoadStateAdapter() != null) {
+                getPagedListAdapter().withLoadStateFooter(getLoadStateAdapter()!!)
+            }else
                 getPagedListAdapter()
         }
         getViewModel().liveLoadState.observe(this) {

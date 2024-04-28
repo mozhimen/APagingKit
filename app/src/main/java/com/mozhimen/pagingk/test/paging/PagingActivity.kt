@@ -1,7 +1,6 @@
 package com.mozhimen.pagingk.test.paging
 
 import android.os.Bundle
-import android.util.Log
 import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState

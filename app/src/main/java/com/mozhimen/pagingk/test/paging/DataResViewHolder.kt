@@ -1,7 +1,7 @@
 package com.mozhimen.pagingk.test.paging
 
 import com.mozhimen.pagingk.test.databinding.ItemPagingBinding
-import com.mozhimen.xmlk.vhk.VHKRecyclerVB
+import com.mozhimen.xmlk.vhk.VHKRecyclerVDB
 
 /**
  * @ClassName DataViewHolder
@@ -13,4 +13,4 @@ import com.mozhimen.xmlk.vhk.VHKRecyclerVB
 //class DataResViewHolder(private val _vb: ItemPagingkBinding) : VHKRecyclerVB(_vb.root) {
 //    var vb = _vb
 //}
-class DataResViewHolder(viewDataBinding: ItemPagingBinding) : VHKRecyclerVB<ItemPagingBinding>(viewDataBinding)
+class DataResViewHolder(viewDataBinding: ItemPagingBinding) : VHKRecyclerVDB<ItemPagingBinding>(viewDataBinding)
