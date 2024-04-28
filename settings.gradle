@@ -20,7 +20,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "APagingKit"
 include ':app'
-include ':pagingk'
+include ':pagingk_list'
 //SwiftKit
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\SwiftKit")
@@ -35,3 +35,4 @@ include ':ANetKit:netk_okhttp'
 include ':AXmlKit'
 project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
 include ':AXmlKit:vhk'
+include ':pagingk_data'

@@ -55,7 +55,7 @@ class PagingActivity : BaseActivityVDBVM<ActivityPagingBinding, PagingViewModel>
         }
     }
 
-    override fun bindViewVM(vb: ActivityPagingBinding) {
+    override fun bindViewVM(vdb: ActivityPagingBinding) {
 
     }
 }
