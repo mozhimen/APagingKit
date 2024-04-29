@@ -66,7 +66,7 @@ abstract class BasePagingKFragmentVDBVM<DES : Any, VB : ViewDataBinding, VM : Ba
     }
 
     override fun onRefresh() {
-        getViewModel().onInvalidate()
+        getPagingDataAdapter().refresh()
     }
 
     override fun onFirstLoadEmpty() {

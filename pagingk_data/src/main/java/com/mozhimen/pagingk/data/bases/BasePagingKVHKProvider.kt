@@ -6,6 +6,7 @@ import androidx.annotation.CallSuper
 import com.mozhimen.basick.utilk.commons.IUtilK
 import com.mozhimen.pagingk.data.widgets.PagingKDataMultiAdapter
 import com.mozhimen.xmlk.vhk.VHKLifecycle
+import com.mozhimen.xmlk.vhk.commons.IVHKProvider
 import java.lang.ref.WeakReference
 
 /**
@@ -15,7 +16,7 @@ import java.lang.ref.WeakReference
  * @Date 2023/10/11 11:52
  * @Version 1.0
  */
-abstract class BasePagingKVHKProvider<DATA : Any, VH : VHKLifecycle> : IUtilK {
+abstract class BasePagingKVHKProvider<DATA : Any, VH : VHKLifecycle> : IVHKProvider<DATA, VH>, IUtilK {
     internal var _adapterRef: WeakReference<PagingKDataMultiAdapter<DATA, VH>>? = null
 
     val adapter: PagingKDataMultiAdapter<DATA, VH>?
@@ -30,33 +31,27 @@ abstract class BasePagingKVHKProvider<DATA : Any, VH : VHKLifecycle> : IUtilK {
 
     ///////////////////////////////////////////////////////////////////////
 
-    /**
-     * （可选重写）创建 ViewHolder。
-     * 默认实现返回[BaseViewHolder]，可重写返回自定义 ViewHolder
-     */
-    abstract fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH
-
     @CallSuper
-    open fun onBindViewHolder(holder: VH, item: DATA?, position: Int) {
+    override fun onBindViewHolder(holder: VH, item: DATA?, position: Int) {
         holder.onBind()
     }
 
-    open fun onBindViewHolder(holder: VH, item: DATA?, position: Int, payloads: List<Any>) {}
+    override fun onBindViewHolder(holder: VH, item: DATA?, position: Int, payloads: List<Any>) {}
 
     ///////////////////////////////////////////////////////////////////////
 
     @CallSuper
-    open fun onViewAttachedToWindow(holder: VH, item: DATA?, position: Int?) {
+    override fun onViewAttachedToWindow(holder: VH, item: DATA?, position: Int?) {
         holder.onViewAttachedToWindow()
     }
 
     @CallSuper
-    open fun onViewDetachedFromWindow(holder: VH, item: DATA?, position: Int?) {
+    override fun onViewDetachedFromWindow(holder: VH, item: DATA?, position: Int?) {
         holder.onViewDetachedFromWindow()
     }
 
     @CallSuper
-    open fun onViewRecycled(holder: VH, item: DATA?, position: Int?) {
+    override fun onViewRecycled(holder: VH, item: DATA?, position: Int?) {
         holder.onViewRecycled()
     }
 }

@@ -24,38 +24,6 @@ import kotlinx.coroutines.CoroutineScope
  */
 abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKSource<RES, DES> {
 
-    open val pageSource by lazy {
-        object : BasePagingKSource<RES, DES>(pagingKConfig) {
-            override suspend fun onLoadStart(currentPageIndex: Int) {
-                this@BasePagingKViewModel.onLoadStart(currentPageIndex)
-            }
-
-            override suspend fun onLoadRes(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES> {
-                return this@BasePagingKViewModel.onLoadRes(currentPageIndex, pageSize)
-            }
-
-            override suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {
-                this@BasePagingKViewModel.onLoadFinished(currentPageIndex, isResEmpty)
-            }
-
-            override suspend fun onTransformData(currentPageIndex: Int?, datas: List<RES>): List<DES> {
-                return this@BasePagingKViewModel.onTransformData(currentPageIndex, datas)
-            }
-
-            override suspend fun onCombineData(currentPageIndex: Int?, datas: MutableList<DES>) {
-                this@BasePagingKViewModel.onCombineData(currentPageIndex, datas)
-            }
-
-            override suspend fun onGetHeader(): DES? {
-                return this@BasePagingKViewModel.onGetHeader()
-            }
-
-            override suspend fun onGetFooter(): DES? {
-                return this@BasePagingKViewModel.onGetFooter()
-            }
-        }
-    }
-
     @OptIn(androidx.paging.ExperimentalPagingApi::class)
     open val pager by lazy {
         Pager(
@@ -66,7 +34,37 @@ abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig:
                 initialLoadSize = pagingKConfig.pageSize * 3//设置首次加载的数量，要求是pageSize的整数倍
             ),
             initialKey = pagingKConfig.pageIndexFirst,
-            pagingSourceFactory = { pageSource }
+            pagingSourceFactory = {
+                object : BasePagingKSource<RES, DES>(pagingKConfig) {
+                    override suspend fun onLoadStart(currentPageIndex: Int) {
+                        this@BasePagingKViewModel.onLoadStart(currentPageIndex)
+                    }
+
+                    override suspend fun onLoadRes(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES> {
+                        return this@BasePagingKViewModel.onLoadRes(currentPageIndex, pageSize)
+                    }
+
+                    override suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {
+                        this@BasePagingKViewModel.onLoadFinished(currentPageIndex, isResEmpty)
+                    }
+
+                    override suspend fun onTransformData(currentPageIndex: Int?, datas: List<RES>): List<DES> {
+                        return this@BasePagingKViewModel.onTransformData(currentPageIndex, datas)
+                    }
+
+                    override suspend fun onCombineData(currentPageIndex: Int?, datas: MutableList<DES>) {
+                        this@BasePagingKViewModel.onCombineData(currentPageIndex, datas)
+                    }
+
+                    override suspend fun onGetHeader(): DES? {
+                        return this@BasePagingKViewModel.onGetHeader()
+                    }
+
+                    override suspend fun onGetFooter(): DES? {
+                        return this@BasePagingKViewModel.onGetFooter()
+                    }
+                }
+            }
         )
     }
     val liveLoadState = MutableLiveData<Int>()
@@ -75,12 +73,6 @@ abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig:
 
     fun getViewModelScope(): CoroutineScope =
         viewModelScope
-
-    ////////////////////////////////////////////////////////////////////////////////////
-
-    open fun onInvalidate() {
-        pageSource.invalidate()
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////
 
