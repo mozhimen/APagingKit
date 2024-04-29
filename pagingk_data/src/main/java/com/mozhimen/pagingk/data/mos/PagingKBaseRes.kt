@@ -39,6 +39,6 @@ class PagingKBaseRes<RES> {
     }
 
     override fun toString(): String {
-        return "BasePagingKRep(code=$code, msg=$msg, data=$data)"
+        return "PagingKBaseRes(code=$code, msg=$msg, data=$data)"
     }
 }

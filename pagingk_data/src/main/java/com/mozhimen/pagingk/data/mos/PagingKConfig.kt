@@ -11,7 +11,7 @@ class PagingKConfig(
     /**
      * 第一页的页码
      */
-    val pageIndexFirst: Int = 0,
+    val pageIndexFirst: Int = 1,
     /**
      * 每页需要加载的数量
      */
