@@ -1,2 +1,2 @@
 # APagingKit
-Android分页库 -> Paging3
+Android分页库 -> Paging(2,3)
