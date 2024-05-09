@@ -1,21 +1,17 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
 }
 
 android {
-    namespace 'com.mozhimen.pagingk.test'
+    namespace 'com.mozhimen.pagingk.paging3.basic'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.mozhimen.pagingk.test"
-        minSdk 21
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        minSdk 19
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -31,18 +27,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        dataBinding true
-    }
 }
 
 dependencies {
-
-    implementation project(':SwiftKit:basick')
-    implementation project(':SwiftKit:xmlk')
-    implementation project(':ANetKit:netk_retrofit')
-    implementation project(':pagingk_paging3_list')
-    implementation project(':AXmlKit:vhk')
+    //data source
+    api 'androidx.paging:paging-runtime:3.1.1'
+    api 'androidx.paging:paging-common:3.1.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
