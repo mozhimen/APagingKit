@@ -4,11 +4,12 @@ plugins {
 }
 
 android {
-    namespace 'com.mozhimen.pagingk.paging2.basic'
+    namespace 'com.mozhimen.rxk.pagingk_paging2_rxjava2'
     compileSdk 34
 
     defaultConfig {
         minSdk 19
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -30,8 +31,7 @@ android {
 }
 
 dependencies {
-    api "androidx.paging:paging-common:2.0.0"
-    api "androidx.paging:paging-runtime:2.0.0"
+    api "androidx.paging:paging-rxjava2:2.0.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
