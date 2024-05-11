@@ -18,9 +18,14 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "APagingKit_Paging"
+rootProject.name = "APagingKit"
 include ':app'
 include ':pagingk_paging3_list'
+include ':pagingk_paging3_data'
+include ':pagingk_paging3_basic'
+include ':pagingk_paging2_basic'
+include ':pagingk_paging2_rxjava2'
+include ':pagingk_epoxy'
 //SwiftKit
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\SwiftKit")
@@ -29,14 +34,10 @@ include ':SwiftKit:xmlk'
 //ANetKit
 include ':ANetKit'
 project(':ANetKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ANetKit")
-include ':ANetKit:netk_retrofit'
-include ':ANetKit:netk_okhttp'
+include ':ANetKit:netk_retrofit2'
+include ':ANetKit:netk_okhttp3'
 //AXmlKit
 include ':AXmlKit'
 project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
 include ':AXmlKit:vhk'
-include ':pagingk_paging3_data'
-include ':pagingk_paging3_basic'
-include ':pagingk_paging2_basic'
-include ':pagingk_epoxy'
-include ':pagingk_paging2_rxjava2'
+

@@ -40,7 +40,7 @@ dependencies {
 
     implementation project(':SwiftKit:basick')
     implementation project(':SwiftKit:xmlk')
-    implementation project(':ANetKit:netk_retrofit')
+    implementation project(':ANetKit:netk_retrofit2')
     implementation project(':pagingk_paging3_list')
     implementation project(':AXmlKit:vhk')
 
