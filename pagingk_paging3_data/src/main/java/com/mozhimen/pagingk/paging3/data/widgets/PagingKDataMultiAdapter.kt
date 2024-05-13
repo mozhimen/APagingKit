@@ -6,9 +6,8 @@ import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.basick.utilk.commons.IUtilK
-import com.mozhimen.pagingk.data.R
+import com.mozhimen.pagingk.paging3.data.R
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKVHKProvider
 import com.mozhimen.xmlk.vhk.VHKLifecycle
 import java.lang.ref.WeakReference
