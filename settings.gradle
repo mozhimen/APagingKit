@@ -25,7 +25,7 @@ include ':pagingk_paging3_data'
 include ':pagingk_paging3_basic'
 include ':pagingk_paging2_basic'
 include ':pagingk_paging2_rxjava2'
-include ':pagingk_epoxy'
+include ':pagingk_epoxy3'
 //SwiftKit
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\SwiftKit")
@@ -41,3 +41,4 @@ include ':AXmlKit'
 project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
 include ':AXmlKit:vhk'
 
+include ':pagingk_epoxy4'

@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.epoxy
+package com.mozhimen.pagingk.epoxy4
 
 import org.junit.Test
 

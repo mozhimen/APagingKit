@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.mozhimen.pagingk.epoxy'
+    namespace 'com.mozhimen.pagingk.epoxy4'
     compileSdk 34
 
     defaultConfig {
@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    api "com.airbnb.android:epoxy-paging:3.8.0"
+    api "com.airbnb.android:epoxy-paging:4.6.3-vinay-compose"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
