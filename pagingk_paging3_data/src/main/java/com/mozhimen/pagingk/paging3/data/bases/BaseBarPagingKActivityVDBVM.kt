@@ -45,6 +45,11 @@ abstract class BaseBarPagingKActivityVDBVM<DES : Any, VB : ViewDataBinding, VM :
         _toolBarProxy.setToolbarTitle(strTitle)
     }
 
+    @OptIn(OApiUse_BaseApplication::class, OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
+    override fun setToolbarTitle(intResStr: Int) {
+        _toolBarProxy.setToolbarTitle(getString(intResStr))
+    }
+
     override fun getToolbarNavigationIcon(): Int =
         android.R.drawable.arrow_up_float
 
