@@ -4,6 +4,7 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.annotation.DrawableRes
 import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import com.mozhimen.basick.elemk.androidx.appcompat.IToolbarProxyProvider
 import com.mozhimen.basick.elemk.androidx.appcompat.ToolbarProxy
 import com.mozhimen.basick.lintk.optins.OApiCall_BindLifecycle
@@ -18,7 +19,7 @@ import com.mozhimen.basick.utilk.androidx.appcompat.UtilKActionBar
  * @Date 2024/5/20
  * @Version 1.0
  */
-abstract class BaseBarPagingKActivityVDBVM<DES : Any, VDB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BasePagingKActivityVDBVM<DES, VDB, VM>, IToolbarProxyProvider {
+abstract class BaseBarPagingKActivityVBVM<DES : Any, VB : ViewBinding, VM : BasePagingKViewModel<*, DES>> : BasePagingKActivityVBVM<DES, VB, VM>, IToolbarProxyProvider {
     /**
      * 针对Hilt(@JvmOverloads kotlin默认参数值无效)
      * @constructor
@@ -27,7 +28,7 @@ abstract class BaseBarPagingKActivityVDBVM<DES : Any, VDB : ViewDataBinding, VM 
 
     /////////////////////////////////////////////////////////////////////
     @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiUse_BaseApplication::class)
-    private val _toolBarProxy by lazy { ToolbarProxy<BaseBarPagingKActivityVDBVM<*, *, *>>().apply { bindLifecycle(this@BaseBarPagingKActivityVDBVM) } }
+    private val _toolBarProxy by lazy { ToolbarProxy<BaseBarPagingKActivityVBVM<*, *, *>>().apply { bindLifecycle(this@BaseBarPagingKActivityVBVM) } }
 
     /////////////////////////////////////////////////////////////////////
 
