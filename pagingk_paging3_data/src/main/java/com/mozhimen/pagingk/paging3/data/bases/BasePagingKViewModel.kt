@@ -22,7 +22,7 @@ import kotlinx.coroutines.CoroutineScope
  * @Date 2023/10/11 16:22
  * @Version 1.0
  */
-abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKSource<RES, DES> {
+abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKSource<RES, DES> {
 
     @OptIn(androidx.paging.ExperimentalPagingApi::class)
     open val pager by lazy {
