@@ -22,10 +22,20 @@ rootProject.name = "APagingKit"
 include ':app'
 include ':pagingk_paging3_list'
 include ':pagingk_paging3_data'
-include ':pagingk_paging3_basic'
-include ':pagingk_paging2_basic'
-include ':pagingk_paging2_rxjava2'
 include ':pagingk_epoxy3'
+include ':pagingk_epoxy4'
+//ALibKit_Jetpack
+include ':ALibKit_Jetpack'
+project(':ALibKit_Jetpack').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Jetpack")
+include ':ALibKit_Jetpack:paging3'
+include ':ALibKit_Jetpack:paging300'
+//ALibKit_Squareup
+include ':ALibKit_Squareup'
+project(':ALibKit_Squareup').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Squareup")
+include ':ALibKit_Squareup:okhttp3'
+include ':ALibKit_Squareup:okhttp3_log'
+include ':ALibKit_Squareup:retrofit2'
+include ':ALibKit_Squareup:moshi'
 //SwiftKit
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\SwiftKit")
@@ -40,5 +50,8 @@ include ':ANetKit:netk_okhttp3'
 include ':AXmlKit'
 project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
 include ':AXmlKit:vhk'
+//ASerialKit
+include ':ASerialKit'
+project(':ASerialKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ASerialKit")
+include ':ASerialKit:serialk_moshi'
 
-include ':pagingk_epoxy4'

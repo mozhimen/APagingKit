@@ -31,9 +31,7 @@ android {
 }
 
 dependencies {
-    //data source
-    api "androidx.paging:paging-runtime:3.0.0-alpha03"
-    api "androidx.paging:paging-common:3.0.0-alpha03"
+    api project(':ALibKit_Jetpack:paging300')
 
     //////////////////////////////////////////////////////////////////
 
