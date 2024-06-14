@@ -7,6 +7,7 @@ import com.mozhimen.basick.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.basick.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.basick.utilk.android.view.applyGone
 import com.mozhimen.basick.utilk.android.view.applyVisible
+import com.mozhimen.basick.utilk.kotlin.UtilKLazyJVM
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 
 /**
@@ -19,7 +20,7 @@ import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 abstract class BasePagingKActivityVDBVM<DES : Any, VDB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BaseActivityVDB<VDB>(), IPagingKActivity<DES, VM> {
 
     @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
-    private val _basePagingKProxy by lazy { BasePagingKProxy<DES,VM>(this).apply { bindLifecycle(this@BasePagingKActivityVDBVM) } }
+    private val _basePagingKProxy by UtilKLazyJVM.lazy_ofNone { BasePagingKProxy<DES, VM>(this).apply { bindLifecycle(this@BasePagingKActivityVDBVM) } }
 
     ////////////////////////////////////////////////////////////////////////
 

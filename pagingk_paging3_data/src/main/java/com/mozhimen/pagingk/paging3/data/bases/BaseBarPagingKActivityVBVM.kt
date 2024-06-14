@@ -11,6 +11,7 @@ import com.mozhimen.basick.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.basick.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.basick.lintk.optins.OApiUse_BaseApplication
 import com.mozhimen.basick.utilk.androidx.appcompat.UtilKActionBar
+import com.mozhimen.basick.utilk.kotlin.UtilKLazyJVM
 
 /**
  * @ClassName BaseBarPagingKActivityVDBVM
@@ -28,7 +29,7 @@ abstract class BaseBarPagingKActivityVBVM<DES : Any, VB : ViewBinding, VM : Base
 
     /////////////////////////////////////////////////////////////////////
     @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiUse_BaseApplication::class)
-    private val _toolBarProxy by lazy { ToolbarProxy<BaseBarPagingKActivityVBVM<*, *, *>>().apply { bindLifecycle(this@BaseBarPagingKActivityVBVM) } }
+    private val _toolBarProxy by UtilKLazyJVM.lazy_ofNone { ToolbarProxy<BaseBarPagingKActivityVBVM<*, *, *>>().apply { bindLifecycle(this@BaseBarPagingKActivityVBVM) } }
 
     /////////////////////////////////////////////////////////////////////
 

@@ -29,9 +29,9 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
         Pager(
             config = PagingConfig(
                 pageSize = pagingKConfig.pageSize,//设置每页的大小
-                prefetchDistance = pagingKConfig.pageSize / 2,//设置距离底部还有多少条时开始加载下一页
+                prefetchDistance = pagingKConfig.prefetchDistance,//设置距离底部还有多少条时开始加载下一页
                 enablePlaceholders = false,//设置是否显示占位符
-                initialLoadSize = pagingKConfig.pageSize * 3//设置首次加载的数量，要求是pageSize的整数倍
+                initialLoadSize = pagingKConfig.initialLoadSize//设置首次加载的数量，要求是pageSize的整数倍
             ),
             initialKey = pagingKConfig.pageIndexFirst,
             pagingSourceFactory = {

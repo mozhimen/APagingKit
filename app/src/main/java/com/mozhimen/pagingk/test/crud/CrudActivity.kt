@@ -7,7 +7,7 @@ import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivi
 import com.mozhimen.pagingk.test.databinding.ActivityCrudBinding
 
 class CrudActivity : BaseActivityVDBVM<ActivityCrudBinding, SampleViewModel>() {
-    private val sampleAdapter by lazy { SampleAdapter(vm) }
+    private val sampleAdapter by lazy_ofNone { SampleAdapter(vm) }
 
     override fun initView(savedInstanceState: Bundle?) {
         vdb.rvItems.apply {

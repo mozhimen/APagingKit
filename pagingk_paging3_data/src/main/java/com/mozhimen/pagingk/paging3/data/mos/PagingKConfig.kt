@@ -15,5 +15,8 @@ class PagingKConfig(
     /**
      * 每页需要加载的数量
      */
-    val pageSize: Int = 10
+    val pageSize: Int = 10,
+
+    val prefetchDistance: Int = pageSize / 2,
+    val initialLoadSize :Int = pageSize * 2
 )
