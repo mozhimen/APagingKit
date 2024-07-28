@@ -33,7 +33,7 @@ include ':ALibKit_Jetpack:paging300'
 include ':ALibKit_Squareup'
 project(':ALibKit_Squareup').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Squareup")
 include ':ALibKit_Squareup:okhttp3'
-include ':ALibKit_Squareup:okhttp3_log'
+include ':ALibKit_Squareup:okhttp3_logging_interceptor'
 include ':ALibKit_Squareup:retrofit2'
 include ':ALibKit_Squareup:moshi'
 //SwiftKit
