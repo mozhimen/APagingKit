@@ -33,6 +33,9 @@ class PagingKDataRes<RES> {
     var totalItemNum = 0//总条数
     var pageSize = 0//一页条数
 
+    fun toPagingKRep(): PagingKBaseRes<RES> =
+        PagingKBaseRes(1, null, this)
+
     //////////////////////////////////////////////////////
 
     override fun toString(): String {

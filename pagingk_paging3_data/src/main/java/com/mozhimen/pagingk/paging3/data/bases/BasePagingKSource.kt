@@ -6,6 +6,8 @@ import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.basick.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKSource
 import com.mozhimen.pagingk.paging3.data.mos.PagingKConfig
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * @ClassName BasePagingKSource
@@ -30,7 +32,9 @@ abstract class BasePagingKSource<RES, DES : Any>(
             onLoadStart(currentPageIndex)
 
             //加载数据
-            val pagingKRep = onLoadRes(currentPageIndex, _pagingKConfig.pageSize)
+            val pagingKRep = withContext(Dispatchers.IO){
+                onLoadRes(currentPageIndex, _pagingKConfig.pageSize)
+            }
             val transformData: MutableList<DES>
 
             if (pagingKRep.isSuccessful()) {
