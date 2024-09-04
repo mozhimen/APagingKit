@@ -1,14 +1,14 @@
 package com.mozhimen.pagingk.paging3.list.bases
 
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.mozhimen.basick.elemk.androidx.fragment.bases.databinding.BaseFragmentVDB
-import com.mozhimen.basick.utilk.android.view.applyGone
-import com.mozhimen.basick.utilk.android.view.applyVisible
+import com.mozhimen.mvvmk.bases.fragment.databinding.BaseFragmentVDB
+import com.mozhimen.kotlin.utilk.android.view.applyGone
+import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.pagingk.paging3.list.commons.IPagingKActivity
 import com.mozhimen.pagingk.paging3.list.cons.CPagingKLoadingState
 

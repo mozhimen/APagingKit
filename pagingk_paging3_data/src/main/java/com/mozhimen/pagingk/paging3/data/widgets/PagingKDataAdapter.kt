@@ -2,7 +2,7 @@ package com.mozhimen.pagingk.paging3.data.widgets
 
 import android.content.Context
 import android.util.SparseArray
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
@@ -12,9 +12,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStart
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
+import com.mozhimen.kotlin.utilk.androidx.lifecycle.handleLifecycleEventOnStart
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKDataAdapter
 import com.mozhimen.pagingk.paging3.data.widgets.commons.IOnPageItemChildClickListener
 import com.mozhimen.pagingk.paging3.data.widgets.commons.IOnPageItemChildLongClickListener

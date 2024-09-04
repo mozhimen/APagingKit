@@ -1,7 +1,7 @@
 package com.mozhimen.pagingk.paging3.list.widgets
 
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +15,10 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
-import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStart
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.android.view.applyDebounceClickListener
+import com.mozhimen.kotlin.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
+import com.mozhimen.kotlin.utilk.androidx.lifecycle.handleLifecycleEventOnStart
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.list.bases.BasePagedListAdapter
 import com.mozhimen.pagingk.paging3.list.widgets.commons.IOnPageItemChildClickListener
 import com.mozhimen.pagingk.paging3.list.widgets.commons.IOnPageItemClickListener

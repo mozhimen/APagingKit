@@ -35,7 +35,7 @@ dependencies {
 
     //////////////////////////////////////////////////////////////////
 
-    implementation project(':SwiftKit:basick')
+    implementation project(':SwiftKit:mvvmk')
     implementation project(':SwiftKit:xmlk')
     implementation project(':AXmlKit:vhk')
 

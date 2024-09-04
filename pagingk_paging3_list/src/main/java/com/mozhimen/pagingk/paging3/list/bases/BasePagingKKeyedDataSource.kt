@@ -1,7 +1,7 @@
 package com.mozhimen.pagingk.paging3.list.bases
 
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.paging.PageKeyedDataSource
 import com.mozhimen.pagingk.paging3.list.commons.IPagingKDataSourceLoadListener
 import com.mozhimen.pagingk.paging3.list.commons.IPagingKKeyedDataSource

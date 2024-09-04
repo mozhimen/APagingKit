@@ -2,11 +2,11 @@ package com.mozhimen.pagingk.paging3.data.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.data.R
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKVHKProvider
 import com.mozhimen.xmlk.vhk.VHKLifecycle

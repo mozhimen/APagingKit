@@ -3,7 +3,7 @@ package com.mozhimen.pagingk.test.paging
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.mozhimen.basick.elemk.androidx.lifecycle.bases.BaseViewModel
+import com.mozhimen.kotlin.elemk.androidx.lifecycle.bases.BaseViewModel
 import com.mozhimen.pagingk.test.restful.Repository
 
 /**

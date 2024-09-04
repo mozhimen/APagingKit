@@ -1,12 +1,12 @@
 package com.mozhimen.pagingk.paging3.data.bases
 
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.mozhimen.basick.elemk.androidx.lifecycle.bases.BaseViewModel
-import com.mozhimen.basick.utilk.java.util.UtilKDateWrapper
+import com.mozhimen.kotlin.elemk.androidx.lifecycle.bases.BaseViewModel
+import com.mozhimen.kotlin.utilk.java.util.UtilKDateWrapper
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKSource
 import com.mozhimen.pagingk.paging3.data.cons.CPagingKLoadingState
 import com.mozhimen.pagingk.paging3.data.mos.PagingKBaseRes

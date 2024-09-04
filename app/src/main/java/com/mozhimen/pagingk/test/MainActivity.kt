@@ -1,8 +1,8 @@
 package com.mozhimen.pagingk.test
 
 import android.view.View
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
-import com.mozhimen.basick.utilk.android.content.startContext
+import com.mozhimen.mvvmk.bases.activity.databinding.BaseActivityVDB
+import com.mozhimen.kotlin.utilk.android.content.startContext
 import com.mozhimen.pagingk.test.countdown.CountDownActivity
 import com.mozhimen.pagingk.test.crud.CrudActivity
 import com.mozhimen.pagingk.test.databinding.ActivityMainBinding

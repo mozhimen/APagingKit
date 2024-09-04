@@ -3,7 +3,7 @@ package com.mozhimen.pagingk.paging3.data.bases
 import android.content.Context
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.data.widgets.PagingKDataMultiAdapter
 import com.mozhimen.xmlk.vhk.VHKLifecycle
 import com.mozhimen.xmlk.vhk.commons.IVHKProvider

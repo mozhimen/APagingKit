@@ -2,15 +2,15 @@ package com.mozhimen.pagingk.paging3.list.widgets
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
-import com.mozhimen.basick.utilk.android.view.applyDebounceClickListener
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.android.view.applyDebounceClickListener
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.list.bases.BasePagingKVHKProvider
 import com.mozhimen.xmlk.vhk.VHKRecycler
 

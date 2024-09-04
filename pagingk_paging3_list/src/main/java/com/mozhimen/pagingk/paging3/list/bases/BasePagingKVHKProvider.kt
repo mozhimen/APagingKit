@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import com.mozhimen.basick.utilk.android.view.UtilKView
-import com.mozhimen.basick.utilk.android.view.UtilKViewWrapper
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.android.view.UtilKView
+import com.mozhimen.kotlin.utilk.android.view.UtilKViewWrapper
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.list.widgets.PagingKPagedListMultiAdapter
 import com.mozhimen.xmlk.vhk.VHKRecycler
 import java.lang.ref.WeakReference

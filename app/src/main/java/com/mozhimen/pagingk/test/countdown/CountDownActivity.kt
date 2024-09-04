@@ -2,7 +2,7 @@ package com.mozhimen.pagingk.test.countdown
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
+import com.mozhimen.mvvmk.bases.activity.databinding.BaseActivityVDB
 import com.mozhimen.pagingk.test.databinding.ActivityCountDownBinding
 
 class CountDownActivity : BaseActivityVDB<ActivityCountDownBinding>() {

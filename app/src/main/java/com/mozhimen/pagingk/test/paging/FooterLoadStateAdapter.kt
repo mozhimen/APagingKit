@@ -1,11 +1,11 @@
 package com.mozhimen.pagingk.test.paging
 
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-import com.mozhimen.basick.elemk.commons.I_Listener
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.elemk.commons.I_Listener
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 
 /**
  * @ClassName LoadStateFooterAdapter

@@ -3,7 +3,7 @@ package com.mozhimen.pagingk.test.crud
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDBVM
+import com.mozhimen.mvvmk.bases.activity.databinding.BaseActivityVDBVM
 import com.mozhimen.pagingk.test.databinding.ActivityCrudBinding
 
 class CrudActivity : BaseActivityVDBVM<ActivityCrudBinding, SampleViewModel>() {

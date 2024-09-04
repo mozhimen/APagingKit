@@ -1,6 +1,6 @@
 package com.mozhimen.pagingk.paging3.list.helpers
 
-import com.mozhimen.basick.utilk.kotlin.UtilKThrowable
+import com.mozhimen.kotlin.utilk.kotlin.UtilKThrowable
 import com.mozhimen.pagingk.paging3.list.bases.BasePagingKRep
 
 /**

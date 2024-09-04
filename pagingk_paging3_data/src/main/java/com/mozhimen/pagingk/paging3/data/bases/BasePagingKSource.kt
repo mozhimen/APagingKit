@@ -2,8 +2,8 @@ package com.mozhimen.pagingk.paging3.data.bases
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKSource
 import com.mozhimen.pagingk.paging3.data.mos.PagingKConfig
 import kotlinx.coroutines.Dispatchers
