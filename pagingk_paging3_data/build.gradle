@@ -32,6 +32,7 @@ android {
 
 dependencies {
     api project(':ALibKit_Jetpack:paging3')
+    api project(project.path.replace(project.name,'')+':basic')
 
     //////////////////////////////////////////////////////////////////
 

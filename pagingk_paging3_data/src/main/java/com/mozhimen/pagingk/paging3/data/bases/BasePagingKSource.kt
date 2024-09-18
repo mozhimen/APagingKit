@@ -4,8 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.kotlin.utilk.commons.IUtilK
-import com.mozhimen.pagingk.paging3.data.commons.IPagingKSource
-import com.mozhimen.pagingk.paging3.data.mos.PagingKConfig
+import com.mozhimen.pagingk.basic.commons.IPagingKSource
+import com.mozhimen.pagingk.basic.mos.PagingKConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

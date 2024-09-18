@@ -7,7 +7,8 @@ import com.mozhimen.basick.bases.BaseWakeBefDestroyLifecycleObserver
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
-import com.mozhimen.pagingk.paging3.data.cons.CPagingKLoadingState
+import com.mozhimen.pagingk.basic.cons.CPagingKLoadingState
+import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

@@ -24,11 +24,15 @@ include ':pagingk_paging3_list'
 include ':pagingk_paging3_data'
 include ':pagingk_epoxy3'
 include ':pagingk_epoxy4'
+include ':pagingk_paging3_compose'
+include ':pagingk_paging3_compose_test'
 //ALibKit_Jetpack
 include ':ALibKit_Jetpack'
 project(':ALibKit_Jetpack').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Jetpack")
 include ':ALibKit_Jetpack:paging3'
 include ':ALibKit_Jetpack:paging300'
+include ':ALibKit_Jetpack:paging_compose'
+include ':ALibKit_Jetpack:lifecycle_viewmodel_compose'
 //ALibKit_Squareup
 include ':ALibKit_Squareup'
 project(':ALibKit_Squareup').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Squareup")
@@ -36,11 +40,14 @@ include ':ALibKit_Squareup:okhttp3'
 include ':ALibKit_Squareup:okhttp3_logging_interceptor'
 include ':ALibKit_Squareup:retrofit2'
 include ':ALibKit_Squareup:moshi'
+include ':ALibKit_Squareup:retrofit2_converter_gson'
 //SwiftKit
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\SwiftKit")
 include ':SwiftKit:basick'
 include ':SwiftKit:xmlk'
+include ':SwiftKit:mvvmk'
+include ':SwiftKit:composek'
 //ANetKit
 include ':ANetKit'
 project(':ANetKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ANetKit")
@@ -53,4 +60,11 @@ include ':AXmlKit:vhk'
 include ':ASerialKit'
 project(':ASerialKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ASerialKit")
 include ':ASerialKit:serialk_moshi'
+//KUtilKit
+include ':KUtilKit'
+project(':KUtilKit').projectDir = new File("D:\\WorkSpace\\GitHub\\KUtilKit")
+include ':KUtilKit:utilk_android'
+include ':KUtilKit:utilk_kotlin'
 
+
+include ':basic'

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.data.R
-import com.mozhimen.pagingk.paging3.data.bases.BasePagingKVHKProvider
+import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKVHKProvider
 import com.mozhimen.xmlk.vhk.VHKLifecycle
 import java.lang.ref.WeakReference
 

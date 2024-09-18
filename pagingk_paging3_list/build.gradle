@@ -31,7 +31,9 @@ android {
 }
 
 dependencies {
+    api project(':SwiftKit:mvvmk')
     api project(':ALibKit_Jetpack:paging300')
+    api project(project.path.replace(project.name,'')+':basic')
 
     //////////////////////////////////////////////////////////////////
 
