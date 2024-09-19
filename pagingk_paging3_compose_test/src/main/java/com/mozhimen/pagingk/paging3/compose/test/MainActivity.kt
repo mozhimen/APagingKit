@@ -51,27 +51,35 @@ fun Greeting() {
             items(
                 count = pagingItems.itemCount
             ) { index ->
-                Message(data = pagingItems[index])
+                pagingItems[index]?.let { Message(data = it) }
             }
-            if (pagingItems.loadState.refresh is LoadState.Loading) {
-                Log.d("MainActivity>>>>>", "正在加载")
-            } else if (pagingItems.loadState.refresh is LoadState.Error) {
-                when ((pagingItems.loadState.refresh as LoadState.Error).error) {
-                    is IOException -> {
-                        Log.d("MainActivity>>>>>", "网络未连接，可在这里放置失败视图")
-                    }
+            when (val refresh = pagingItems.loadState.refresh) {
+                LoadState.Loading -> {
+                    Log.d("MainActivity>>>>>", "正在加载")
+                }
 
-                    else -> {
-                        Log.d("MainActivity>>>>>", "网络未连接，其他异常")
+                is LoadState.Error -> {
+                    when (refresh.error) {
+                        is IOException -> {
+                            Log.d("MainActivity>>>>>", "网络未连接，可在这里放置失败视图")
+                        }
+
+                        else -> {
+                            Log.d("MainActivity>>>>>", "网络未连接，其他异常")
+                        }
                     }
                 }
+
+                is LoadState.NotLoading -> {}
             }
         }
     }
 }
 
 @Composable
-fun Message(data: DataRes?) {
+fun Message(
+    data: DataRes = DataRes()
+) {
     Card(
         modifier = Modifier
             .background(Color.White)
@@ -80,10 +88,10 @@ fun Message(data: DataRes?) {
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             Text(
-                text = "作者: ${data?.author}"
+                text = "作者: ${data.author}"
             )
             Text(
-                text = "${data?.title}"
+                text = "${data.title}"
             )
         }
     }

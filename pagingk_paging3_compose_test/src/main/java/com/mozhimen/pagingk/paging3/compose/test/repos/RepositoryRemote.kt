@@ -2,6 +2,7 @@ package com.mozhimen.pagingk.paging3.compose.test.repos
 
 import androidx.annotation.WorkerThread
 import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
+import com.mozhimen.pagingk.basic.mos.PagingKDataRes
 import com.mozhimen.pagingk.paging3.compose.test.restful.ApiFactory
 import com.mozhimen.pagingk.paging3.compose.test.restful.Apis
 import com.mozhimen.pagingk.paging3.compose.test.restful.mos.BaseRes
@@ -28,5 +29,13 @@ object RepositoryRemote {
 
     @WorkerThread
     @JvmStatic
-    suspend fun getDataOnBack2(pageIndex: Int):PagingKBaseRes<>
+    suspend fun getDataOnBack2(pageIndex: Int):PagingKBaseRes<DataRes> {
+        return baseRes2pagingKBaseRes(ApiFactory.netKRetrofit2.create<Apis>().getData(pageIndex))
+    }
+
+    fun baseRes2pagingKBaseRes(res: BaseRes<PageRes<DataRes>>?): PagingKBaseRes<DataRes> {
+        return res?.data?.let { data->
+            PagingKBaseRes(1, null, PagingKDataRes(data.curPage, data.pageCount, data.size, data.total, data.datas))
+        } ?: PagingKBaseRes(0, null)
+    }
 }
