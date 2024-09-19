@@ -68,7 +68,7 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
 
     private val _flowLoadState = MutableStateFlow<Int?>(null)
     val flowLoadState get() = _flowLoadState
-    private val _flowPagingData = pager.flow
+    private val _flowPagingData by lazy { pager.flow }
     val flowPagingData get() = _flowPagingData
 
     ////////////////////////////////////////////////////////////////////////////////////
