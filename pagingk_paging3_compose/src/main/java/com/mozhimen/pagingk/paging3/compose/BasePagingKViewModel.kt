@@ -10,6 +10,8 @@ import com.mozhimen.pagingk.basic.cons.CPagingKLoadingState
 import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
 import com.mozhimen.pagingk.basic.mos.PagingKConfig
 import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 
 /**
  * @ClassName BasePagingKViewModel
@@ -68,7 +70,7 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
 
     private val _flowLoadState = MutableStateFlow<Int?>(null)
     val flowLoadState get() = _flowLoadState
-    private val _flowPagingData by lazy { pager.flow }
+    private val _flowPagingData by lazy { pager.flow.cachedIn(viewModelScope) }
     val flowPagingData get() = _flowPagingData
 
     ////////////////////////////////////////////////////////////////////////////////////

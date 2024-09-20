@@ -26,6 +26,7 @@ include ':pagingk_epoxy3'
 include ':pagingk_epoxy4'
 include ':pagingk_paging3_compose'
 include ':pagingk_paging3_compose_test'
+include ':basic'
 //ALibKit_Jetpack
 include ':ALibKit_Jetpack'
 project(':ALibKit_Jetpack').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Jetpack")
@@ -33,6 +34,7 @@ include ':ALibKit_Jetpack:paging3'
 include ':ALibKit_Jetpack:paging300'
 include ':ALibKit_Jetpack:paging_compose'
 include ':ALibKit_Jetpack:lifecycle_viewmodel_compose'
+include ':ALibKit_Jetpack:lifecycle_viewmodel'
 //ALibKit_Squareup
 include ':ALibKit_Squareup'
 project(':ALibKit_Squareup').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Squareup")
@@ -67,4 +69,3 @@ include ':KUtilKit:utilk_android'
 include ':KUtilKit:utilk_kotlin'
 
 
-include ':basic'

@@ -32,6 +32,7 @@ android {
 dependencies {
     api project(project.path.replace(project.name,'')+':basic')
     api project(':ALibKit_Jetpack:paging_compose')
+    api project(':ALibKit_Jetpack:lifecycle_viewmodel')
     implementation project(':KUtilKit:utilk_android')
 
     testImplementation 'junit:junit:4.13.2'

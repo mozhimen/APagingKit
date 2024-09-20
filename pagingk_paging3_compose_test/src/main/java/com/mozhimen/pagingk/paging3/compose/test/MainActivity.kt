@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mozhimen.kotlin.elemk.commons.IA_Listener
+import com.mozhimen.kotlin.utilk.kotlin.collections.main
 import com.mozhimen.pagingk.paging3.compose.test.restful.mos.DataRes
 import com.mozhimen.pagingk.paging3.compose.test.ui.theme.ComposePagingDemoTheme
 import java.io.IOException
@@ -46,52 +49,66 @@ class MainActivity : ComponentActivity() {
 fun Greeting() {
     val mainViewmodel: MainViewModel2 = viewModel()
     val pagingItems: LazyPagingItems<DataRes> = mainViewmodel.flowPagingData.collectAsLazyPagingItems()
+    when (val refresh = pagingItems.loadState.refresh) {
+        LoadState.Loading -> {
+            Log.d("MainActivity>>>>>", "正在加载")
+        }
+
+        is LoadState.Error -> {
+            when (refresh.error) {
+                is IOException -> {
+                    Log.d("MainActivity>>>>>", "网络未连接，可在这里放置失败视图")
+                }
+
+                else -> {
+                    Log.d("MainActivity>>>>>", "网络未连接，其他异常")
+                }
+            }
+        }
+
+        is LoadState.NotLoading -> {}
+    }
     Column {
         LazyColumn {
             items(
                 count = pagingItems.itemCount
             ) { index ->
-                pagingItems[index]?.let { Message(data = it) }
-            }
-            when (val refresh = pagingItems.loadState.refresh) {
-                LoadState.Loading -> {
-                    Log.d("MainActivity>>>>>", "正在加载")
-                }
-
-                is LoadState.Error -> {
-                    when (refresh.error) {
-                        is IOException -> {
-                            Log.d("MainActivity>>>>>", "网络未连接，可在这里放置失败视图")
+                pagingItems[index]?.let {
+                    ItemMessage(
+                        dataRes = it,
+                        onItemClick = {
+                            mainViewmodel.flowPagingData
                         }
-
-                        else -> {
-                            Log.d("MainActivity>>>>>", "网络未连接，其他异常")
-                        }
-                    }
+                    )
                 }
-
-                is LoadState.NotLoading -> {}
             }
         }
     }
 }
 
 @Composable
-fun Message(
-    data: DataRes = DataRes()
+fun ItemMessage(
+    dataRes: DataRes = DataRes(),
+    onItemClick: IA_Listener<DataRes>? = null
 ) {
     Card(
         modifier = Modifier
             .background(Color.White)
             .padding(10.dp)
-            .fillMaxSize(), elevation = 10.dp
+            .fillMaxSize()
+            .clickable {
+                onItemClick?.invoke(dataRes)
+            },
+        elevation = 10.dp
     ) {
-        Column(modifier = Modifier.padding(10.dp)) {
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
             Text(
-                text = "作者: ${data.author}"
+                text = "作者: ${dataRes.author}"
             )
             Text(
-                text = "${data.title}"
+                text = "${dataRes.title}"
             )
         }
     }
