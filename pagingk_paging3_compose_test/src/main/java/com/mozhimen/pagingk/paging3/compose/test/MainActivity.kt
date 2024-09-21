@@ -23,12 +23,13 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.mozhimen.kotlin.elemk.commons.IA_Listener
-import com.mozhimen.kotlin.utilk.kotlin.collections.main
+import com.mozhimen.kotlin.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.java.util.UtilKDateWrapper
 import com.mozhimen.pagingk.paging3.compose.test.restful.mos.DataRes
 import com.mozhimen.pagingk.paging3.compose.test.ui.theme.ComposePagingDemoTheme
 import java.io.IOException
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), IUtilK {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting() {
-    val mainViewmodel: MainViewModel2 = viewModel()
+    val mainViewmodel: MainViewModel = viewModel()
     val pagingItems: LazyPagingItems<DataRes> = mainViewmodel.flowPagingData.collectAsLazyPagingItems()
     when (val refresh = pagingItems.loadState.refresh) {
         LoadState.Loading -> {
@@ -77,7 +78,12 @@ fun Greeting() {
                     ItemMessage(
                         dataRes = it,
                         onItemClick = {
-                            mainViewmodel.flowPagingData
+                            Log.d("Greeting>>>>>", "Greeting: onItemClick")
+//                            mainViewmodel.onViewEvent(MainViewModel.SViewEvents.Edit1(it)
+                            mainViewmodel.onViewEvent(MainViewModel.SViewEvents.Edit2(it) { dataRes: DataRes ->
+                                dataRes.author += "点击:${UtilKDateWrapper.getNowStr()}"
+                                dataRes
+                            })
                         }
                     )
                 }

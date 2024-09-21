@@ -4,7 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.kotlin.utilk.commons.IUtilK
-import com.mozhimen.pagingk.basic.commons.IPagingKSource
+import com.mozhimen.pagingk.basic.commons.IPagingKDataSource
+import com.mozhimen.pagingk.basic.commons.IPagingKStateSource
 import com.mozhimen.pagingk.basic.mos.PagingKConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,24 +17,34 @@ import kotlinx.coroutines.withContext
  * @Date 2024/4/28
  * @Version 1.0
  */
-abstract class BasePagingKSource<RES, DES : Any>(
-    private val _pagingKConfig: PagingKConfig
-) : PagingSource<Int, DES>(), IPagingKSource<RES, DES>, IUtilK {
+abstract class BasePagingKPagingSource<RES, DES : Any> : PagingSource<Int, DES>(),
+    IPagingKStateSource<RES, DES>,
+    IPagingKDataSource<RES, DES>,
+    IUtilK {
 
-    override fun getRefreshKey(state: PagingState<Int, DES>): Int? = null
+    abstract val pagingKConfig: PagingKConfig
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    override fun getRefreshKey(state: PagingState<Int, DES>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DES> {
         try {
-            val currentPageIndex: Int = params.key ?: _pagingKConfig.pageIndexFirst//页码未定义置为1
-            val prevPageIndex = if (currentPageIndex <= _pagingKConfig.pageIndexFirst) null else currentPageIndex - 1
+            val currentPageIndex: Int = params.key ?: pagingKConfig.pageIndexFirst//页码未定义置为1
+            val prevPageIndex: Int? = if (currentPageIndex <= pagingKConfig.pageIndexFirst) null else currentPageIndex - 1
             var nextPageIndex: Int? = null
 
             //第一次加载
             onLoadStart(currentPageIndex)
 
             //加载数据
-            val pagingKRep = withContext(Dispatchers.IO){
-                onLoadRes(currentPageIndex, _pagingKConfig.pageSize)
+            val pagingKRep = withContext(Dispatchers.IO) {
+                onLoading(currentPageIndex, pagingKConfig.pageSize)
             }
             val transformData: MutableList<DES>
 
@@ -46,8 +57,8 @@ abstract class BasePagingKSource<RES, DES : Any>(
                         if (_totalPageNum <= 0) {
                             val _totalItemNum = _data.totalItemNum
                             //total 总条数 用总条数/每页数量=总页数
-                            _totalPageNum = _totalItemNum / _pagingKConfig.pageSize
-                            if (_totalItemNum % _pagingKConfig.pageSize > 0) {
+                            _totalPageNum = _totalItemNum / pagingKConfig.pageSize
+                            if (_totalItemNum % pagingKConfig.pageSize > 0) {
                                 _totalPageNum += 1
                             }
                         }
@@ -61,14 +72,19 @@ abstract class BasePagingKSource<RES, DES : Any>(
 
                         //添加头部
                         onGetHeader()?.let {
-                            transformData.add(0, it)
-                        }
-                        //添加底部
-                        if (nextPageIndex == null && onGetFooter() != null) {
-                            transformData.add(onGetFooter()!!)
+                            if (currentPageIndex == pagingKConfig.pageIndexFirst) {
+                                transformData.add(0, it)
+                            }
                         }
 
-                        //第一次加载结束
+                        //添加底部
+                        onGetFooter()?.let {
+                            if (nextPageIndex == null) {
+                                transformData.add(it)
+                            }
+                        }
+
+                        //加载结束
                         onLoadFinished(currentPageIndex, false)
 
                         return LoadResult.Page(transformData, prevPageIndex, nextPageIndex)
@@ -83,7 +99,9 @@ abstract class BasePagingKSource<RES, DES : Any>(
 
             //添加头部
             onGetHeader()?.let {
-                transformData.add(0, it)
+                if (currentPageIndex == pagingKConfig.pageIndexFirst) {
+                    transformData.add(0, it)
+                }
             }
 
             //添加底部
@@ -91,7 +109,7 @@ abstract class BasePagingKSource<RES, DES : Any>(
                 transformData.add(it)
             }
 
-            //第一次加载结束
+            //加载结束
             onLoadFinished(currentPageIndex, true)
 
             return LoadResult.Page(transformData, prevPageIndex, nextPageIndex)

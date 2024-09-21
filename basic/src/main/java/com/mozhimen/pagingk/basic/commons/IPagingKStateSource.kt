@@ -9,9 +9,9 @@ import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
  * @Date 2023/10/12 14:50
  * @Version 1.0
  */
-interface IPagingKSource<RES, DES> : IPagingKDataSource<RES, DES> {
+interface IPagingKStateSource<RES, DES> {
 
-    suspend fun onLoadStart(currentPageIndex: Int) {}
+    suspend fun onLoadStart(currentPageIndex: Int)
 
     /**
      * 初次调用
@@ -20,7 +20,7 @@ interface IPagingKSource<RES, DES> : IPagingKDataSource<RES, DES> {
      * 加载下一页
      * @param p 下一页的页码
      */
-    suspend fun onLoadRes(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES>
+    suspend fun onLoading(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES>
 
-    suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {}
+    suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean)
 }

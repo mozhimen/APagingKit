@@ -19,8 +19,6 @@ class PagingSourceData : PagingSource<Int, DataRes>(), IUtilK {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataRes> {
         return try {
             val currentPage = params.key ?: 1
-            //仓库层请求数据
-            Log.d("请求页码标记", "请求第${currentPage}页")
             val dataRes = RepositoryRemote.getDataOnBack(currentPage)
             //上一页
             val prevPage = if (currentPage == 1) null else currentPage - 1
@@ -39,15 +37,14 @@ class PagingSourceData : PagingSource<Int, DataRes>(), IUtilK {
             )
 
         } catch (e: Exception) {
-            if (e is IOException) {
-                Log.d("测试错误数据", "-------连接失败")
-            }
-            Log.d("测试错误数据", "-------${e.message}")
             LoadResult.Error(throwable = e)
         }
     }
 
     override fun getRefreshKey(state: PagingState<Int, DataRes>): Int? {
-        return null
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 }

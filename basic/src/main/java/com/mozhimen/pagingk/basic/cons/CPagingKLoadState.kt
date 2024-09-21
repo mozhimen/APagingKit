@@ -7,7 +7,7 @@ package com.mozhimen.pagingk.basic.cons
  * @Date 2023/10/11 16:44
  * @Version 1.0
  */
-object CPagingKLoadingState {
+object CPagingKLoadState {
     const val STATE_FIRST_LOAD_START = 0
     const val STATE_FIRST_LOAD_FINISH = 1
     const val STATE_FIRST_LOAD_EMPTY = 2

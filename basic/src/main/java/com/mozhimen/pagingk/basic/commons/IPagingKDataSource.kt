@@ -14,7 +14,7 @@ interface IPagingKDataSource<RES, DES> {
      * @param hasMore 是否还有更多
      * @param datas 数据
      */
-    suspend fun onCombineData(currentPageIndex: Int?, datas: MutableList<DES>) {}
+    suspend fun onCombineData(currentPageIndex: Int?, datas: MutableList<DES>){}
 
     /**
      * 数据聚合 将请求回来的原始数据，组装成目标数据

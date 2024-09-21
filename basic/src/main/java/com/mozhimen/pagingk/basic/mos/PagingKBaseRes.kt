@@ -8,6 +8,15 @@ package com.mozhimen.pagingk.basic.mos
  * @Version 1.0
  */
 class PagingKBaseRes<RES> {
+
+    companion object {
+        @JvmStatic
+        fun <RES> empty(): PagingKBaseRes<RES> =
+            PagingKBaseRes(0, null)
+    }
+
+    //////////////////////////////////////////////////////
+
     constructor()
 
     constructor(code: Int, msg: String?) {
