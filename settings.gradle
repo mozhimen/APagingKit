@@ -35,6 +35,8 @@ include ':ALibKit_Jetpack:paging300'
 include ':ALibKit_Jetpack:paging_compose'
 include ':ALibKit_Jetpack:lifecycle_viewmodel_compose'
 include ':ALibKit_Jetpack:lifecycle_viewmodel'
+include ':ALibKit_Jetpack:room'
+include ':ALibKit_Jetpack:room_paging'
 //ALibKit_Squareup
 include ':ALibKit_Squareup'
 project(':ALibKit_Squareup').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Squareup")

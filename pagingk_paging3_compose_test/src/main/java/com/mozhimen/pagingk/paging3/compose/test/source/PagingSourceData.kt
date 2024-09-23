@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.mozhimen.kotlin.utilk.commons.IUtilK
+import com.mozhimen.pagingk.paging3.compose.test.db.DataEntity
 import com.mozhimen.pagingk.paging3.compose.test.repos.RepositoryRemote
 import com.mozhimen.pagingk.paging3.compose.test.restful.mos.DataRes
 import java.io.IOException
@@ -15,8 +16,8 @@ import java.lang.Exception
  * @date 2020/11/7
  * @desc 数据源
  */
-class PagingSourceData : PagingSource<Int, DataRes>(), IUtilK {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataRes> {
+class PagingSourceData : PagingSource<Int, DataEntity>(), IUtilK {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataEntity> {
         return try {
             val currentPage = params.key ?: 1
             val dataRes = RepositoryRemote.getDataOnBack(currentPage)
@@ -31,7 +32,7 @@ class PagingSourceData : PagingSource<Int, DataRes>(), IUtilK {
             }
 
             LoadResult.Page(
-                data = dataRes.data!!.datas!!,
+                data = dataRes.data?.datas?.map { DataEntity(it.id.toString(), it.author?:"", it.title?:"") } ?: emptyList(),
                 prevKey = prevPage,
                 nextKey = nextPage
             )
@@ -41,7 +42,7 @@ class PagingSourceData : PagingSource<Int, DataRes>(), IUtilK {
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, DataRes>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, DataEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

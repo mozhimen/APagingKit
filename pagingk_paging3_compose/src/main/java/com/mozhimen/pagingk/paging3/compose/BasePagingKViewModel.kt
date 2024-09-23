@@ -26,15 +26,14 @@ import com.mozhimen.pagingk.basic.commons.IPagingKDataSource
  * @Date 2023/10/11 16:22
  * @Version 1.0
  */
-abstract class BasePagingKViewModel<RES, DES : Any>(val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKStateSource<RES, DES> {
+abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKStateSource<RES, DES> {
 
     val flowLoadState = MutableStateFlow<Int?>(null)
     val flowPagingData = getPager().flow.cachedIn(viewModelScope)
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    open val dataSource: IPagingKDataSource<RES, DES>? = null
-
+    abstract val dataSource: IPagingKDataSource<RES, DES>?
 
     open fun getPagingSourceFactory(): () -> PagingSource<Int, DES> {
         return {

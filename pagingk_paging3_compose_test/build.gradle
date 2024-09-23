@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -46,6 +47,10 @@ dependencies {
     implementation project(':ALibKit_Squareup:retrofit2_converter_gson')
     implementation project(':ALibKit_Jetpack:lifecycle_viewmodel_compose')
 
+    //room
+    implementation project(':ALibKit_Jetpack:room')
+    implementation project(':ALibKit_Jetpack:room_paging')
+    kapt 'androidx.room:room-compiler:2.6.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'

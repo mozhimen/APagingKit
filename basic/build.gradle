@@ -31,8 +31,8 @@ android {
 }
 
 dependencies {
-    api project(':ALibKit_Jetpack:room')
-    api project(':ALibKit_Jetpack:room_paging')
+    implementation project(':ALibKit_Jetpack:room')
+    implementation project(':ALibKit_Jetpack:room_paging')
     kapt 'androidx.room:room-compiler:2.6.1'
     implementation project(':KUtilKit:utilk_android')
 

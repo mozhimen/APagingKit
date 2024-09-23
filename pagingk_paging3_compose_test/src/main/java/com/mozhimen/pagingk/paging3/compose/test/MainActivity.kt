@@ -25,6 +25,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.mozhimen.kotlin.elemk.commons.IA_Listener
 import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.kotlin.utilk.java.util.UtilKDateWrapper
+import com.mozhimen.pagingk.paging3.compose.test.db.DataEntity
 import com.mozhimen.pagingk.paging3.compose.test.restful.mos.DataRes
 import com.mozhimen.pagingk.paging3.compose.test.ui.theme.ComposePagingDemoTheme
 import java.io.IOException
@@ -48,8 +49,8 @@ class MainActivity : ComponentActivity(), IUtilK {
 
 @Composable
 fun Greeting() {
-    val mainViewmodel: MainViewModel = viewModel()
-    val pagingItems: LazyPagingItems<DataRes> = mainViewmodel.flowPagingData.collectAsLazyPagingItems()
+    val mainViewmodel: MainViewModel3 = viewModel()
+    val pagingItems: LazyPagingItems<DataEntity> = mainViewmodel.flowPagingData.collectAsLazyPagingItems()
     when (val refresh = pagingItems.loadState.refresh) {
         LoadState.Loading -> {
             Log.d("MainActivity>>>>>", "正在加载")
@@ -76,13 +77,19 @@ fun Greeting() {
             ) { index ->
                 pagingItems[index]?.let {
                     ItemMessage(
-                        dataRes = it,
-                        onItemClick = {
+                        dataEntity = it,
+                        onItemClick = { entity->
                             Log.d("Greeting>>>>>", "Greeting: onItemClick")
+                            //MainViewModel2
 //                            mainViewmodel.onViewEvent(MainViewModel.SViewEvents.Edit1(it)
-                            mainViewmodel.onViewEvent(MainViewModel.SViewEvents.Edit2(it) { dataRes: DataRes ->
-                                dataRes.author += "点击:${UtilKDateWrapper.getNowStr()}"
-                                dataRes
+//                            mainViewmodel.onViewEvent(MainViewModel.SViewEvents.Edit2(it) { dataRes: DataEntity ->
+//                                dataRes.author += "点击:${UtilKDateWrapper.getNowStr()}"
+//                                dataRes
+//                            })
+
+                            //MainViewModel3
+                            mainViewmodel.updateData(entity.apply {
+                                author+="点击:${UtilKDateWrapper.getNowStr()}"
                             })
                         }
                     )
@@ -94,8 +101,8 @@ fun Greeting() {
 
 @Composable
 fun ItemMessage(
-    dataRes: DataRes = DataRes(),
-    onItemClick: IA_Listener<DataRes>? = null
+    dataEntity: DataEntity = DataEntity(),
+    onItemClick: IA_Listener<DataEntity>? = null
 ) {
     Card(
         modifier = Modifier
@@ -103,7 +110,7 @@ fun ItemMessage(
             .padding(10.dp)
             .fillMaxSize()
             .clickable {
-                onItemClick?.invoke(dataRes)
+                onItemClick?.invoke(dataEntity)
             },
         elevation = 10.dp
     ) {
@@ -111,10 +118,10 @@ fun ItemMessage(
             modifier = Modifier.padding(10.dp)
         ) {
             Text(
-                text = "作者: ${dataRes.author}"
+                text = "作者: ${dataEntity.author}"
             )
             Text(
-                text = "${dataRes.title}"
+                text = dataEntity.title
             )
         }
     }

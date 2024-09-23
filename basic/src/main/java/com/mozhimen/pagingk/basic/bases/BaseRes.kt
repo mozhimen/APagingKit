@@ -7,4 +7,4 @@ package com.mozhimen.pagingk.basic.bases
  * @Date 2024/9/20
  * @Version 1.0
  */
-abstract class BaseRes(var id: String)
+abstract class BaseRes(open var id: String)
