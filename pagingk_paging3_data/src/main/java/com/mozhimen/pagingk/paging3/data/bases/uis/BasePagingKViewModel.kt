@@ -3,15 +3,20 @@ package com.mozhimen.pagingk.paging3.data.bases.uis
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingSource
+import androidx.paging.RemoteMediator
+import androidx.paging.cachedIn
 import com.mozhimen.kotlin.elemk.androidx.lifecycle.bases.BaseViewModel
 import com.mozhimen.kotlin.utilk.java.util.UtilKDateWrapper
-import com.mozhimen.pagingk.basic.commons.IPagingKSource
-import com.mozhimen.pagingk.basic.cons.CPagingKLoadingState
+import com.mozhimen.pagingk.basic.commons.IPagingKDataSource
+import com.mozhimen.pagingk.basic.commons.IPagingKStateSource
+import com.mozhimen.pagingk.basic.cons.CPagingKLoadState
 import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
 import com.mozhimen.pagingk.basic.mos.PagingKConfig
-import com.mozhimen.pagingk.paging3.data.bases.BasePagingKSource
+import com.mozhimen.pagingk.paging3.data.bases.BasePagingKPagingSource
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -23,10 +28,58 @@ import kotlinx.coroutines.CoroutineScope
  * @Date 2023/10/11 16:22
  * @Version 1.0
  */
-abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKSource<RES, DES> {
+abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKStateSource<RES, DES> {
 
-    @OptIn(androidx.paging.ExperimentalPagingApi::class)
-    open val pager by lazy {
+    val liveLoadState = MutableLiveData<Int>()
+    val flowPagingData = getPager().flow.cachedIn(viewModelScope)
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    abstract val dataSource: IPagingKDataSource<RES, DES>?
+
+    @OptIn(ExperimentalPagingApi::class)
+    open fun getPagingSourceFactory(): () -> PagingSource<Int, DES> {
+        return {
+            object : BasePagingKPagingSource<RES, DES>() {
+                override val pagingKConfig: PagingKConfig
+                    get() = this@BasePagingKViewModel.pagingKConfig
+
+                override suspend fun onLoadStart(currentPageIndex: Int) {
+                    this@BasePagingKViewModel.onLoadStart(currentPageIndex)
+                }
+
+                override suspend fun onLoading(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES> {
+                    return this@BasePagingKViewModel.onLoading(currentPageIndex, pageSize)
+                }
+
+                override suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {
+                    this@BasePagingKViewModel.onLoadFinished(currentPageIndex, isResEmpty)
+                }
+
+                override suspend fun onTransformData(currentPageIndex: Int?, datas: List<RES>): List<DES> {
+                    return dataSource?.onTransformData(currentPageIndex, datas) ?: emptyList()
+                }
+
+                override suspend fun onCombineData(currentPageIndex: Int?, datas: MutableList<DES>) {
+                    dataSource?.onCombineData(currentPageIndex, datas)
+                }
+
+                override suspend fun onGetHeader(): DES? {
+                    return dataSource?.onGetHeader()
+                }
+
+                override suspend fun onGetFooter(): DES? {
+                    return dataSource?.onGetFooter()
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    open fun getRemoteMediator(): RemoteMediator<Int, DES>? = null
+
+    @OptIn(ExperimentalPagingApi::class)
+    open fun getPager(): Pager<Int, DES> =
         Pager(
             config = PagingConfig(
                 pageSize = pagingKConfig.pageSize,//设置每页的大小
@@ -35,40 +88,9 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
                 initialLoadSize = pagingKConfig.initialLoadSize//设置首次加载的数量，要求是pageSize的整数倍
             ),
             initialKey = pagingKConfig.pageIndexFirst,
-            pagingSourceFactory = {
-                object : BasePagingKSource<RES, DES>(pagingKConfig) {
-                    override suspend fun onLoadStart(currentPageIndex: Int) {
-                        this@BasePagingKViewModel.onLoadStart(currentPageIndex)
-                    }
-
-                    override suspend fun onLoadRes(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES> {
-                        return this@BasePagingKViewModel.onLoadRes(currentPageIndex, pageSize)
-                    }
-
-                    override suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {
-                        this@BasePagingKViewModel.onLoadFinished(currentPageIndex, isResEmpty)
-                    }
-
-                    override suspend fun onTransformData(currentPageIndex: Int?, datas: List<RES>): List<DES> {
-                        return this@BasePagingKViewModel.onTransformData(currentPageIndex, datas)
-                    }
-
-                    override suspend fun onCombineData(currentPageIndex: Int?, datas: MutableList<DES>) {
-                        this@BasePagingKViewModel.onCombineData(currentPageIndex, datas)
-                    }
-
-                    override suspend fun onGetHeader(): DES? {
-                        return this@BasePagingKViewModel.onGetHeader()
-                    }
-
-                    override suspend fun onGetFooter(): DES? {
-                        return this@BasePagingKViewModel.onGetFooter()
-                    }
-                }
-            }
+            pagingSourceFactory = getPagingSourceFactory(),
+            remoteMediator = getRemoteMediator()
         )
-    }
-    val liveLoadState = MutableLiveData<Int>()
 
     ////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,7 +102,7 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
     override suspend fun onLoadStart(currentPageIndex: Int) {
         if (currentPageIndex == pagingKConfig.pageIndexFirst) {
             UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
-            liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_START)
+            liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_START)
         }
     }
 
@@ -88,9 +110,9 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
         if (currentPageIndex == pagingKConfig.pageIndexFirst) {
             UtilKLogWrapper.d(TAG, "onFirstLoadFinish: ${UtilKDateWrapper.getNowStr()} isEmpty $isResEmpty")
             if (isResEmpty)
-                liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_EMPTY)
+                liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_EMPTY)
             else
-                liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_FINISH)
+                liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_FINISH)
         }
     }
 }

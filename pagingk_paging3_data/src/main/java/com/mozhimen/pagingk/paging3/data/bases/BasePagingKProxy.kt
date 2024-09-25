@@ -6,8 +6,8 @@ import androidx.lifecycle.flowWithLifecycle
 import com.mozhimen.basick.bases.BaseWakeBefDestroyLifecycleObserver
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
+import com.mozhimen.pagingk.basic.cons.CPagingKLoadState
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
-import com.mozhimen.pagingk.basic.cons.CPagingKLoadingState
 import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -40,12 +40,12 @@ class BasePagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var
         }
         pagingKActivity.getViewModel().liveLoadState.observe(owner) {
             when (it) {
-                CPagingKLoadingState.STATE_FIRST_LOAD_START -> {
+                CPagingKLoadState.STATE_FIRST_LOAD_START -> {
                     pagingKActivity.getSwipeRefreshLayout()?.isRefreshing = true
                     pagingKActivity.onFirstLoadStart()
                 }
 
-                CPagingKLoadingState.STATE_FIRST_LOAD_FINISH -> {
+                CPagingKLoadState.STATE_FIRST_LOAD_FINISH -> {
                     pagingKActivity.getSwipeRefreshLayout()?.isRefreshing = false
                     pagingKActivity.onFirstLoadFinish()
                 }
@@ -57,7 +57,7 @@ class BasePagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var
             }
         }
 
-        pagingKActivity.getViewModel().pager.flow
+        pagingKActivity.getViewModel().flowPagingData
             .onEach { pagingKActivity.getPagingDataAdapter().submitData(it) }
             .flowWithLifecycle(owner.lifecycle, Lifecycle.State.CREATED)
             .launchIn(pagingKActivity.getViewModel().getViewModelScope())
