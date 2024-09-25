@@ -173,6 +173,7 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
 
     open suspend fun refreshDb(loadType: LoadType, transformData: List<DES>) {
         if (loadType == LoadType.REFRESH) {
+            Log.d(TAG, "refreshDb: ")
             deleteAll_ofDb()
             KeyDb.getKeyDao().deleteAll()
         }

@@ -18,5 +18,6 @@ class PagingKConfig constructor(
     val pageSize: Int = 10,
 
     val prefetchDistance: Int = pageSize / 2,
-    val initialLoadSize :Int = pageSize * 2
+    val initialLoadSize: Int = pageSize * 2,
+    val enablePlaceholders: Boolean = true,
 )
