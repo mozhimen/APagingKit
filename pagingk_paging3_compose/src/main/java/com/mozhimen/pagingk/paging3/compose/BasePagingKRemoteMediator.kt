@@ -7,9 +7,9 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.RoomDatabase
 import androidx.room.withTransaction
+import com.mozhimen.kotlin.elemk.commons.IHasId
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.kotlin.utilk.commons.IUtilK
-import com.mozhimen.pagingk.basic.bases.BaseRes
 import com.mozhimen.pagingk.basic.commons.IPagingKDataSource
 import com.mozhimen.pagingk.basic.commons.IPagingKRemoteMediatorDbDao
 import com.mozhimen.pagingk.basic.commons.IPagingKStateSource
@@ -28,7 +28,7 @@ import kotlinx.coroutines.withContext
  * @Version 1.0
  */
 @OptIn(ExperimentalPagingApi::class)
-abstract class BasePagingKRemoteMediator<RES, DES : BaseRes> : RemoteMediator<Int, DES>(),
+abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int, DES>(),
     IPagingKStateSource<RES, DES>,
     IPagingKDataSource<RES, DES>,
     IPagingKRemoteMediatorDbDao<DES>,
@@ -151,16 +151,8 @@ abstract class BasePagingKRemoteMediator<RES, DES : BaseRes> : RemoteMediator<In
 
                         // 第三步： 插入数据库
                         getDb().withTransaction {
-                            if (loadType == LoadType.REFRESH) {
-                                deleteAll_ofDb()
-                                KeyDb.getKeyDao().deleteAll()
-                            }
-                            insertAll_ofDb(transformData.toList())
-                            val keys = transformData.map {
-                                KeyEntity(
-                                    id = it.id, prevPageIndex, currentPageIndex, nextPageIndex,
-                                )
-                            }
+                            refreshDb(loadType, transformData)
+                            val keys = transformData.map { KeyEntity(id = it.id, prevPageIndex, currentPageIndex, nextPageIndex) }
                             KeyDb.getKeyDao().insertKeys(keys)
                         }
 
@@ -179,9 +171,17 @@ abstract class BasePagingKRemoteMediator<RES, DES : BaseRes> : RemoteMediator<In
         }
     }
 
+    open suspend fun refreshDb(loadType: LoadType, transformData: List<DES>) {
+        if (loadType == LoadType.REFRESH) {
+            deleteAll_ofDb()
+            KeyDb.getKeyDao().deleteAll()
+        }
+        insertAll_ofDb(transformData.toList())
+    }
+
     private suspend fun getPage(
         loadType: LoadType,
-        state: PagingState<Int, DES>
+        state: PagingState<Int, DES>,
     ): SPageState {
 
         return when (loadType) {
