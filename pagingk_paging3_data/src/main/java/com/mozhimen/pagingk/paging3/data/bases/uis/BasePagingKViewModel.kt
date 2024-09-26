@@ -99,8 +99,10 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
 
     ////////////////////////////////////////////////////////////////////////////////////
 
+    private var isFirst = true
     override suspend fun onLoadStart(currentPageIndex: Int) {
-        if (currentPageIndex == pagingKConfig.pageIndexFirst) {
+        if (currentPageIndex == pagingKConfig.pageIndexFirst && isFirst) {
+            isFirst = false
             UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
             liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_START)
         }
