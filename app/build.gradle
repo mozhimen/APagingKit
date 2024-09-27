@@ -37,10 +37,10 @@ android {
 }
 
 dependencies {
-
-    implementation project(':SwiftKit:basick')
+    implementation project(':SwiftKit:mvvmk')
     implementation project(':SwiftKit:xmlk')
     implementation project(':ANetKit:netk_retrofit2')
+    implementation project(':ALibKit_Squareup:retrofit2_converter_gson')
     implementation project(':pagingk_paging3_list')
     implementation project(':AXmlKit:vhk')
 

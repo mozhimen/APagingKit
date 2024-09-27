@@ -6,7 +6,6 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.RoomDatabase
-import androidx.room.withTransaction
 import com.mozhimen.kotlin.elemk.commons.IHasId
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.kotlin.utilk.commons.IUtilK
@@ -16,6 +15,7 @@ import com.mozhimen.pagingk.basic.commons.IPagingKStateSource
 import com.mozhimen.pagingk.basic.cons.SPageState
 import com.mozhimen.pagingk.basic.db.KeyDb
 import com.mozhimen.pagingk.basic.db.KeyEntity
+import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
 import com.mozhimen.pagingk.basic.mos.PagingKConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -109,23 +109,23 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
 //            }
 
             // 第二步： 请问网络分页数据
-            val currentPageIndex = currentPageIndexTemp//页码未定义置为1
-            Log.d(TAG, "load: currentPageIndex $currentPageIndex")
-            val prevPageIndex: Int? = if (currentPageIndex <= pagingKConfig.pageIndexFirst) null else currentPageIndex - 1
+            val currPageIndex = currentPageIndexTemp//页码未定义置为1
+            Log.d(TAG, "load: currentPageIndex $currPageIndex")
+            val prevPageIndex: Int? = if (currPageIndex <= pagingKConfig.pageIndexFirst) null else currPageIndex - 1
             var nextPageIndex: Int? = null
 
-            //第一次加载
-            onLoadStart(currentPageIndex)
+            //加载之前
+            onLoadStart(currPageIndex)
 
             //加载数据
-            val pagingKRep = withContext(Dispatchers.IO) {
-                onLoading(currentPageIndex, pagingKConfig.pageSize)
+            val pagingKBaseRes: PagingKBaseRes<RES> = withContext(Dispatchers.IO) {
+                onLoading(currPageIndex, pagingKConfig.pageSize)
             }
             val transformData: MutableList<DES>
             var endOfPagination = true
 
-            if (pagingKRep.isSuccessful()) {
-                val _data = pagingKRep.data
+            if (pagingKBaseRes.isSuccessful()) {
+                val _data = pagingKBaseRes.data
                 if (_data != null) {
                     val _currentPageItems = _data.currentPageItems
                     if (!_currentPageItems.isNullOrEmpty()) {
@@ -138,46 +138,55 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
                                 _totalPageNum += 1
                             }
                         }
-                        nextPageIndex = if (currentPageIndex >= _totalPageNum) null else currentPageIndex + 1
+                        nextPageIndex = if (currPageIndex >= _totalPageNum) null else currPageIndex + 1
 
                         //加载基础数据
-                        transformData = onTransformData(currentPageIndex, _currentPageItems).toMutableList()
+                        transformData = onTransformData(currPageIndex, _currentPageItems).toMutableList()
 
                         //加载结束
-                        onLoadFinished(currentPageIndex, false)
+                        onLoadFinished(currPageIndex, false)
 
                         //是否是最后一页
                         endOfPagination = transformData.isEmpty()
 
-                        // 第三步： 插入数据库
-                        getDb().withTransaction {
-                            refreshDb(loadType, transformData)
-                            val keys = transformData.map { KeyEntity(id = it.id, prevPageIndex, currentPageIndex, nextPageIndex) }
+                        // 第三步： 插入数据库(事务)
+                        try {
+                            getDb().beginTransaction()
+                            KeyDb.get().beginTransaction()
+
+                            if (loadType == LoadType.REFRESH) {
+                                Log.d(TAG, "refreshDb: ")
+                                deleteAll_ofDb()
+                                KeyDb.getKeyDao().deleteAll()
+                            }
+
+                            insertAll_ofDb(transformData.toList())
+                            val keys = transformData.map { KeyEntity(id = it.id, prevPageIndex, currPageIndex, nextPageIndex) }
                             KeyDb.getKeyDao().insertKeys(keys)
+
+                            getDb().setTransactionSuccessful()
+                            KeyDb.get().setTransactionSuccessful()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        } finally {
+                            getDb().endTransaction()
+                            KeyDb.get().endTransaction()
                         }
 
+                        Log.d(TAG, "load: currPageIndex $currPageIndex prevPageIndex $prevPageIndex nextPageIndex $nextPageIndex")
                         return MediatorResult.Success(endOfPagination)
                     }
                 }
             }
 
             //加载结束
-            onLoadFinished(currentPageIndex, endOfPagination)
+            onLoadFinished(currPageIndex, endOfPagination)
 
             return MediatorResult.Success(endOfPagination)
         } catch (e: Exception) {
             UtilKLogWrapper.e(TAG, e.message ?: "")
             return MediatorResult.Error(throwable = e)
         }
-    }
-
-    open suspend fun refreshDb(loadType: LoadType, transformData: List<DES>) {
-        if (loadType == LoadType.REFRESH) {
-            Log.d(TAG, "refreshDb: ")
-            deleteAll_ofDb()
-            KeyDb.getKeyDao().deleteAll()
-        }
-        insertAll_ofDb(transformData.toList())
     }
 
     private suspend fun getPage(

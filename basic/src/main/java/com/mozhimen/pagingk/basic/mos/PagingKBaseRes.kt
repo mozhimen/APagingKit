@@ -30,6 +30,12 @@ class PagingKBaseRes<RES> {
         this.data = data
     }
 
+    constructor(code: Int, msg: String?, key: String, data: PagingKDataRes<RES>) {
+        this.code = code
+        this.msg = msg
+        this.data = data
+        this.key = key
+    }
     //////////////////////////////////////////////////////
 
     /**
@@ -39,6 +45,7 @@ class PagingKBaseRes<RES> {
      */
     var code = 0
     var msg: String? = null
+    var key = ""
     var data: PagingKDataRes<RES>? = null
 
     //////////////////////////////////////////////////////
@@ -48,6 +55,6 @@ class PagingKBaseRes<RES> {
     }
 
     override fun toString(): String {
-        return "PagingKBaseRes(code=$code, msg=$msg, data=$data)"
+        return "PagingKBaseRes(code=$code, msg=$msg, key='$key', data=$data)"
     }
 }

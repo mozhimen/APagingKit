@@ -8,7 +8,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mozhimen.kotlin.elemk.androidx.lifecycle.bases.BaseViewModel
 import com.mozhimen.kotlin.utilk.java.util.UtilKDateWrapper
-import com.mozhimen.pagingk.basic.cons.CPagingKLoadingState
+import com.mozhimen.pagingk.basic.cons.CPagingKLoadState
 import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
 import com.mozhimen.pagingk.basic.mos.PagingKConfig
 import com.mozhimen.pagingk.paging3.list.bases.BasePagingKDataSourceFactory
@@ -30,15 +30,15 @@ abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig:
     private val _pagingKDataSourceLoadingListener: IPagingKDataSourceLoadListener = object : IPagingKDataSourceLoadListener {
         override fun onFirstLoadStart() {
             UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
-            liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_START)
+            liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_START)
         }
 
         override fun onFirstLoadFinish(isEmpty: Boolean) {
             UtilKLogWrapper.d(TAG, "onFirstLoadFinish: ${UtilKDateWrapper.getNowStr()} isEmpty $isEmpty")
             if (isEmpty)
-                liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_EMPTY)
+                liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_EMPTY)
             else
-                liveLoadState.postValue(CPagingKLoadingState.STATE_FIRST_LOAD_FINISH)
+                liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_FINISH)
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////

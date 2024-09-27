@@ -45,4 +45,11 @@ class DataResPagingSource(private val _repository: Repository) : PagingSource<In
             LoadResult.Error(throwable = e)
         }
     }
+
+    override fun getRefreshKey(state: PagingState<Int, DataRes>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
 }

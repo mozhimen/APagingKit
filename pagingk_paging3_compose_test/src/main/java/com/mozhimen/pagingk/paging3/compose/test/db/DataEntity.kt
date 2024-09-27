@@ -2,6 +2,7 @@ package com.mozhimen.pagingk.paging3.compose.test.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.mozhimen.kotlin.elemk.commons.IHasId
 
 /**
  * @ClassName DataEntity
@@ -16,4 +17,4 @@ data class DataEntity(
     override var id: String = "",
     var author: String = "",
     val title: String = ""
-) : com.mozhimen.pagingk.basic.bases.BaseRes(id)
+) : IHasId

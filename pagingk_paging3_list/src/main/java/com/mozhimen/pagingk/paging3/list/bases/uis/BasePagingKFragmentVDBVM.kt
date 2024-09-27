@@ -8,7 +8,7 @@ import androidx.paging.PagedList
 import com.mozhimen.mvvmk.bases.fragment.databinding.BaseFragmentVDB
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
-import com.mozhimen.pagingk.basic.cons.CPagingKLoadingState
+import com.mozhimen.pagingk.basic.cons.CPagingKLoadState
 import com.mozhimen.pagingk.paging3.list.commons.IPagingKActivity
 
 /**
@@ -49,12 +49,12 @@ abstract class BasePagingKFragmentVDBVM<DES : Any, VB : ViewDataBinding, VM : Ba
         }
         getViewModel().liveLoadState.observe(this) {
             when (it) {
-                CPagingKLoadingState.STATE_FIRST_LOAD_START -> {
+                CPagingKLoadState.STATE_FIRST_LOAD_START -> {
                     getSwipeRefreshLayout()?.isRefreshing = true
                     onLoadStart()
                 }
 
-                CPagingKLoadingState.STATE_FIRST_LOAD_FINISH -> {
+                CPagingKLoadState.STATE_FIRST_LOAD_FINISH -> {
                     getSwipeRefreshLayout()?.isRefreshing = false
                     onLoadComplete()
                 }
