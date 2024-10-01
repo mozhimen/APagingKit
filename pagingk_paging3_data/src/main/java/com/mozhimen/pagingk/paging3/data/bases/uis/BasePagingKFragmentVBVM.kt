@@ -7,7 +7,7 @@ import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
-import com.mozhimen.mvvmk.bases.fragment.viewbinding.BaseFragmentVB
+import com.mozhimen.bindk.bases.fragment.viewbinding.BaseFragmentVB
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKProxy
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 

@@ -5,7 +5,7 @@ import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mozhimen.mvvmk.bases.activity.databinding.BaseActivityVDBVM
+import com.mozhimen.bindk.bases.activity.databinding.BaseActivityVDBVM
 import com.mozhimen.pagingk.test.databinding.ActivityPagingBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
