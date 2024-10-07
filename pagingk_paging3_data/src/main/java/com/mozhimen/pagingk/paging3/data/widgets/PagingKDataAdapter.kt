@@ -16,14 +16,14 @@ import com.mozhimen.kotlin.utilk.androidx.lifecycle.handleLifecycleEventOnDestro
 import com.mozhimen.kotlin.utilk.androidx.lifecycle.handleLifecycleEventOnStart
 import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKDataAdapter
-import com.mozhimen.pagingk.paging3.data.widgets.commons.IOnPageItemChildClickListener
-import com.mozhimen.pagingk.paging3.data.widgets.commons.IOnPageItemChildLongClickListener
-import com.mozhimen.pagingk.paging3.data.widgets.commons.IOnPageItemClickListener
-import com.mozhimen.pagingk.paging3.data.widgets.commons.IOnPageItemLongClickListener
+import com.mozhimen.xmlk.recyclerk.commons.IOnItemChildClickListener
+import com.mozhimen.xmlk.recyclerk.commons.IOnItemChildLongClickListener
+import com.mozhimen.xmlk.recyclerk.commons.IOnItemClickListener
+import com.mozhimen.xmlk.recyclerk.commons.IOnItemLongClickListener
 import com.mozhimen.xmlk.vhk.VHKLifecycle
 
 /**
- * @ClassName AdapterPageRecycler
+ * @ClassName AdapterRecycler
  * @Description TODO
  * @Author Mozhimen & Kolin Zhao
  * @Date 2023/10/11 10:28
@@ -118,10 +118,10 @@ abstract class PagingKDataAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: D
 
     //////////////////////////////////////////////////////////////////////////////
 
-    private var _onPageItemClickListener: IOnPageItemClickListener<DATA>? = null
-    private var _onPageItemLongClickListener: IOnPageItemLongClickListener<DATA>? = null
-    private var _onPageItemChildClickListeners: SparseArray<IOnPageItemChildClickListener<DATA>>? = null
-    private var _onPageItemChildLongClickListeners: SparseArray<IOnPageItemChildLongClickListener<DATA>>? = null
+    private var _onItemClickListener: IOnItemClickListener<DATA,PagingKDataAdapter<*,*>>? = null
+    private var _onItemLongClickListener: IOnItemLongClickListener<DATA,PagingKDataAdapter<*,*>>? = null
+    private var _onItemChildClickListeners: SparseArray<IOnItemChildClickListener<DATA,PagingKDataAdapter<*,*>>>? = null
+    private var _onItemChildLongClickListeners: SparseArray<IOnItemChildLongClickListener<DATA,PagingKDataAdapter<*,*>>>? = null
 
     //////////////////////////////////////////////////////////////////////////////
 
@@ -130,7 +130,7 @@ abstract class PagingKDataAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: D
      * 如果你想重新实现 item 点击事件逻辑，请重写此方法
      */
     protected open fun onItemClick(v: View, position: Int) {
-        _onPageItemClickListener?.onClick(this, v, position)
+        _onItemClickListener?.onClick(this, v, position)
     }
 
     /**
@@ -138,15 +138,15 @@ abstract class PagingKDataAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: D
      * 如果你想重新实现 item 长按事件逻辑，请重写此方法
      */
     protected open fun onItemLongClick(v: View, position: Int): Boolean {
-        return _onPageItemLongClickListener?.onLongClick(this, v, position) ?: false
+        return _onItemLongClickListener?.onLongClick(this, v, position) ?: false
     }
 
     protected open fun onItemChildClick(v: View, position: Int) {
-        _onPageItemChildClickListeners?.get(v.id)?.onChildClick(this, v, position)
+        _onItemChildClickListeners?.get(v.id)?.onChildClick(this, v, position)
     }
 
     protected open fun onItemChildLongClick(v: View, position: Int): Boolean {
-        return _onPageItemChildLongClickListeners?.get(v.id)?.onChildLongClick(this, v, position) ?: false
+        return _onItemChildLongClickListeners?.get(v.id)?.onChildLongClick(this, v, position) ?: false
     }
 
     //////////////////////////////////////////////////////////////////////////////
@@ -156,21 +156,21 @@ abstract class PagingKDataAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: D
      */
     @CallSuper
     protected open fun bindViewClickListener(holder: VH, viewType: Int) {
-        _onPageItemClickListener?.let {
+        _onItemClickListener?.let {
             holder.itemView.setOnClickListener { view ->
                 getPosition(holder)?.let {
                     onItemClick(view, it)
                 }
             }
         }
-        _onPageItemLongClickListener?.let {
+        _onItemLongClickListener?.let {
             holder.itemView.setOnLongClickListener { view ->
                 getPosition(holder)?.let {
                     onItemLongClick(view, it)
                 } ?: false
             }
         }
-        _onPageItemChildClickListeners?.let {
+        _onItemChildClickListeners?.let {
             for (i in 0 until it.size()) {
                 val id = it.keyAt(i)
                 holder.itemView.findViewById<View>(id)?.let { v1 ->
@@ -182,7 +182,7 @@ abstract class PagingKDataAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: D
                 }
             }
         }
-        _onPageItemChildLongClickListeners?.let {
+        _onItemChildLongClickListeners?.let {
             for (i in 0 until it.size()) {
                 val id = it.keyAt(i)
                 holder.itemView.findViewById<View>(id)?.let { v1 ->
@@ -198,38 +198,38 @@ abstract class PagingKDataAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: D
 
     //////////////////////////////////////////////////////////////////////////////
 
-    fun setOnPageItemClickListener(listener: IOnPageItemClickListener<DATA>?) = apply {
-        _onPageItemClickListener = listener
+    fun setOnItemClickListener(listener: IOnItemClickListener<DATA,PagingKDataAdapter<*,*>>?) = apply {
+        _onItemClickListener = listener
     }
 
-    fun getOnPageItemClickListener(): IOnPageItemClickListener<DATA>? =
-        _onPageItemClickListener
+    fun getOnItemClickListener(): IOnItemClickListener<DATA,PagingKDataAdapter<*,*>>? =
+        _onItemClickListener
 
-    fun setOnPageItemLongClickListener(listener: IOnPageItemLongClickListener<DATA>?) = apply {
-        _onPageItemLongClickListener = listener
+    fun setOnItemLongClickListener(listener: IOnItemLongClickListener<DATA,PagingKDataAdapter<*,*>>?) = apply {
+        _onItemLongClickListener = listener
     }
 
-    fun getOnPageItemLongClickListener(): IOnPageItemLongClickListener<DATA>? =
-        _onPageItemLongClickListener
+    fun getOnItemLongClickListener(): IOnItemLongClickListener<DATA,PagingKDataAdapter<*,*>>? =
+        _onItemLongClickListener
 
-    fun addOnPageItemChildClickListener(@IdRes id: Int, listener: IOnPageItemChildClickListener<DATA>) = apply {
-        _onPageItemChildClickListeners =
-            (_onPageItemChildClickListeners ?: SparseArray<IOnPageItemChildClickListener<DATA>>(2)).apply {
+    fun addOnItemChildClickListener(@IdRes id: Int, listener: IOnItemChildClickListener<DATA,PagingKDataAdapter<*,*>>) = apply {
+        _onItemChildClickListeners =
+            (_onItemChildClickListeners ?: SparseArray<IOnItemChildClickListener<DATA,PagingKDataAdapter<*,*>>>(2)).apply {
                 put(id, listener)
             }
     }
 
-    fun removeOnPageItemChildClickListener(@IdRes id: Int)= apply {
-        _onPageItemChildClickListeners?.remove(id)
+    fun removeOnItemChildClickListener(@IdRes id: Int)= apply {
+        _onItemChildClickListeners?.remove(id)
     }
 
-    fun addOnPageItemChildLongClickListener(@IdRes id: Int, listener: IOnPageItemChildLongClickListener<DATA>) = apply {
-        _onPageItemChildLongClickListeners = (_onPageItemChildLongClickListeners ?: SparseArray<IOnPageItemChildLongClickListener<DATA>>(2)).apply {
+    fun addOnItemChildLongClickListener(@IdRes id: Int, listener: IOnItemChildLongClickListener<DATA,PagingKDataAdapter<*,*>>) = apply {
+        _onItemChildLongClickListeners = (_onItemChildLongClickListeners ?: SparseArray<IOnItemChildLongClickListener<DATA,PagingKDataAdapter<*,*>>>(2)).apply {
             put(id, listener)
         }
     }
 
     fun removeOnItemChildLongClickListener(@IdRes id: Int) = apply {
-        _onPageItemChildLongClickListeners?.remove(id)
+        _onItemChildLongClickListeners?.remove(id)
     }
 }

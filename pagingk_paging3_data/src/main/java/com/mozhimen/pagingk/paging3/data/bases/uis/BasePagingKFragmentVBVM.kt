@@ -2,12 +2,12 @@ package com.mozhimen.pagingk.paging3.data.bases.uis
 
 import androidx.annotation.CallSuper
 import androidx.viewbinding.ViewBinding
+import com.mozhimen.bindk.bases.viewbinding.fragment.BaseFragmentVB
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
-import com.mozhimen.bindk.bases.fragment.viewbinding.BaseFragmentVB
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKProxy
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 

@@ -9,6 +9,7 @@ package com.mozhimen.pagingk.basic.cons
  */
 object CPagingKLoadState {
     const val STATE_FIRST_LOAD_START = 0
+    const val STATE_FIRST_LOAD_START_FIRST = 3
     const val STATE_FIRST_LOAD_FINISH = 1
     const val STATE_FIRST_LOAD_EMPTY = 2
 }
