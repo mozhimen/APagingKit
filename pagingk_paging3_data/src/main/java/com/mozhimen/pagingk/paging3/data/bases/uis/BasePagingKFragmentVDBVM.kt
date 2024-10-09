@@ -29,7 +29,7 @@ abstract class BasePagingKFragmentVDBVM<DES : Any, VDB : ViewDataBinding, VM : B
     @CallSuper
     override fun initLayout() {
         super.initLayout()
-        _basePagingKProxy.initLayout(this)
+        _basePagingKProxy.initLayout(this.viewLifecycleOwner)
     }
 
     override fun onRefresh() {

@@ -18,6 +18,7 @@ import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
 import com.mozhimen.pagingk.basic.mos.PagingKConfig
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKPagingSource
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * @ClassName BasePagingKViewModel
@@ -31,7 +32,7 @@ import kotlinx.coroutines.CoroutineScope
 abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKStateSource<RES, DES> {
 
     val liveLoadState = MutableLiveData<Int>()
-    val flowPagingData = getPager().flow.cachedIn(viewModelScope)
+    open val flowPagingData = getPager().flow.cachedIn(viewModelScope)
 
     ////////////////////////////////////////////////////////////////////////////////////
 
@@ -84,7 +85,7 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
             config = PagingConfig(
                 pageSize = pagingKConfig.pageSize,//设置每页的大小
                 prefetchDistance = pagingKConfig.prefetchDistance,//设置距离底部还有多少条时开始加载下一页
-                enablePlaceholders = false,//设置是否显示占位符
+                enablePlaceholders = pagingKConfig.enablePlaceholders,//设置是否显示占位符
                 initialLoadSize = pagingKConfig.initialLoadSize//设置首次加载的数量，要求是pageSize的整数倍
             ),
             initialKey = pagingKConfig.pageIndexFirst,
@@ -101,10 +102,13 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
 
     private var isFirst = true
     override suspend fun onLoadStart(currentPageIndex: Int) {
-        if (currentPageIndex == pagingKConfig.pageIndexFirst && isFirst) {
-            isFirst = false
-            UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
-            liveLoadState.postValue(CPagingKLoadState.STATE_FIRST_LOAD_START)
+        if (currentPageIndex == pagingKConfig.pageIndexFirst) {
+            if (isFirst){
+                isFirst = false
+                UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
+                liveLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_START_FIRST)
+            }
+            liveLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_START)
         }
     }
 

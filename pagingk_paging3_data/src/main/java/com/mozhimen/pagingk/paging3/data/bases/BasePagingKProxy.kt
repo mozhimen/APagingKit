@@ -6,6 +6,7 @@ import androidx.lifecycle.flowWithLifecycle
 import com.mozhimen.basick.bases.BaseWakeBefDestroyLifecycleObserver
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.pagingk.basic.cons.CPagingKLoadState
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKViewModel
@@ -58,7 +59,9 @@ class BasePagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var
         }
 
         pagingKActivity.getViewModel().flowPagingData
-            .onEach { pagingKActivity.getPagingDataAdapter().submitData(it) }
+            .onEach {
+                pagingKActivity.getPagingDataAdapter().submitData(it)
+            }
             .flowWithLifecycle(owner.lifecycle, Lifecycle.State.CREATED)
             .launchIn(pagingKActivity.getViewModel().getViewModelScope())
     }
