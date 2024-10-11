@@ -164,10 +164,12 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
                             val keys = transformData.map { KeyEntity(id = it.id, prevPageIndex, currPageIndex, nextPageIndex) }
                             KeyDb.getKeyDao().insertKeys(keys)
 
+                            Log.d(TAG, "load: Transaction success")
                             getDb().setTransactionSuccessful()
                             KeyDb.get().setTransactionSuccessful()
                         } catch (e: Exception) {
                             e.printStackTrace()
+                            Log.e(TAG, "load: Transaction e", e)
                         } finally {
                             getDb().endTransaction()
                             KeyDb.get().endTransaction()
@@ -223,7 +225,7 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
             state.closestItemToPosition(position)?.id?.let { id ->
                 KeyDb.getKeyDao().getKey(id)
             }
-        }
+        }.also { Log.d(TAG, "getRemoteKeyClosestToCurrentPosition: $it") }
     }
 
     private suspend fun getLastRemoteKey(state: PagingState<Int, DES>): KeyEntity? {
@@ -232,7 +234,7 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
             ?.data?.lastOrNull()
             ?.let { id ->
                 KeyDb.getKeyDao().getKey(id.id)
-            }
+            }.also { Log.d(TAG, "getLastRemoteKey: $it") }
     }
 
     private suspend fun getFirstRemoteKey(state: PagingState<Int, DES>): KeyEntity? {
@@ -241,7 +243,6 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
             ?.data?.firstOrNull()
             ?.let { id ->
                 KeyDb.getKeyDao().getKey(id.id)
-            }
-
+            }.also { Log.d(TAG, "getFirstRemoteKey: $it") }
     }
 }
