@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.paging3.compose
+package com.mozhimen.pagingk.paging3.compose.bases
 
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.paging.Pager
@@ -26,7 +26,7 @@ import com.mozhimen.pagingk.basic.commons.IPagingKDataSource
  * @Date 2023/10/11 16:22
  * @Version 1.0
  */
-abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel(), IPagingKStateSource<RES, DES> {
+abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig: PagingKConfig = PagingKConfig()) : BaseViewModel() {
 
     val flowLoadState = MutableStateFlow<Int?>(null)
     val flowPagingData = getPager().flow.cachedIn(viewModelScope)
@@ -34,6 +34,34 @@ abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig:
     ////////////////////////////////////////////////////////////////////////////////////
 
     abstract val dataSource: IPagingKDataSource<RES, DES>?
+    open val stateSource: IPagingKStateSource<RES, DES> = object :IPagingKStateSource<RES,DES>{
+        private var isFirst = true
+        override suspend fun onLoadStart(currentPageIndex: Int) {
+            if (currentPageIndex == pagingKConfig.pageIndexFirst) {
+                if (isFirst) {
+                    isFirst = false
+                    UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
+                    flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_START_FIRST)
+                }
+                flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_START)
+            }
+        }
+
+        override suspend fun onLoading(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES> {
+            return this@BasePagingKViewModel.onLoading(currentPageIndex, pageSize)
+        }
+
+        override suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {
+            if (currentPageIndex == pagingKConfig.pageIndexFirst) {
+                UtilKLogWrapper.d(TAG, "onFirstLoadFinish: ${UtilKDateWrapper.getNowStr()} isEmpty $isResEmpty")
+                if (isResEmpty)
+                    flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_EMPTY)
+                else
+                    flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_FINISH)
+            }
+        }
+    }
+    abstract suspend fun onLoading(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES>
 
     open fun getPagingSourceFactory(): () -> PagingSource<Int, DES> {
         return {
@@ -42,15 +70,15 @@ abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig:
                     get() = this@BasePagingKViewModel.pagingKConfig
 
                 override suspend fun onLoadStart(currentPageIndex: Int) {
-                    this@BasePagingKViewModel.onLoadStart(currentPageIndex)
+                    stateSource.onLoadStart(currentPageIndex)
                 }
 
                 override suspend fun onLoading(currentPageIndex: Int, pageSize: Int): PagingKBaseRes<RES> {
-                    return this@BasePagingKViewModel.onLoading(currentPageIndex, pageSize)
+                    return stateSource.onLoading(currentPageIndex, pageSize)
                 }
 
                 override suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {
-                    this@BasePagingKViewModel.onLoadFinished(currentPageIndex, isResEmpty)
+                    stateSource.onLoadFinished(currentPageIndex, isResEmpty)
                 }
 
                 override suspend fun onTransformData(currentPageIndex: Int?, datas: List<RES>): List<DES> {
@@ -88,28 +116,4 @@ abstract class BasePagingKViewModel<RES, DES : Any>(protected val pagingKConfig:
             pagingSourceFactory = getPagingSourceFactory(),
             remoteMediator = getRemoteMediator()
         )
-
-    ////////////////////////////////////////////////////////////////////////////////////
-
-    private var isFirst = true
-    override suspend fun onLoadStart(currentPageIndex: Int) {
-        if (currentPageIndex == pagingKConfig.pageIndexFirst) {
-            if (isFirst){
-                isFirst = false
-                UtilKLogWrapper.d(TAG, "onFirstLoadStart: ${UtilKDateWrapper.getNowStr()}")
-                flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_START_FIRST)
-            }
-            flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_START)
-        }
-    }
-
-    override suspend fun onLoadFinished(currentPageIndex: Int, isResEmpty: Boolean) {
-        if (currentPageIndex == pagingKConfig.pageIndexFirst) {
-            UtilKLogWrapper.d(TAG, "onFirstLoadFinish: ${UtilKDateWrapper.getNowStr()} isEmpty $isResEmpty")
-            if (isResEmpty)
-                flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_EMPTY)
-            else
-                flowLoadState.value = (CPagingKLoadState.STATE_FIRST_LOAD_FINISH)
-        }
-    }
 }

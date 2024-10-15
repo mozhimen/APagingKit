@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.paging3.compose
+package com.mozhimen.pagingk.paging3.compose.bases
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

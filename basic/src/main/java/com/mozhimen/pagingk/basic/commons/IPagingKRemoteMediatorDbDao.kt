@@ -17,5 +17,5 @@ interface IPagingKRemoteMediatorDbDao<T : Any> {
     fun deleteAll_ofDb()
 
     //@Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll_ofDb(entities: List<T>)
+    fun insertAll_ofDb(pageIndex: Int, entities: List<T>)
 }

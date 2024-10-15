@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.paging3.compose
+package com.mozhimen.pagingk.paging3.compose.bases
 
 import android.util.Log
 import androidx.paging.ExperimentalPagingApi
@@ -55,21 +55,41 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
              * 3. 将网路插入到本地数据库中
              */
             // 第一步： 判断 LoadType
-            val pageState = getPage(
-                loadType = loadType,
-                state = state
-            )
-            val currentPageIndexTemp = when (pageState) {
-                is SPageState.Append -> pageState.page ?: return MediatorResult.Success(
-                    endOfPaginationReached = false
-                )
+            val currentPageIndexTemp = when (loadType) {
+                LoadType.REFRESH -> {
+                    val remoteKey = getRemoteKeyClosestToCurrentPosition(state)
+                    remoteKey?.nextPage?.minus(1) ?: pagingKConfig.pageIndexFirst
+                }
 
-                is SPageState.Prepend -> pageState.page ?: return MediatorResult.Success(
-                    endOfPaginationReached = true
-                )
+                LoadType.PREPEND -> {
+                    val remoteKey = getFirstRemoteKey(state)
+                    val prevPage = remoteKey?.prevPage
+                        ?:return MediatorResult.Success(endOfPaginationReached = remoteKey!=null)
+                    prevPage
+                }
 
-                is SPageState.Refresh -> pageState.page
+                LoadType.APPEND->{
+                    val remoteKey = getLastRemoteKey(state)
+                    val nextPage = remoteKey?.nextPage
+                        ?:return MediatorResult.Success(endOfPaginationReached = remoteKey!=null)
+                    nextPage
+                }
             }
+//            val pageState = getPage(
+//                loadType = loadType,
+//                state = state
+//            )
+//            val currentPageIndexTemp = when (pageState) {
+//                is SPageState.Append -> pageState.page ?: return MediatorResult.Success(
+//                    endOfPaginationReached = false
+//                )
+//
+//                is SPageState.Prepend -> pageState.page ?: return MediatorResult.Success(
+//                    endOfPaginationReached = true
+//                )
+//
+//                is SPageState.Refresh -> pageState.page
+//            }
 //            val currentPageIndexTemp = when (loadType) {
 //                LoadType.REFRESH -> pagingKConfig.pageIndexFirst// 首次访问 或者调用 PagingDataAdapter.refresh()
 //
@@ -160,7 +180,7 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
                                 KeyDb.getKeyDao().deleteAll()
                             }
 
-                            insertAll_ofDb(transformData.toList())
+                            insertAll_ofDb(currPageIndex,transformData.toList())
                             val keys = transformData.map { KeyEntity(id = it.id, prevPageIndex, currPageIndex, nextPageIndex) }
                             KeyDb.getKeyDao().insertKeys(keys)
 
@@ -191,34 +211,34 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
         }
     }
 
-    private suspend fun getPage(
-        loadType: LoadType,
-        state: PagingState<Int, DES>,
-    ): SPageState {
-
-        return when (loadType) {
-            // loading
-            LoadType.REFRESH -> {
-                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                val page = remoteKeys?.nextPage?.minus(1) ?: pagingKConfig.pageIndexFirst
-                SPageState.Refresh(page = page)
-            }
-
-            // has data, load more
-            LoadType.APPEND -> {
-                val remoteKeys = getLastRemoteKey(state)
-                val page = remoteKeys?.nextPage
-                SPageState.Append(page = page)
-            }
-
-            // has data, load previous
-            LoadType.PREPEND -> {
-                val remoteKeys = getFirstRemoteKey(state)
-                val page = remoteKeys?.prevPage
-                SPageState.Prepend(page = page)
-            }
-        }
-    }
+//    private suspend fun getPage(
+//        loadType: LoadType,
+//        state: PagingState<Int, DES>,
+//    ): SPageState {
+//
+//        return when (loadType) {
+//            // loading
+//            LoadType.REFRESH -> {
+//                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+//                val page = remoteKeys?.nextPage?.minus(1) ?: pagingKConfig.pageIndexFirst
+//                SPageState.Refresh(page = page)
+//            }
+//
+//            // has data, load previous
+//            LoadType.PREPEND -> {
+//                val remoteKeys = getFirstRemoteKey(state)
+//                val page = remoteKeys?.prevPage
+//                SPageState.Prepend(page = page)
+//            }
+//
+//            // has data, load more
+//            LoadType.APPEND -> {
+//                val remoteKeys = getLastRemoteKey(state)
+//                val page = remoteKeys?.nextPage
+//                SPageState.Append(page = page)
+//            }
+//        }
+//    }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, DES>): KeyEntity? {
         return state.anchorPosition?.let { position ->
@@ -228,15 +248,6 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
         }.also { Log.d(TAG, "getRemoteKeyClosestToCurrentPosition: $it") }
     }
 
-    private suspend fun getLastRemoteKey(state: PagingState<Int, DES>): KeyEntity? {
-        return state.pages
-            .lastOrNull { it.data.isNotEmpty() }
-            ?.data?.lastOrNull()
-            ?.let { id ->
-                KeyDb.getKeyDao().getKey(id.id)
-            }.also { Log.d(TAG, "getLastRemoteKey: $it") }
-    }
-
     private suspend fun getFirstRemoteKey(state: PagingState<Int, DES>): KeyEntity? {
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
@@ -244,5 +255,14 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
             ?.let { id ->
                 KeyDb.getKeyDao().getKey(id.id)
             }.also { Log.d(TAG, "getFirstRemoteKey: $it") }
+    }
+
+    private suspend fun getLastRemoteKey(state: PagingState<Int, DES>): KeyEntity? {
+        return state.pages
+            .lastOrNull { it.data.isNotEmpty() }
+            ?.data?.lastOrNull()
+            ?.let { id ->
+                KeyDb.getKeyDao().getKey(id.id)
+            }.also { Log.d(TAG, "getLastRemoteKey: $it") }
     }
 }
