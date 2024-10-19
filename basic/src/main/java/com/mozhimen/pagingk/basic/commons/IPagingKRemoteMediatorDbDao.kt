@@ -18,4 +18,6 @@ interface IPagingKRemoteMediatorDbDao<T : Any> {
 
     //@Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll_ofDb(pageIndex: Int, entities: List<T>)
+
+    fun insert_ofDb(pageIndex: Int, entity: T)
 }

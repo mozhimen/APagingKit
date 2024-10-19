@@ -12,7 +12,6 @@ import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.basic.commons.IPagingKDataSource
 import com.mozhimen.pagingk.basic.commons.IPagingKRemoteMediatorDbDao
 import com.mozhimen.pagingk.basic.commons.IPagingKStateSource
-import com.mozhimen.pagingk.basic.cons.SPageState
 import com.mozhimen.pagingk.basic.db.KeyDb
 import com.mozhimen.pagingk.basic.db.KeyEntity
 import com.mozhimen.pagingk.basic.mos.PagingKBaseRes
@@ -64,14 +63,14 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
                 LoadType.PREPEND -> {
                     val remoteKey = getFirstRemoteKey(state)
                     val prevPage = remoteKey?.prevPage
-                        ?:return MediatorResult.Success(endOfPaginationReached = remoteKey!=null)
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
                     prevPage
                 }
 
-                LoadType.APPEND->{
+                LoadType.APPEND -> {
                     val remoteKey = getLastRemoteKey(state)
                     val nextPage = remoteKey?.nextPage
-                        ?:return MediatorResult.Success(endOfPaginationReached = remoteKey!=null)
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
                     nextPage
                 }
             }
@@ -141,7 +140,7 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
             val pagingKBaseRes: PagingKBaseRes<RES> = withContext(Dispatchers.IO) {
                 onLoading(currPageIndex, pagingKConfig.pageSize)
             }
-            val transformData: MutableList<DES>
+            val transformDatas: MutableList<DES>
             var endOfPagination = true
 
             if (pagingKBaseRes.isSuccessful()) {
@@ -161,13 +160,13 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
                         nextPageIndex = if (currPageIndex >= _totalPageNum) null else currPageIndex + 1
 
                         //加载基础数据
-                        transformData = onTransformData(currPageIndex, _currentPageItems).toMutableList()
+                        transformDatas = onTransformData(currPageIndex, _currentPageItems).toMutableList()
 
                         //加载结束
                         onLoadFinished(currPageIndex, false)
 
                         //是否是最后一页
-                        endOfPagination = transformData.isEmpty()
+                        endOfPagination = transformDatas.isEmpty()
 
                         // 第三步： 插入数据库(事务)
                         try {
@@ -180,9 +179,16 @@ abstract class BasePagingKRemoteMediator<RES, DES : IHasId> : RemoteMediator<Int
                                 KeyDb.getKeyDao().deleteAll()
                             }
 
-                            insertAll_ofDb(currPageIndex,transformData.toList())
-                            val keys = transformData.map { KeyEntity(id = it.id, prevPageIndex, currPageIndex, nextPageIndex) }
-                            KeyDb.getKeyDao().insertKeys(keys)
+                            transformDatas.forEach { transformData ->
+                                try {
+                                    insert_ofDb(currPageIndex, transformData)
+                                    val key = KeyEntity(id = transformData.id, prevPageIndex, currPageIndex, nextPageIndex)
+                                    KeyDb.getKeyDao().insertKey(key)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    Log.e(TAG, "load: insert fail")
+                                }
+                            }
 
                             Log.d(TAG, "load: Transaction success")
                             getDb().setTransactionSuccessful()

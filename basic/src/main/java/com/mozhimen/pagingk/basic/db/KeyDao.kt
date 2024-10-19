@@ -10,6 +10,9 @@ interface KeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertKeys(keys: List<KeyEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertKey(key: KeyEntity)
+
     @Query("SELECT * FROM ${KeyEntity.TABLE_NAME} WHERE id =:id")
     suspend fun getKey(id: String) : KeyEntity?
 
