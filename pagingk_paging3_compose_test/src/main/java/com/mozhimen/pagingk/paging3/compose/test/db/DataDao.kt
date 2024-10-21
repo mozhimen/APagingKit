@@ -22,6 +22,9 @@ interface DataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(datas: List<DataEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(data: DataEntity)
+
     @Query("delete from data_entity")
     fun deleteAll()
 

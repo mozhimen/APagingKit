@@ -12,7 +12,6 @@ import androidx.paging.insertHeaderItem
 import androidx.paging.map
 import com.mozhimen.kotlin.elemk.commons.IA_AListener
 import com.mozhimen.pagingk.paging3.compose.test.db.DataEntity
-import com.mozhimen.pagingk.paging3.compose.test.restful.mos.DataRes
 import com.mozhimen.pagingk.paging3.compose.test.source.PagingSourceData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +23,7 @@ import kotlinx.coroutines.flow.combine
  * @date 2020/11/7
  * @desc viewModel 对象
  */
-class MainViewModel : ViewModel() {
+class MainViewModel1 : ViewModel() {
     private val modificationEvents = MutableStateFlow<List<SViewEvents>>(emptyList())
 
     sealed class SViewEvents {

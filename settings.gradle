@@ -70,5 +70,10 @@ include ':KUtilKit'
 project(':KUtilKit').projectDir = new File("D:\\WorkSpace\\GitHub\\KUtilKit")
 include ':KUtilKit:utilk_android'
 include ':KUtilKit:utilk_kotlin'
+//AComposeKit
+include ':AComposeKit'
+project(':AComposeKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AComposeKit")
+include ':AComposeKit:basic'
 
 
+include ':pagingk_compose'

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.mozhimen.pagingk.paging3.compose'
+    namespace 'com.mozhimen.pagingk.compose'
     compileSdk 34
 
     defaultConfig {
@@ -27,23 +27,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.5.10'
-    }
 }
 
 dependencies {
-    api project(project.path.replace(project.name,'')+':basic')
-    api project(':ALibKit_Jetpack:paging_compose')
-    api project(':ALibKit_Jetpack:lifecycle_viewmodel')
-    api project(':AComposeKit:basic')
-    implementation project(':KUtilKit:utilk_android')
-    implementation project(':ALibKit_Jetpack:room')
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
