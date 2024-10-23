@@ -27,6 +27,7 @@ include ':pagingk_epoxy4'
 include ':pagingk_paging3_compose'
 include ':pagingk_paging3_compose_test'
 include ':basic'
+include ':pagingk_compose'
 //ALibKit_Jetpack
 include ':ALibKit_Jetpack'
 project(':ALibKit_Jetpack').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Jetpack")
@@ -76,4 +77,3 @@ project(':AComposeKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AComposeKi
 include ':AComposeKit:basic'
 
 
-include ':pagingk_compose'
