@@ -5,8 +5,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import com.mozhimen.basick.bases.BaseWakeBefDestroyLifecycleObserver
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
+import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
-import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.pagingk.basic.cons.CPagingKLoadState
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKViewModel
@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.onEach
  * @Date 2024/5/25 22:21
  * @Version 1.0
  */
+@OApiCall_BindViewLifecycle
 @OApiInit_ByLazy
 @OApiCall_BindLifecycle
 class BasePagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var _pagingKActivity: IPagingKActivity<DES, VM>?) : BaseWakeBefDestroyLifecycleObserver() {
@@ -57,7 +58,6 @@ class BasePagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var
                 }
             }
         }
-
         pagingKActivity.getViewModel().flowPagingData
             .onEach {
                 pagingKActivity.getPagingDataAdapter().submitData(it)

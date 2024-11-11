@@ -4,6 +4,7 @@ import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import com.mozhimen.bindk.bases.viewdatabinding.fragment.BaseFragmentVDB
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
+import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
@@ -20,12 +21,12 @@ import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
  */
 abstract class BasePagingKFragmentVDBVM<DES : Any, VDB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BaseFragmentVDB<VDB>(), IPagingKActivity<DES, VM> {
 
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
+    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
     private val _basePagingKProxy by UtilKLazyJVM.lazy_ofNone { BasePagingKProxy<DES, VM>(this).apply { bindLifecycle(this@BasePagingKFragmentVDBVM) } }
 
     ////////////////////////////////////////////////////////////////////////
 
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
+    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
     @CallSuper
     override fun initLayout() {
         super.initLayout()
