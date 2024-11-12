@@ -65,11 +65,11 @@ abstract class BasePagingKViewModel<RES, DES : Any> constructor(protected val pa
                     dataSource?.onCombineData(currentPageIndex, datas)
                 }
 
-                override suspend fun onGetHeader(): DES? {
+                override suspend fun onGetHeader(): List<DES>? {
                     return dataSource?.onGetHeader()
                 }
 
-                override suspend fun onGetFooter(): DES? {
+                override suspend fun onGetFooter(): List<DES>? {
                     return dataSource?.onGetFooter()
                 }
             }

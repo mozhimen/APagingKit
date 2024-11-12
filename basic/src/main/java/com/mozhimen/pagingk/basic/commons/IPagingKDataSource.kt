@@ -25,10 +25,10 @@ interface IPagingKDataSource<RES, DES> {
     /**
      * 获取头部数据
      */
-    suspend fun onGetHeader(): DES? = null
+    suspend fun onGetHeader(): List<DES>? = null
 
     /**
      * 获取底部数据
      */
-    suspend fun onGetFooter(): DES? = null
+    suspend fun onGetFooter():  List<DES>? = null
 }

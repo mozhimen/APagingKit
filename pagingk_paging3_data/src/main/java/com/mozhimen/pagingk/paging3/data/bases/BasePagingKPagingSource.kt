@@ -74,7 +74,8 @@ abstract class BasePagingKPagingSource<RES, DES : Any> : PagingSource<Int, DES>(
                         //添加头部
                         onGetHeader()?.let {
                             if (currentPageIndex == pagingKConfig.pageIndexFirst) {
-                                transformData.add(0, it)
+                                Log.d(TAG, "load: onGetHeader $it")
+                                transformData.addAll(0, it)
                             }
                         }
 
@@ -82,7 +83,7 @@ abstract class BasePagingKPagingSource<RES, DES : Any> : PagingSource<Int, DES>(
                         onGetFooter()?.let {
                             Log.d(TAG, "load: onGetFooter $it")
                             if (nextPageIndex == null) {
-                                transformData.add(it)
+                                transformData.addAll(it)
                             }
                         }
 
@@ -102,14 +103,15 @@ abstract class BasePagingKPagingSource<RES, DES : Any> : PagingSource<Int, DES>(
             //添加头部
             onGetHeader()?.let {
                 if (currentPageIndex == pagingKConfig.pageIndexFirst) {
-                    transformData.add(0, it)
+                    Log.d(TAG, "load: onGetFooter1 $it")
+                    transformData.addAll(0, it)
                 }
             }
 
             //添加底部
             onGetFooter()?.let {
                 Log.d(TAG, "load: onGetFooter1 $it")
-                transformData.add(it)
+                transformData.addAll(it)
             }
 
             //第一次加载结束
