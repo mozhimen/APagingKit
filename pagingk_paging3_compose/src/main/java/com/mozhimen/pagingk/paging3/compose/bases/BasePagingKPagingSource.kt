@@ -1,5 +1,6 @@
 package com.mozhimen.pagingk.paging3.compose.bases
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
@@ -73,14 +74,15 @@ abstract class BasePagingKPagingSource<RES, DES : Any> : PagingSource<Int, DES>(
                         //添加头部
                         onGetHeader()?.let {
                             if (currentPageIndex == pagingKConfig.pageIndexFirst) {
-                                transformData.add(0, it)
+                                transformData.addAll(0, it)
                             }
                         }
 
                         //添加底部
                         onGetFooter()?.let {
+                            Log.d(TAG, "load: onGetFooter $it")
                             if (nextPageIndex == null) {
-                                transformData.add(it)
+                                transformData.addAll(it)
                             }
                         }
 
@@ -100,13 +102,14 @@ abstract class BasePagingKPagingSource<RES, DES : Any> : PagingSource<Int, DES>(
             //添加头部
             onGetHeader()?.let {
                 if (currentPageIndex == pagingKConfig.pageIndexFirst) {
-                    transformData.add(0, it)
+                    transformData.addAll(0, it)
                 }
             }
 
             //添加底部
             onGetFooter()?.let {
-                transformData.add(it)
+                Log.d(TAG, "load: onGetFooter1 $it")
+                transformData.addAll(it)
             }
 
             //加载结束
