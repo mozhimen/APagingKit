@@ -48,7 +48,7 @@ open class PagingKDataMultiAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: 
     /////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
-        val recyclerKPageItem = getPagingKVHKProvider("onCreateViewHolder",viewType)
+        val recyclerKPageItem = getPagingKVHKProvider("onCreateViewHolder", viewType)
         checkNotNull(recyclerKPageItem) { "ViewType: $viewType no such provider found，please use addItemProvider() first!" }
         return recyclerKPageItem.onCreateViewHolder(parent.context, parent, viewType).apply {
             itemView.setTag(R.id.PagingKDataMultiAdapter_Key, recyclerKPageItem)
@@ -57,13 +57,21 @@ open class PagingKDataMultiAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: 
 
     @SuppressLint("MissingSuperCall")
     override fun onBindViewHolder(holder: VH, item: DATA?, position: Int) {
-        getPagingKVHKProvider(holder)?.onBindViewHolder(holder, item, position)
-            ?.also { UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $item position $position") }
+        try {
+            getPagingKVHKProvider(holder)?.onBindViewHolder(holder, item, position)
+                ?.also { UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $item position $position") }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onBindViewHolder(holder: VH, item: DATA?, position: Int, payloads: List<Any>) {
-        getPagingKVHKProvider(holder)?.onBindViewHolder(holder, item, position, payloads)
-            ?.also { UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $item position $position payloads $payloads") }
+        try {
+            getPagingKVHKProvider(holder)?.onBindViewHolder(holder, item, position, payloads)
+                ?.also { UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $item position $position payloads $payloads") }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////
