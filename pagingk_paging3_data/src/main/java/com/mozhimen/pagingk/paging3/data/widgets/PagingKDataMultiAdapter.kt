@@ -78,16 +78,19 @@ open class PagingKDataMultiAdapter<DATA : Any, VH : VHKLifecycle>(itemCallback: 
 
     override fun onViewAttachedToWindow(holder: VH) {
         val position = getPosition(holder)
-        getPagingKVHKProvider(holder)?.onViewAttachedToWindow(holder, position?.let { getItem(it) }, position)
+        if (position in 0 until itemCount)
+            getPagingKVHKProvider(holder)?.onViewAttachedToWindow(holder, position?.let { getItem(it) }, position)
     }
 
     override fun onViewDetachedFromWindow(holder: VH) {
         val position = getPosition(holder)
-        getPagingKVHKProvider(holder)?.onViewDetachedFromWindow(holder, position?.let { getItem(it) }, position)
+        if (position in 0 until itemCount)
+            getPagingKVHKProvider(holder)?.onViewDetachedFromWindow(holder, position?.let { getItem(it) }, position)
     }
 
     override fun onViewRecycled(holder: VH) {
         val position = getPosition(holder)
-        getPagingKVHKProvider(holder)?.onViewRecycled(holder, position?.let { getItem(it) }, position)
+        if (position in 0 until itemCount)
+            getPagingKVHKProvider(holder)?.onViewRecycled(holder, position?.let { getItem(it) }, position)
     }
 }
