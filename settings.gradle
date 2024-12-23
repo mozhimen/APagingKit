@@ -22,8 +22,6 @@ rootProject.name = "APagingKit"
 include ':app'
 include ':pagingk_paging3_list'
 include ':pagingk_paging3_data'
-include ':pagingk_epoxy3'
-include ':pagingk_epoxy4'
 include ':pagingk_paging3_compose'
 include ':pagingk_paging3_compose_test'
 include ':basic'
