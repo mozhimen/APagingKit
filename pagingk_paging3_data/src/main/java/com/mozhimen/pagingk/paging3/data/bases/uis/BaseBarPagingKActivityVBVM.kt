@@ -1,14 +1,17 @@
 package com.mozhimen.pagingk.paging3.data.bases.uis
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.CallSuper
-import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.mozhimen.basick.helpers.IToolbarProxy
 import com.mozhimen.basick.helpers.IToolbarProxyProvider
 import com.mozhimen.basick.helpers.ToolbarProxy
+import com.mozhimen.kotlin.elemk.commons.IA_Listener
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
+import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
-import com.mozhimen.kotlin.lintk.optins.OApiUse_BaseApplication
 import com.mozhimen.kotlin.utilk.androidx.appcompat.UtilKActionBar
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
 
@@ -19,7 +22,8 @@ import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
  * @Date 2024/5/20
  * @Version 1.0
  */
-abstract class BaseBarPagingKActivityVBVM<DES : Any, VB : ViewBinding, VM : BasePagingKViewModel<*, DES>> : BasePagingKActivityVBVM<DES, VB, VM>, IToolbarProxyProvider {
+@OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
+abstract class BaseBarPagingKActivityVBVM<DES : Any, VB : ViewBinding, VM : BasePagingKViewModel<*, DES>> : BasePagingKActivityVBVM<DES, VB, VM>, IToolbarProxyProvider, IToolbarProxy {
     /**
      * 针对Hilt(@JvmOverloads kotlin默认参数值无效)
      * @constructor
@@ -27,40 +31,50 @@ abstract class BaseBarPagingKActivityVBVM<DES : Any, VB : ViewBinding, VM : Base
     constructor() : super()
 
     /////////////////////////////////////////////////////////////////////
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiUse_BaseApplication::class)
-    private val _toolBarProxy by UtilKLazyJVM.lazy_ofNone { ToolbarProxy<BaseBarPagingKActivityVBVM<*, *, *>>().apply { bindLifecycle(this@BaseBarPagingKActivityVBVM) } }
+
+    protected val toolBarProxy by UtilKLazyJVM.lazy_ofNone { ToolbarProxy<BaseBarPagingKActivityVBVM<*, *, *>>().apply { bindLifecycle(this@BaseBarPagingKActivityVBVM) } }
 
     /////////////////////////////////////////////////////////////////////
 
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiUse_BaseApplication::class)
     @CallSuper
     override fun initLayout() {
         super.initLayout()
         UtilKActionBar.get_ofSupport(this)?.let {
-            _toolBarProxy.initToolbar(this, it, title)
+            toolBarProxy.initToolbar(this, it)
         }
     }
 
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiUse_BaseApplication::class)
-    override fun setToolbarTitle(strTitle: CharSequence) {
-        _toolBarProxy.setToolbarTitle(strTitle)
+    /////////////////////////////////////////////////////////////////////
+
+    override fun setToolbarNavigationIconRes(intResDrawable: Int) {
+        toolBarProxy.setToolbarNavigationIconRes(intResDrawable)
     }
 
-    @OptIn(OApiUse_BaseApplication::class, OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
-    override fun setToolbarTitle(intResStr: Int) {
-        _toolBarProxy.setToolbarTitle(getString(intResStr))
+    override fun <A> setToolbarNavigationOnClickListener(provider: A, listener: IA_Listener<A>) where A : AppCompatActivity, A : IToolbarProxyProvider {
+        toolBarProxy.setToolbarNavigationOnClickListener(provider, listener)
     }
 
-    override fun getToolbarNavigationIcon(): Int =
-        android.R.drawable.arrow_up_float
-
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiUse_BaseApplication::class)
-    override fun setToolbarNavigationIcon(@DrawableRes intResDrawable: Int) {
-        _toolBarProxy.setToolbarNavigationIcon(intResDrawable)
+    override fun setToolbarBackground(drawable: Drawable) {
+        toolBarProxy.setToolbarBackground(drawable)
     }
 
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiUse_BaseApplication::class)
+    override fun setToolbarBackgroundColor(intColor: Int) {
+        toolBarProxy.setToolbarBackgroundColor(intColor)
+    }
+
+    override fun setToolbarBackgroundRes(intResDrawable: Int) {
+        toolBarProxy.setToolbarBackgroundRes(intResDrawable)
+    }
+
+    override fun setToolbarText(strText: CharSequence) {
+        toolBarProxy.setToolbarText(strText)
+    }
+
+    override fun setToolbarTextRes(intStrRes: Int) {
+        toolBarProxy.setToolbarTextRes(intStrRes)
+    }
+
     override fun setToolbarCustomView(customView: View) {
-        _toolBarProxy.setToolbarCustomView(customView)
+        toolBarProxy.setToolbarCustomView(customView)
     }
 }
