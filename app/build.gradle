@@ -37,11 +37,11 @@ android {
 }
 
 dependencies {
-    implementation project(':SwiftKit:bindk')
-    implementation project(':SwiftKit:xmlk')
-    implementation project(':ANetKit:netk_retrofit2')
+    implementation project(':ASwiftKit:bindk')
+    implementation project(':ASwiftKit:xmlk')
+    implementation project(':ANetKit:retrofit2')
     implementation project(':ALibKit_Squareup:retrofit2_converter_gson')
-    implementation project(':pagingk_paging3_list')
+    implementation project(':paging300:list')
     implementation project(':AXmlKit:vhk')
 
     testImplementation 'junit:junit:4.13.2'

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.mozhimen.pagingk.paging3.list'
+    namespace 'com.mozhimen.pagingk.paging3.data'
     compileSdk 34
 
     defaultConfig {
@@ -12,13 +12,13 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+//        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -31,15 +31,15 @@ android {
 }
 
 dependencies {
-    api project(':SwiftKit:bindk')
-    api project(':ALibKit_Jetpack:paging300')
-    api project(project.path.replace(project.name,'')+':basic')
+    api project(':ALibKit_Jetpack:paging3')
+    api project(/*project.path.replace(project.name,'')+*/':APagingKit:basic')
 
     //////////////////////////////////////////////////////////////////
 
-    implementation project(':SwiftKit:basick')
-    implementation project(':SwiftKit:xmlk')
+    implementation project(':ASwiftKit:bindk')
+    implementation project(':ASwiftKit:xmlk')
     implementation project(':AXmlKit:vhk')
+    implementation project(':AXmlKit:recyclerk')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

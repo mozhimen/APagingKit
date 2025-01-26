@@ -40,13 +40,12 @@ android {
 }
 
 dependencies {
-    implementation project(':SwiftKit:basick')
-    implementation project(':SwiftKit:composek')
+    implementation project(':ASwiftKit:basick')
+    implementation project(':ASwiftKit:composek')
 
-    implementation project(':pagingk_paging3_compose')
-    implementation project(':pagingk_compose')
+    implementation project(':paging3:compose')
 
-    implementation project(':ANetKit:netk_retrofit2')
+    implementation project(':ANetKit:retrofit2')
     implementation project(':ALibKit_Squareup:retrofit2_converter_gson')
     implementation project(':ALibKit_Jetpack:lifecycle_viewmodel_compose')
 
