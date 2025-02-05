@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation project(':ASwiftKit:bindk')
+    implementation project(':ASwiftKit:uik:databinding')
     implementation project(':ASwiftKit:xmlk')
     implementation project(':ANetKit:retrofit2')
     implementation project(':ALibKit_Squareup:retrofit2_converter_gson')

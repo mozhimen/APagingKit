@@ -5,7 +5,7 @@ import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.mozhimen.bindk.bases.fragment.databinding.BaseFragmentVDB
+import com.mozhimen.uik.databinding.bases.fragment.databinding.BaseFragmentVDB
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.pagingk.basic.cons.CPagingKLoadState

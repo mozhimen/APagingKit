@@ -65,7 +65,7 @@ include ':ASwiftKit'
 project(':ASwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ASwiftKit")
 include ':ASwiftKit:basick'
 include ':ASwiftKit:xmlk'
-include ':ASwiftKit:bindk'
+include ':ASwiftKit:uik:databinding'
 include ':ASwiftKit:composek'
 //ANetKit
 include ':ANetKit'

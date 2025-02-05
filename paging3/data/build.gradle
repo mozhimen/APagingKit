@@ -40,7 +40,7 @@ dependencies {
 
     //////////////////////////////////////////////////////////////////
 
-    implementation project(':ASwiftKit:bindk')
+    implementation project(':ASwiftKit:uik:databinding')
     implementation project(':ASwiftKit:xmlk')
     implementation project(':AXmlKit:vhk')
     implementation project(':AXmlKit:recyclerk')

@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    api project(':ASwiftKit:bindk')
+    api project(':ASwiftKit:uik:databinding')
     api project(':ALibKit_Jetpack:paging300')
     api project(/*project.path.replace(project.name,'')+*/':basic')
 

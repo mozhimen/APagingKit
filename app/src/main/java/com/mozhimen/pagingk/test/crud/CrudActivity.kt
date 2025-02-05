@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM.lazy_ofNone
-import com.mozhimen.bindk.bases.activity.databinding.BaseActivityVDBVM
+import com.mozhimen.uik.databinding.bases.activity.databinding.BaseActivityVDBVM
 import com.mozhimen.pagingk.test.databinding.ActivityCrudBinding
 
 class CrudActivity : BaseActivityVDBVM<ActivityCrudBinding, SampleViewModel>() {

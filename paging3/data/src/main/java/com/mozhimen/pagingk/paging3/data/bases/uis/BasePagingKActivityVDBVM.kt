@@ -2,7 +2,7 @@ package com.mozhimen.pagingk.paging3.data.bases.uis
 
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
-import com.mozhimen.bindk.bases.viewdatabinding.activity.BaseActivityVDB
+import com.mozhimen.uik.databinding.bases.viewdatabinding.activity.BaseActivityVDB
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
