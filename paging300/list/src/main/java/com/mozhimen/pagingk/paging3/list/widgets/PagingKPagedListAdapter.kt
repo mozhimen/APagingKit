@@ -23,7 +23,7 @@ import com.mozhimen.pagingk.paging3.list.bases.BasePagedListAdapter
 import com.mozhimen.pagingk.paging3.list.widgets.commons.IOnPageItemChildClickListener
 import com.mozhimen.pagingk.paging3.list.widgets.commons.IOnPageItemClickListener
 import com.mozhimen.pagingk.paging3.list.widgets.commons.IOnPageItemLongClickListener
-import com.mozhimen.xmlk.vhk.VHKRecycler
+import com.mozhimen.xmlk.vhk.VHKLifecycle2
 import java.util.LinkedHashSet
 
 /**
@@ -33,7 +33,7 @@ import java.util.LinkedHashSet
  * @Date 2023/10/11 10:28
  * @Version 1.0
  */
-open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : BasePagedListAdapter<DATA, VHKRecycler>(itemCallback), IUtilK,
+open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId: Int, itemCallback: DiffUtil.ItemCallback<DATA>) : BasePagedListAdapter<DATA, VHKLifecycle2>(itemCallback), IUtilK,
     LifecycleOwner {
     private var _onPageItemClickListener: IOnPageItemClickListener<DATA>? = null
     private var _onPageItemLongClickListener: IOnPageItemLongClickListener<DATA>? = null
@@ -52,17 +52,17 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
 
     //////////////////////////////////////////////////////////////////////////////
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler {
-        val viewHolder = VHKRecycler(LayoutInflater.from(parent.context).inflate(_layoutId, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKLifecycle2 {
+        val viewHolder = VHKLifecycle2(LayoutInflater.from(parent.context).inflate(_layoutId, parent, false))
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: VHKRecycler, position: Int) {
+    override fun onBindViewHolder(holder: VHKLifecycle2, position: Int) {
         onBindViewHolderInner(holder, getItem(position), position)
     }
 
     @CallSuper
-    override fun onBindViewHolder(holder: VHKRecycler, position: Int, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(holder: VHKLifecycle2, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
         } else {
@@ -71,12 +71,12 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
     }
 
     @CallSuper
-    protected open fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int) {
+    protected open fun onBindViewHolderInner(holder: VHKLifecycle2, item: DATA?, position: Int) {
         UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder")
         holder.onBind()
     }
 
-    protected open fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
+    protected open fun onBindViewHolderInner(holder: VHKLifecycle2, item: DATA?, position: Int, payloads: List<Any>) {
         UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder payloads $payloads")
     }
 
@@ -88,21 +88,21 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
         lifecycleRegistry.handleLifecycleEventOnDestroy()
     }
 
-    override fun onViewAttachedToWindow(holder: VHKRecycler) {
+    override fun onViewAttachedToWindow(holder: VHKLifecycle2) {
         holder.onViewAttachedToWindow()
     }
 
-    override fun onViewDetachedFromWindow(holder: VHKRecycler) {
+    override fun onViewDetachedFromWindow(holder: VHKLifecycle2) {
         holder.onViewDetachedFromWindow()
     }
 
-    override fun onViewRecycled(holder: VHKRecycler) {
+    override fun onViewRecycled(holder: VHKLifecycle2) {
         holder.onViewRecycled()
     }
 
     //////////////////////////////////////////////////////////////////////////////
 
-    fun getPosition(viewHolder: VHKRecycler): Int? {
+    fun getPosition(viewHolder: VHKLifecycle2): Int? {
         val position = viewHolder.bindingAdapterPosition
         if (position == RecyclerView.NO_POSITION) {
             return null
@@ -116,7 +116,7 @@ open class PagingKPagedListAdapter<DATA : Any>(@LayoutRes private val _layoutId:
      * 绑定 item 点击事件
      */
     @CallSuper
-    protected open fun bindViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
+    protected open fun bindViewClickListener(holder: VHKLifecycle2, viewType: Int, position: Int) {
         _onPageItemClickListener?.let {
             holder.itemView.applyDebounceClickListener(lifecycleScope, 500) { view ->
 //                val position = holder.adapterPosition

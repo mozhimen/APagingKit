@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.kotlin.utilk.android.view.applyDebounceClickListener
 import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.list.bases.uis.BasePagingKVHKProvider
-import com.mozhimen.xmlk.vhk.VHKRecycler
+import com.mozhimen.xmlk.vhk.VHKLifecycle2
 
 /**
  * @ClassName PagingKPagedListMultiAdapter
@@ -43,7 +43,7 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKLifecycle2 {
         val recyclerKPageItem = getPagingKVHKProvider(viewType)
         checkNotNull(recyclerKPageItem) { "ViewType: $viewType no such provider found，please use addItemProvider() first!" }
         recyclerKPageItem.context = parent.context
@@ -53,42 +53,42 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
     }
 
     @SuppressLint("MissingSuperCall")
-    override fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int) {
+    override fun onBindViewHolderInner(holder: VHKLifecycle2, item: DATA?, position: Int) {
         UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder")
         getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position)
     }
 
-    override fun onBindViewHolderInner(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {
+    override fun onBindViewHolderInner(holder: VHKLifecycle2, item: DATA?, position: Int, payloads: List<Any>) {
         UtilKLogWrapper.d(TAG, "onBindViewHolderInner: holder $holder item $holder position $holder payloads $payloads")
         getPagingKVHKProvider(holder.itemViewType)?.onBindViewHolder(holder, item, position, payloads)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    override fun onViewAttachedToWindow(holder: VHKRecycler) {
+    override fun onViewAttachedToWindow(holder: VHKLifecycle2) {
         val position = getPosition(holder)
         getPagingKVHKProvider(holder.itemViewType)?.onViewAttachedToWindow(holder, position?.let { getItem(it) }, position)
     }
 
-    override fun onViewDetachedFromWindow(holder: VHKRecycler) {
+    override fun onViewDetachedFromWindow(holder: VHKLifecycle2) {
         val position = getPosition(holder)
         getPagingKVHKProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder, position?.let { getItem(it) }, position)
     }
 
-    override fun onViewRecycled(holder: VHKRecycler) {
+    override fun onViewRecycled(holder: VHKLifecycle2) {
         val position = getPosition(holder)
         getPagingKVHKProvider(holder.itemViewType)?.onViewRecycled(holder, position?.let { getItem(it) }, position)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    //    override fun bindViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
+    //    override fun bindViewClickListener(holder: VHKLifecycle2, viewType: Int, position: Int) {
 //        super.bindViewClickListener(holder, viewType, position)
 //        bindItemViewClickListener(holder, viewType, position)
 //        bindItemChildViewClickListener(holder, viewType, position)
 //    }
 
-    protected open fun bindItemViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
+    protected open fun bindItemViewClickListener(holder: VHKLifecycle2, viewType: Int, position: Int) {
         if (getOnItemClickListener() == null) {
             //如果没有设置点击监听，则回调给 itemProvider
             //Callback to itemProvider if no click listener is set
@@ -105,7 +105,7 @@ open class PagingKPagedListMultiAdapter<DATA : Any>(itemCallback: ItemCallback<D
         }
     }
 
-    protected open fun bindItemChildViewClickListener(holder: VHKRecycler, viewType: Int, position: Int) {
+    protected open fun bindItemChildViewClickListener(holder: VHKLifecycle2, viewType: Int, position: Int) {
         if (getOnItemChildClickListener() == null) {
             val recyclerKPageItem = getPagingKVHKProvider(viewType) ?: return
             val childClickViewIds = recyclerKPageItem.getChildClickViewIds()

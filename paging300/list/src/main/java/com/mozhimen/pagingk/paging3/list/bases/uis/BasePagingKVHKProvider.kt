@@ -9,7 +9,7 @@ import androidx.annotation.LayoutRes
 import com.mozhimen.kotlin.utilk.android.view.UtilKView
 import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.paging3.list.widgets.PagingKPagedListMultiAdapter
-import com.mozhimen.xmlk.vhk.VHKRecycler
+import com.mozhimen.xmlk.vhk.VHKLifecycle2
 import java.lang.ref.WeakReference
 
 /**
@@ -70,35 +70,35 @@ abstract class BasePagingKVHKProvider<DATA : Any> : IUtilK {
      * （可选重写）创建 ViewHolder。
      * 默认实现返回[BaseViewHolder]，可重写返回自定义 ViewHolder
      */
-    open fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKRecycler =
-        VHKRecycler(UtilKView.get_ofInflate(parent, layoutId))
+    open fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHKLifecycle2 =
+        VHKLifecycle2(UtilKView.get_ofInflate(parent, layoutId))
 
     @CallSuper
-    open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int) {
+    open fun onBindViewHolder(holder: VHKLifecycle2, item: DATA?, position: Int) {
         holder.onBind()
     }
 
-    open fun onBindViewHolder(holder: VHKRecycler, item: DATA?, position: Int, payloads: List<Any>) {}
+    open fun onBindViewHolder(holder: VHKLifecycle2, item: DATA?, position: Int, payloads: List<Any>) {}
 
     /**
      * （可选重写）ViewHolder创建完毕以后的回掉方法。
      */
-    open fun onViewHolderCreated(holder: VHKRecycler, viewType: Int) {}
+    open fun onViewHolderCreated(holder: VHKLifecycle2, viewType: Int) {}
 
     ///////////////////////////////////////////////////////////////////////
 
     @CallSuper
-    open fun onViewAttachedToWindow(holder: VHKRecycler, item: DATA?, position: Int?) {
+    open fun onViewAttachedToWindow(holder: VHKLifecycle2, item: DATA?, position: Int?) {
         holder.onViewAttachedToWindow()
     }
 
     @CallSuper
-    open fun onViewDetachedFromWindow(holder: VHKRecycler, item: DATA?, position: Int?) {
+    open fun onViewDetachedFromWindow(holder: VHKLifecycle2, item: DATA?, position: Int?) {
         holder.onViewDetachedFromWindow()
     }
 
     @CallSuper
-    open fun onViewRecycled(holder: VHKRecycler, item: DATA?, position: Int?) {
+    open fun onViewRecycled(holder: VHKLifecycle2, item: DATA?, position: Int?) {
         holder.onViewRecycled()
     }
 
@@ -107,22 +107,22 @@ abstract class BasePagingKVHKProvider<DATA : Any> : IUtilK {
     /**
      * item 若想实现条目点击事件则重写该方法
      */
-    open fun onClick(holder: VHKRecycler, view: View, data: DATA?, position: Int) {}
+    open fun onClick(holder: VHKLifecycle2, view: View, data: DATA?, position: Int) {}
 
     /**
      * item 若想实现条目长按事件则重写该方法
      */
-    open fun onLongClick(holder: VHKRecycler, view: View, data: DATA, position: Int): Boolean =
+    open fun onLongClick(holder: VHKLifecycle2, view: View, data: DATA, position: Int): Boolean =
         false
 
     /**
      *
      */
-    open fun onChildClick(holder: VHKRecycler, view: View, data: DATA?, position: Int) {}
+    open fun onChildClick(holder: VHKLifecycle2, view: View, data: DATA?, position: Int) {}
 
     /**
      *
      */
-    open fun onChildLongClick(holder: VHKRecycler, view: View, data: DATA, position: Int): Boolean =
+    open fun onChildLongClick(holder: VHKLifecycle2, view: View, data: DATA, position: Int): Boolean =
         false
 }

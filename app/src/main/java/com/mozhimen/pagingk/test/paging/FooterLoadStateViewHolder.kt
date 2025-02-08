@@ -9,7 +9,7 @@ import com.mozhimen.kotlin.elemk.commons.I_Listener
 import com.mozhimen.kotlin.utilk.commons.IUtilK
 import com.mozhimen.pagingk.test.R
 import com.mozhimen.pagingk.test.databinding.ItemPagingLoadStateBinding
-import com.mozhimen.xmlk.vhk.VHKRecyclerVDB
+import com.mozhimen.xmlk.vhk.VHKLifecycle2VDB
 
 /**
  * @author huanglinqing
@@ -18,7 +18,7 @@ import com.mozhimen.xmlk.vhk.VHKRecyclerVDB
  * @desc 尾部adapter
  */
 class FooterLoadStateViewHolder(parent: ViewGroup, var onRetry: I_Listener) :
-    VHKRecyclerVDB<ItemPagingLoadStateBinding>(LayoutInflater.from(parent.context).inflate(R.layout.item_paging_load_state, parent, false)), IUtilK {
+    VHKLifecycle2VDB<ItemPagingLoadStateBinding>(LayoutInflater.from(parent.context).inflate(R.layout.item_paging_load_state, parent, false)), IUtilK {
 
     fun loadState(loadState: LoadState) {
         when (loadState) {
