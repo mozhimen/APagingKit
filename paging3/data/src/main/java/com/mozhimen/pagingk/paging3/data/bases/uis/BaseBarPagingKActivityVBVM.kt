@@ -5,9 +5,9 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.mozhimen.basick.helpers.IToolbarProxy
-import com.mozhimen.basick.helpers.IToolbarProxyProvider
-import com.mozhimen.basick.helpers.ToolbarProxy
+import com.mozhimen.basick.impls.proxys.IToolbarProxy
+import com.mozhimen.basick.impls.proxys.IToolbarProxyProvider
+import com.mozhimen.basick.impls.proxys.ToolbarProxy
 import com.mozhimen.kotlin.elemk.commons.IA_Listener
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle

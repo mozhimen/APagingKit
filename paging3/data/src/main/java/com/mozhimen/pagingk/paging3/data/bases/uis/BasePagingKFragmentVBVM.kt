@@ -4,12 +4,13 @@ import androidx.annotation.CallSuper
 import androidx.viewbinding.ViewBinding
 import com.mozhimen.uik.databinding.bases.viewbinding.fragment.BaseFragmentVB
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
+import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
-import com.mozhimen.pagingk.paging3.data.bases.BasePagingKProxy
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
+import com.mozhimen.pagingk.paging3.data.impls.PagingKProxy
 
 /**
  * @ClassName BasePagingKFragmentVBVM
@@ -20,16 +21,16 @@ import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
  */
 abstract class BasePagingKFragmentVBVM<DES : Any, VB : ViewBinding, VM : BasePagingKViewModel<*, DES>> : BaseFragmentVB<VB>(), IPagingKActivity<DES, VM> {
 
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
-    private val _basePagingKProxy by UtilKLazyJVM.lazy_ofNone { BasePagingKProxy<DES, VM>(this).apply { bindLifecycle(this@BasePagingKFragmentVBVM) } }
+    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
+    private val _pagingKProxy by UtilKLazyJVM.lazy_ofNone { PagingKProxy<DES, VM>(this).apply { bindLifecycle(this@BasePagingKFragmentVBVM) } }
 
     ////////////////////////////////////////////////////////////////////////
 
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
+    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
     @CallSuper
     override fun initLayout() {
         super.initLayout()
-        _basePagingKProxy.initLayout(this.viewLifecycleOwner)
+        _pagingKProxy.initLayout(this.viewLifecycleOwner)
     }
 
     override fun onRefresh() {

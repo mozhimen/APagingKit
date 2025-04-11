@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.paging3.data.bases
+package com.mozhimen.pagingk.paging3.data.impls
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.onEach
 @OApiCall_BindViewLifecycle
 @OApiInit_ByLazy
 @OApiCall_BindLifecycle
-class BasePagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var _pagingKActivity: IPagingKActivity<DES, VM>?) : BaseWakeBefDestroyLifecycleObserver() {
+class PagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var _pagingKActivity: IPagingKActivity<DES, VM>?) : BaseWakeBefDestroyLifecycleObserver() {
 
     fun initLayout(owner: LifecycleOwner) {
         val pagingKActivity = _pagingKActivity ?: return

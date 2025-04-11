@@ -8,8 +8,8 @@ import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
-import com.mozhimen.pagingk.paging3.data.bases.BasePagingKProxy
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
+import com.mozhimen.pagingk.paging3.data.impls.PagingKProxy
 
 /**
  * @ClassName BasePagingKActivityVBVM
@@ -21,7 +21,7 @@ import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 abstract class BasePagingKActivityVDBVM<DES : Any, VDB : ViewDataBinding, VM : BasePagingKViewModel<*, DES>> : BaseActivityVDB<VDB>(), IPagingKActivity<DES, VM> {
 
     @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class)
-    private val _basePagingKProxy by UtilKLazyJVM.lazy_ofNone { BasePagingKProxy<DES, VM>(this).apply { bindLifecycle(this@BasePagingKActivityVDBVM) } }
+    private val _pagingKProxy by UtilKLazyJVM.lazy_ofNone { PagingKProxy<DES, VM>(this).apply { bindLifecycle(this@BasePagingKActivityVDBVM) } }
 
     ////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +29,7 @@ abstract class BasePagingKActivityVDBVM<DES : Any, VDB : ViewDataBinding, VM : B
     @CallSuper
     override fun initLayout() {
         super.initLayout()
-        _basePagingKProxy.initLayout(this)
+        _pagingKProxy.initLayout(this)
     }
 
     override fun onRefresh() {
