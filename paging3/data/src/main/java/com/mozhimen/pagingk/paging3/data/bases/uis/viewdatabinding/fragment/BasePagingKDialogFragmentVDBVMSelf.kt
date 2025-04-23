@@ -8,11 +8,10 @@ import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
-import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKViewModel
+import com.mozhimen.pagingk.paging3.data.bases.BasePagingKViewModel
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 import com.mozhimen.pagingk.paging3.data.impls.PagingKProxy
 import com.mozhimen.uik.databinding.bases.viewdatabinding.fragment.BaseDialogFragmentVDBVMSelf
-import com.mozhimen.uik.databinding.bases.viewdatabinding.fragment.BaseFragmentVDBVMSelf
 
 /**
  * @ClassName BasePagingKFragmentVBVM

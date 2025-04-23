@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.mozhimen.pagingk.paging3.data.bases.BasePagingKDataAdapter
-import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKViewModel
+import com.mozhimen.pagingk.paging3.data.bases.BasePagingKViewModel
 
 /**
  * @ClassName IPagingKFragment

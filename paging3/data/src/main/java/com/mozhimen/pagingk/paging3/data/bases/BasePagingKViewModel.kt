@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.paging3.data.bases.uis
+package com.mozhimen.pagingk.paging3.data.bases
 
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.lifecycle.MutableLiveData

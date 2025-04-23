@@ -1,4 +1,4 @@
-package com.mozhimen.pagingk.paging3.data.bases.uis
+package com.mozhimen.pagingk.paging3.data.bases
 
 import android.content.Context
 import androidx.annotation.CallSuper

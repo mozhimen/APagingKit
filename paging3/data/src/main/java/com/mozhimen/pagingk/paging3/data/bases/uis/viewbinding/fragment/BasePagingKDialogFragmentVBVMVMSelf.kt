@@ -1,8 +1,6 @@
 package com.mozhimen.pagingk.paging3.data.bases.uis.viewbinding.fragment
 
-import android.view.View
 import androidx.annotation.CallSuper
-import androidx.databinding.ViewDataBinding
 import androidx.viewbinding.ViewBinding
 import com.mozhimen.kotlin.elemk.androidx.lifecycle.bases.BaseViewModel
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
@@ -11,12 +9,10 @@ import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
-import com.mozhimen.pagingk.paging3.data.bases.uis.BasePagingKViewModel
+import com.mozhimen.pagingk.paging3.data.bases.BasePagingKViewModel
 import com.mozhimen.pagingk.paging3.data.commons.IPagingKActivity
 import com.mozhimen.pagingk.paging3.data.impls.PagingKProxy
 import com.mozhimen.uik.databinding.bases.viewbinding.fragment.BaseDialogFragmentVBVMVMSelf
-import com.mozhimen.uik.databinding.bases.viewbinding.fragment.BaseFragmentVBVMVMSelf
-import com.mozhimen.uik.databinding.bases.viewdatabinding.fragment.BaseFragmentVDBVMVMSelf
 
 /**
  * @ClassName BasePagingKFragmentVBVM
