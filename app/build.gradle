@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.mozhimen.pagingk.test'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.mozhimen.pagingk.test"

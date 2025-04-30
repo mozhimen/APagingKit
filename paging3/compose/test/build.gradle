@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.mozhimen.pagingk.paging3.compose.test'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.mozhimen.pagingk.paging3.compose.test"
@@ -35,7 +35,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.5.10'
+        kotlinCompilerExtensionVersion '1.5.15'
     }
 }
 
