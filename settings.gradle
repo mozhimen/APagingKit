@@ -39,7 +39,7 @@ include ':ALibKit_Jetpack'
 project(':ALibKit_Jetpack').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Jetpack")
 include ':ALibKit_Jetpack:paging3'
 include ':ALibKit_Jetpack:paging300'
-include ':ALibKit_Jetpack:paging3:compose'
+include ':ALibKit_Jetpack:paging3_compose'
 include ':ALibKit_Jetpack:lifecycle_viewmodel_compose'
 include ':ALibKit_Jetpack:lifecycle_viewmodel'
 include ':ALibKit_Jetpack:room'
