@@ -52,9 +52,13 @@ class PagingKProxy<DES : Any, VM : BasePagingKViewModel<*, DES>>(private var _pa
                     pagingKActivity.onFirstLoadFinish()
                 }
 
-                else -> {
+                CPagingKLoadState.STATE_FIRST_LOAD_EMPTY ->{
                     pagingKActivity.getSwipeRefreshLayout()?.isRefreshing = false
                     pagingKActivity.onFirstLoadEmpty()
+                }
+
+                else -> {
+
                 }
             }
         }
