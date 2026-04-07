@@ -43,7 +43,7 @@ dependencies {
     }
     api project(':ALibKit_Jetpack:paging3_compose')
     api project(':ALibKit_Jetpack:lifecycle_viewmodel')
-    implementation project(':KUtilKit:android')
+    implementation 'com.github.mozhimen.KUtilKit:android:0.0.2'
     implementation project(':ALibKit_Jetpack:room')
 
     testImplementation 'junit:junit:4.13.2'

@@ -32,10 +32,10 @@ android {
 }
 
 dependencies {
-    implementation project(':ALibKit_Jetpack:room')
-    implementation project(':ALibKit_Jetpack:room_paging')
+    implementation project(':ALibKit_Jetpack:room-bom')
+    implementation project(':ALibKit_Jetpack:room-paging')
     kapt 'androidx.room:room-compiler:2.6.1'
-    implementation project(':KUtilKit:android')
+    implementation 'com.github.mozhimen.KUtilKit:android:0.0.2'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

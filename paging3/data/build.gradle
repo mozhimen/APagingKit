@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    api project(':ALibKit_Jetpack:paging3')
+    api project(':ALibKit_Jetpack:paging3-bom')
     if (rootProject.name == "APagingKit") {
         api project(/*project.path.replace(project.name,'')+*/ ':basic')
     }else {
