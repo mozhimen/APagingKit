@@ -25,61 +25,6 @@ include ':paging3:data'
 include ':paging3:compose'
 include ':paging3:compose:test'
 include ':basic'
-//ALibKit_Google
-include ':ALibKit_Google'
-project(':ALibKit_Google').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Google")
-include ':ALibKit_Google:material'
-//ALibKit_Jetbrains
-include ':ALibKit_Jetbrains'
-project(':ALibKit_Jetbrains').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Jetbrains")
-include ':ALibKit_Jetbrains:kotlin_stdlib'
-include ':ALibKit_Jetbrains:kotlinx_coroutines'
-//ALibKit_Jetpack
-include ':ALibKit_Jetpack'
-project(':ALibKit_Jetpack').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Jetpack")
-include ':ALibKit_Jetpack:paging3'
-include ':ALibKit_Jetpack:paging300'
-include ':ALibKit_Jetpack:paging3_compose'
-include ':ALibKit_Jetpack:lifecycle_viewmodel_compose'
-include ':ALibKit_Jetpack:lifecycle_viewmodel'
-include ':ALibKit_Jetpack:room'
-include ':ALibKit_Jetpack:room_paging'
-include ':ALibKit_Jetpack:databinding'
-include ':ALibKit_Jetpack:annotation'
-include ':ALibKit_Jetpack:core'
-//ALibKit_Squareup
-include ':ALibKit_Squareup'
-project(':ALibKit_Squareup').projectDir = new File("D:\\WorkSpace\\GitHub\\ALibKit_Squareup")
-include ':ALibKit_Squareup:okhttp3'
-include ':ALibKit_Squareup:okhttp3_logging_interceptor'
-include ':ALibKit_Squareup:retrofit2'
-include ':ALibKit_Squareup:moshi'
-include ':ALibKit_Squareup:retrofit2_converter_gson'
-//KUtilKit
-include ':KUtilKit'
-project(':KUtilKit').projectDir = new File("D:\\WorkSpace\\GitHub\\KUtilKit")
-include ':KUtilKit:android'
-include ':KUtilKit:kotlin'
-//ASwiftKit
-include ':ASwiftKit'
-project(':ASwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ASwiftKit")
-include ':ASwiftKit:basick'
-include ':ASwiftKit:xmlk'
-include ':ASwiftKit:uik:databinding'
-include ':ASwiftKit:composek'
-//ANetKit
-include ':ANetKit'
-project(':ANetKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ANetKit")
-include ':ANetKit:retrofit2'
-//AXmlKit
-include ':AXmlKit'
-project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
-include ':AXmlKit:vhk'
-include ':AXmlKit:recyclerk'
-//ASerialKit
-include ':ASerialKit'
-project(':ASerialKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ASerialKit")
-include ':ASerialKit:moshi'
 //AComposeKit
 include ':AComposeKit'
 project(':AComposeKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AComposeKit")

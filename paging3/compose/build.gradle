@@ -36,15 +36,11 @@ android {
 }
 
 dependencies {
-    if (rootProject.name == "APagingKit") {
-        api project(/*project.path.replace(project.name,'')+*/ ':basic')
-    }else {
-        api project(/*project.path.replace(project.name,'')+*/ ':APagingKit:basic')
-    }
-    api project(':ALibKit_Jetpack:paging3_compose')
-    api project(':ALibKit_Jetpack:lifecycle_viewmodel')
-    implementation 'com.github.mozhimen.KUtilKit:android:0.0.2'
-    implementation project(':ALibKit_Jetpack:room')
+    api project(/*project.path.replace(project.name,'')+*/ ':basic')
+    api 'com.github.mozhimen.ALibKit_Jetpack:paging3_compose:0.0.7'
+    api 'com.github.mozhimen.ALibKit_Jetpack:lifecycle-viewmodel:0.0.7'
+    implementation 'com.github.mozhimen.ALibKit_Jetpack:room:0.0.7'
+    implementation 'com.github.mozhimen.KUtilKit:android:0.0.3'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

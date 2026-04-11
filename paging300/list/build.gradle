@@ -31,15 +31,15 @@ android {
 }
 
 dependencies {
-    api project(':ASwiftKit:uik:databinding')
-    api project(':ALibKit_Jetpack:paging300')
+    api 'com.github.mozhimen.ASwiftKit:uik-databinding:2.0.4'
+    api 'com.github.mozhimen.ALibKit_Jetpack:paging300-bom:0.0.7'
     api project(/*project.path.replace(project.name,'')+*/':basic')
 
     //////////////////////////////////////////////////////////////////
 
-    implementation project(':ASwiftKit:basick')
-    implementation project(':ASwiftKit:xmlk')
-    implementation project(':AXmlKit:vhk')
+    implementation 'com.github.mozhimen.ASwiftKit:basick:2.0.4'
+    implementation 'com.github.mozhimen.ASwiftKit:xmlk:2.0.4'
+    implementation 'com.github.mozhimen.AXmlKit:vhk:0.0.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
