@@ -2,8 +2,8 @@ package com.mozhimen.pagingk.test.countdown
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mozhimen.uik.databinding.bases.activity.databinding.BaseActivityVDB
 import com.mozhimen.pagingk.test.databinding.ActivityCountDownBinding
+import com.mozhimen.uik.databinding.bases.viewdatabinding.activity.BaseActivityVDB
 
 class CountDownActivity : BaseActivityVDB<ActivityCountDownBinding>() {
     override fun initView(savedInstanceState: Bundle?) {

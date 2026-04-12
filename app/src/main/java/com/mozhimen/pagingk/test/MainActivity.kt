@@ -1,12 +1,12 @@
 package com.mozhimen.pagingk.test
 
 import android.view.View
-import com.mozhimen.uik.databinding.bases.activity.databinding.BaseActivityVDB
 import com.mozhimen.kotlin.utilk.android.content.startContext
 import com.mozhimen.pagingk.test.countdown.CountDownActivity
 import com.mozhimen.pagingk.test.crud.CrudActivity
 import com.mozhimen.pagingk.test.databinding.ActivityMainBinding
 import com.mozhimen.pagingk.test.paging.PagingActivity
+import com.mozhimen.uik.databinding.bases.viewdatabinding.activity.BaseActivityVDB
 
 class MainActivity : BaseActivityVDB<ActivityMainBinding>() {
     fun goCountDown(view: View) {

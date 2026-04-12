@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.mozhimen.pagingk.test'
+    namespace 'com.mozhimen.pagingk.paging3.compose.test'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.mozhimen.pagingk.test"
+        applicationId "com.mozhimen.pagingk.paging3.compose.test"
         minSdk 21
         targetSdk 34
         versionCode 1
@@ -32,19 +32,27 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        dataBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.15'
     }
 }
 
 dependencies {
-    implementation 'com.github.mozhimen.ASwiftKit:uik-databinding:2.0.4'
-    implementation 'com.github.mozhimen.ASwiftKit:xmlk:2.0.4'
+    implementation 'com.github.mozhimen.ASwiftKit:basick:2.1.6'
+    implementation 'com.github.mozhimen.ASwiftKit:composek:2.1.6'
     implementation 'com.github.mozhimen.ANetKit:retrofit2:0.0.5'
     implementation 'com.github.mozhimen.ALibKit_Squareup:retrofit2-converter_gson:0.0.1'
-    implementation 'com.github.mozhimen.AXmlKit:vhk:0.0.5'
-    implementation project(':paging300-list')
+    implementation 'com.github.mozhimen.ALibKit_Jetpack:lifecycle-viewmodel_compose:0.0.7'
+    implementation project(':paging3-compose')
 
+
+    //room
+    implementation 'com.github.mozhimen.ALibKit_Jetpack:room-bom:0.0.7'
+    implementation 'com.github.mozhimen.ALibKit_Jetpack:room-paging:0.0.7'
+    kapt 'androidx.room:room-compiler:2.6.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }

@@ -1,27 +1,24 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
 }
 
 android {
-    namespace 'com.mozhimen.pagingk.test'
+    namespace 'com.mozhimen.pagingk.paging3.list'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.mozhimen.pagingk.test"
-        minSdk 21
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        minSdk 19
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -31,18 +28,18 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        dataBinding true
-    }
 }
 
 dependencies {
-    implementation 'com.github.mozhimen.ASwiftKit:uik-databinding:2.0.4'
+    api 'com.github.mozhimen.ASwiftKit:uik-databinding:2.0.4'
+    api 'com.github.mozhimen.ALibKit_Jetpack:paging300-bom:0.0.7'
+    api project(/*project.path.replace(project.name,'')+*/':basic')
+
+    //////////////////////////////////////////////////////////////////
+
+    implementation 'com.github.mozhimen.ASwiftKit:basick:2.0.4'
     implementation 'com.github.mozhimen.ASwiftKit:xmlk:2.0.4'
-    implementation 'com.github.mozhimen.ANetKit:retrofit2:0.0.5'
-    implementation 'com.github.mozhimen.ALibKit_Squareup:retrofit2-converter_gson:0.0.1'
     implementation 'com.github.mozhimen.AXmlKit:vhk:0.0.5'
-    implementation project(':paging300-list')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

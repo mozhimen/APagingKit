@@ -1,6 +1,6 @@
 package com.mozhimen.pagingk.test.restful
 
-import com.mozhimen.netk.retrofit2.NetKRetrofit
+import com.mozhimen.netk.retrofit2.NetKRetrofit2
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
@@ -13,5 +13,5 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiFactory {
     private val _baseUrl = "https://www.wanandroid.com/"
 
-    val apis: Apis by lazy { NetKRetrofit(_baseUrl, _converterFactory = GsonConverterFactory.create()).create(Apis::class.java) }
+    val apis: Apis by lazy { NetKRetrofit2(_baseUrl, _converterFactory = GsonConverterFactory.create()).create(Apis::class.java) }
 }

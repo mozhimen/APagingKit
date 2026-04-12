@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM.lazy_ofNone
-import com.mozhimen.uik.databinding.bases.activity.databinding.BaseActivityVDBVM
 import com.mozhimen.pagingk.test.databinding.ActivityCrudBinding
+import com.mozhimen.uik.databinding.bases.viewdatabinding.activity.BaseActivityVDBVM
 
 class CrudActivity : BaseActivityVDBVM<ActivityCrudBinding, SampleViewModel>() {
     private val sampleAdapter by lazy_ofNone { SampleAdapter(vm) }

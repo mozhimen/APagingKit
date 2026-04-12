@@ -1,6 +1,10 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://jitpack.io" }
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
@@ -11,23 +15,18 @@ dependencyResolutionManagement {
         maven { url 'https://gitee.com/liuchaoya/libcommon/raw/master/repository/' }
         maven { url "https://repo.eclipse.org/content/repositories/paho-snapshots/" }
         maven { url 'https://developer.huawei.com/repo/' }
-        maven { url "https://jitpack.io" }
         maven { url 'https://www.jitpack.io' }
-        mavenCentral()
-        google()
     }
 }
 
 rootProject.name = "APagingKit"
 include ':app'
-include ':paging300:list'
-include ':paging3:data'
-include ':paging3:compose'
-include ':paging3:compose:test'
 include ':basic'
-//AComposeKit
-include ':AComposeKit'
-project(':AComposeKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AComposeKit")
-include ':AComposeKit:basic'
+include ':paging3-compose'
+include ':paging3-compose:test'
+include ':paging3-data'
+include ':paging300-list'
+
+
 
 
