@@ -33,7 +33,11 @@ android {
 dependencies {
     api 'com.github.mozhimen.ASwiftKit:uik-databinding:2.0.4'
     api 'com.github.mozhimen.ALibKit_Jetpack:paging300-bom:0.0.7'
-    api project(/*project.path.replace(project.name,'')+*/':basic')
+    if (rootProject.name == "APagingKit") {
+        api project(':basic')
+    } else {
+        api project(':APagingKit:basic')
+    }
 
     //////////////////////////////////////////////////////////////////
 
