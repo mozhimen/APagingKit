@@ -42,7 +42,7 @@ android {
 dependencies {
     implementation 'com.github.mozhimen.ASwiftKit:basick:2.1.6'
     implementation 'com.github.mozhimen.ASwiftKit:composek:2.1.6'
-    implementation 'com.github.mozhimen.ANetKit:retrofit2:0.0.5'
+    implementation 'com.github.mozhimen.ANetKit:retrofit2:0.0.7'
     implementation 'com.github.mozhimen.ALibKit_Squareup:retrofit2-converter_gson:0.0.1'
     implementation 'com.github.mozhimen.ALibKit_Jetpack:lifecycle-viewmodel_compose:0.0.7'
     implementation project(':paging3-compose')
